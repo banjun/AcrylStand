@@ -7,21 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA2197972BAC520E001F86DB /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = EA2197962BAC520E001F86DB /* RealityKitContent */; };
 		EA2197992BAC520E001F86DB /* AcrylStandApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197982BAC520E001F86DB /* AcrylStandApp.swift */; };
 		EA21979B2BAC520E001F86DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA21979A2BAC520E001F86DB /* ContentView.swift */; };
 		EA21979D2BAC5210001F86DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA21979C2BAC5210001F86DB /* Assets.xcassets */; };
 		EA2197A02BAC5210001F86DB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA21979F2BAC5210001F86DB /* Preview Assets.xcassets */; };
+		EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A72BAC5675001F86DB /* ImageView.swift */; };
+		EA2197AA2BAC5740001F86DB /* WindowSceneReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EA2197912BAC520E001F86DB /* AcrylStand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcrylStand.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA2197952BAC520E001F86DB /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		EA2197982BAC520E001F86DB /* AcrylStandApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrylStandApp.swift; sourceTree = "<group>"; };
 		EA21979A2BAC520E001F86DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EA21979C2BAC5210001F86DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA21979F2BAC5210001F86DB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EA2197A12BAC5210001F86DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA2197A72BAC5675001F86DB /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowSceneReader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,7 +31,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA2197972BAC520E001F86DB /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +59,8 @@
 			children = (
 				EA2197982BAC520E001F86DB /* AcrylStandApp.swift */,
 				EA21979A2BAC520E001F86DB /* ContentView.swift */,
+				EA2197A72BAC5675001F86DB /* ImageView.swift */,
+				EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */,
 				EA21979C2BAC5210001F86DB /* Assets.xcassets */,
 				EA2197A12BAC5210001F86DB /* Info.plist */,
 				EA21979E2BAC5210001F86DB /* Preview Content */,
@@ -68,7 +71,6 @@
 		EA2197942BAC520E001F86DB /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				EA2197952BAC520E001F86DB /* RealityKitContent */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -98,7 +100,6 @@
 			);
 			name = AcrylStand;
 			packageProductDependencies = (
-				EA2197962BAC520E001F86DB /* RealityKitContent */,
 			);
 			productName = AcrylStand;
 			productReference = EA2197912BAC520E001F86DB /* AcrylStand.app */;
@@ -154,8 +155,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */,
 				EA21979B2BAC520E001F86DB /* ContentView.swift in Sources */,
 				EA2197992BAC520E001F86DB /* AcrylStandApp.swift in Sources */,
+				EA2197AA2BAC5740001F86DB /* WindowSceneReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,13 +358,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		EA2197962BAC520E001F86DB /* RealityKitContent */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RealityKitContent;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA2197892BAC520E001F86DB /* Project object */;
 }
