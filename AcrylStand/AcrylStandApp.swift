@@ -29,17 +29,17 @@ struct AcrylStandApp: App {
         }
         .windowStyle(.plain) // make background transparent (default is plain with glass background effect)
 
+        let minVolumetricLength: CGFloat = 300 // lower limit seems to be around 300pt
+        let maxVolumetricLength: CGFloat = 2700 // upper limit seems to be around 2700pt
         // fixed scale window (placing far position let it smaller but still same size physically)
         WindowGroup(id: "FixedImage", for: Data.self) { $value in
             ZStack {
-                // TODO: make the image front aligned
-                Spacer().frame(depth: 150)
+                // make the image front aligned within lower depth limit
+                Spacer().frame(depth: minVolumetricLength)
                 if let value, let image = UIImage(data: value) {
                     // TODO: 1. calculate a good default physical size
                     // TODO: 2. ui for changing size
-                    // upper limit seems to be around 2700pt
-                    let maxSide: CGFloat = 2700
-                    let aspect = min(1, min(maxSide / image.size.width, maxSide / image.size.height))
+                    let aspect = min(1, min(maxVolumetricLength / image.size.width, maxVolumetricLength / image.size.height))
                     let width = image.size.width * aspect
                     let height = image.size.height * aspect
                     ImageView(image: image)
@@ -49,9 +49,9 @@ struct AcrylStandApp: App {
                 }
             }
         }
-        .defaultSize(width: 150, height: 150, depth: 150) // lower limit seems to be around 150pt
+        .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
-        .windowResizability(.contentMinSize)
+        .windowResizability(.contentSize)
     }
 
     private func updateWindowAspectRatio(windowScene: () -> UIWindowScene?, size: CGSize) {
