@@ -12,6 +12,12 @@ struct AcrylStandApp: App {
                 openWindow(id: "Image", value: data)
                 openWindow(id: "FixedImage", value: data)
             })
+
+            Spacer().frame(height: 40)
+
+            Button("Open Experimental AcrylStand") {
+                openWindow(id: "Experimental")
+            }
         }
         .defaultSize(width: 300, height: 300)
         .windowResizability(.contentMinSize)
@@ -47,6 +53,18 @@ struct AcrylStandApp: App {
                 } else {
                     Text("Error in decoding image")
                 }
+            }
+        }
+        .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
+        .windowStyle(.volumetric)
+        .windowResizability(.contentSize)
+
+        WindowGroup(id: "Experimental") {
+            ZStack {
+                // make the image front aligned within lower depth limit
+                Spacer().frame(depth: minVolumetricLength)
+
+                AcrylStand()
             }
         }
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)

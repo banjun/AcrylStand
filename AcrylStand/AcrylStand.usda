@@ -1,0 +1,317 @@
+#usda 1.0
+(
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["Image", "Acryl"]
+    def Cube "Acryl" (
+        active = false
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        reorder nameChildren = ["Acryl", "Image", "ScaleDown"]
+        rel material:binding = </Root/Acryl/Acryl>
+        double size = 0.1
+        float3 xformOp:scale = (1, 1, 0.02)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "Acryl"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+            prepend token outputs:surface.connect = </Root/Acryl/Acryl/DefaultSurfaceShader.outputs:surface>
+
+            def Shader "DefaultSurfaceShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:opacity = 0.01
+                float inputs:roughness = 0
+                token outputs:surface
+            }
+        }
+    }
+
+    def Cube "Image" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Root/Image/Image>
+        double size = 0.1
+        float3 xformOp:scale = (1, 1, 0.05)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "Image"
+        {
+            prepend token outputs:mtlx:surface.connect = </Root/Image/Image/PreviewSurface.outputs:out>
+            token outputs:realitykit:vertex
+            token outputs:surface.connect = </Root/Image/Image/DefaultSurfaceShader.outputs:surface>
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (826.9087, 86.78752)
+            float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
+            int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 414
+
+            def Shader "DefaultSurfaceShader" (
+                active = false
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness
+                color3f inputs:diffuseColor.connect = </Root/Image/Image/isFront_1.outputs:out>
+                color3f inputs:emissiveColor
+                float inputs:ior = 1.4
+                float inputs:metallic
+                float3 inputs:normal
+                float inputs:occlusion = 1
+                float inputs:occlusion.connect = None
+                float inputs:opacity.connect = </Root/Image/Image/Multiply.outputs:out>
+                float inputs:opacityThreshold
+                float inputs:roughness = 0
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (525.1816, 82.43219)
+                float2 ui:nodegraph:node:size = (159.5, 307)
+                int ui:nodegraph:node:stackingOrder = 489
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:diffuseColor", "Advanced", "inputs:ior", "inputs:metallic"]
+            }
+
+            def Shader "Constant"
+            {
+                uniform token info:id = "ND_constant_filename"
+                asset inputs:value = @banjun-arisu-v2.psd.png@
+                asset outputs:out
+                float2 ui:nodegraph:node:pos = (-826.2787, 181.20984)
+                float2 ui:nodegraph:node:size = (142.5, 53)
+                int ui:nodegraph:node:stackingOrder = 480
+            }
+
+            def Shader "UsdUVTexture"
+            {
+                uniform token info:id = "ND_UsdUVTexture"
+                asset inputs:file.connect = </Root/Image/Image/Constant.outputs:out>
+                color4f inputs:scale
+                float2 inputs:st
+                string inputs:wrapS
+                string inputs:wrapT
+                float outputs:a
+                float outputs:b
+                float outputs:g
+                float outputs:r
+                color3f outputs:rgb
+                color4f outputs:rgba
+                float2 ui:nodegraph:node:pos = (-427.79782, 131.89525)
+                float2 ui:nodegraph:node:size = (141.5, 217)
+                int ui:nodegraph:node:stackingOrder = 442
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:rgba", "outputs:rgba", "outputs:rgba", "outputs:rgba", "outputs:rgba", "outputs:rgba", "outputs:rgba", "outputs:rgba", "inputs:wrapS", "outputs:rgba", "outputs:rgba", "inputs:scale"]
+            }
+
+            def Shader "Normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-429.2066, 762.46063)
+                float2 ui:nodegraph:node:size = (128.5, 40)
+                int ui:nodegraph:node:stackingOrder = 374
+            }
+
+            def Shader "Separate3"
+            {
+                uniform token info:id = "ND_separate3_vector3"
+                float3 inputs:in.connect = </Root/Image/Image/Normal.outputs:out>
+                float outputs:outx
+                float outputs:outy
+                float outputs:outz
+                float2 ui:nodegraph:node:pos = (-254.59149, 757.14026)
+                float2 ui:nodegraph:node:size = (115.5, 145)
+                int ui:nodegraph:node:stackingOrder = 373
+            }
+
+            def Shader "isFront"
+            {
+                uniform token info:id = "ND_ifgreater_float"
+                float inputs:in1.connect = </Root/Image/Image/UsdUVTexture.outputs:a>
+                float inputs:in2 = 0
+                float inputs:value1.connect = </Root/Image/Image/Separate3.outputs:outz>
+                float inputs:value2 = 0.1
+                float outputs:out
+                float2 ui:nodegraph:node:pos = (64.69375, 566.56793)
+                float2 ui:nodegraph:node:size = (109, 163)
+                int ui:nodegraph:node:stackingOrder = 482
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in2"]
+            }
+
+            def Shader "isBack"
+            {
+                uniform token info:id = "ND_ifgreater_float"
+                float inputs:in1 = 1
+                float inputs:in1.connect = </Root/Image/Image/xFlipped.outputs:a>
+                float inputs:in2
+                float inputs:value1 = -0.1
+                float inputs:value1.connect = None
+                float inputs:value2.connect = </Root/Image/Image/Separate3.outputs:outz>
+                float outputs:out
+                float2 ui:nodegraph:node:pos = (73.862206, 337.00803)
+                float2 ui:nodegraph:node:size = (109, 163)
+                int ui:nodegraph:node:stackingOrder = 479
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in1", "inputs:value2"]
+            }
+
+            def Shader "Max"
+            {
+                uniform token info:id = "ND_max_float"
+                float inputs:in1.connect = </Root/Image/Image/isBack.outputs:out>
+                float inputs:in2.connect = </Root/Image/Image/isFront.outputs:out>
+                float outputs:out
+                float2 ui:nodegraph:node:pos = (282.5305, 405.4007)
+                float2 ui:nodegraph:node:size = (113, 40)
+                int ui:nodegraph:node:stackingOrder = 428
+            }
+
+            def Shader "Texcoord"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index
+                float2 outputs:out
+                float2 ui:nodegraph:node:pos = (-962.8002, 531.24536)
+                float2 ui:nodegraph:node:size = (180.5, 53)
+                int ui:nodegraph:node:stackingOrder = 205
+            }
+
+            def Shader "Place2D"
+            {
+                uniform token info:id = "ND_place2d_vector2"
+                float2 inputs:offset
+                float2 inputs:pivot
+                float inputs:rotate
+                float2 inputs:scale = (-1, 1)
+                float2 inputs:texcoord.connect = </Root/Image/Image/Texcoord.outputs:out>
+                float2 outputs:out
+                float2 ui:nodegraph:node:pos = (-755.29877, 586.07556)
+                float2 ui:nodegraph:node:size = (148.5, 181)
+                int ui:nodegraph:node:stackingOrder = 194
+            }
+
+            def Shader "isFront_1"
+            {
+                uniform token info:id = "ND_ifgreater_color3"
+                color3f inputs:in1.connect = </Root/Image/Image/UsdUVTexture.outputs:rgb>
+                color3f inputs:in2 = (1, 1, 1) (
+                    colorSpace = "lin_srgb"
+                )
+                color3f inputs:in2.connect = </Root/Image/Image/Mix.outputs:out>
+                prepend float inputs:value1.connect = </Root/Image/Image/Separate3.outputs:outz>
+                float inputs:value2 = 0.1
+                color3f outputs:out
+                float2 ui:nodegraph:node:pos = (48.658474, -86.60569)
+                float2 ui:nodegraph:node:size = (109, 163)
+                int ui:nodegraph:node:stackingOrder = 309
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in2", "inputs:in1"]
+            }
+
+            def Shader "BackWhite"
+            {
+                uniform token info:id = "ND_constant_color3"
+                color3f inputs:value = (1, 1, 1) (
+                    colorSpace = "lin_srgb"
+                )
+                color3f outputs:out
+                float2 ui:nodegraph:node:pos = (-383.49246, -96.7507)
+                float2 ui:nodegraph:node:size = (152.5, 53)
+                int ui:nodegraph:node:stackingOrder = 331
+            }
+
+            def Shader "xFlipped"
+            {
+                uniform token info:id = "ND_UsdUVTexture"
+                color4f inputs:bias
+                color4f inputs:fallback
+                asset inputs:file (
+                    colorSpace = "srgb_texture"
+                )
+                asset inputs:file.connect = </Root/Image/Image/Constant.outputs:out>
+                color4f inputs:scale
+                float2 inputs:st = (-1, 1)
+                float2 inputs:st.connect = </Root/Image/Image/Place2D.outputs:out>
+                string inputs:wrapS
+                string inputs:wrapT
+                float outputs:a
+                float outputs:b
+                float outputs:g
+                float outputs:r
+                color3f outputs:rgb
+                color4f outputs:rgba
+                float2 ui:nodegraph:node:pos = (-433.16943, 478.8983)
+                float2 ui:nodegraph:node:size = (105, 217)
+                int ui:nodegraph:node:stackingOrder = 422
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:wrapS", "inputs:scale", "inputs:fallback", "outputs:rgba", "outputs:rgba", "outputs:rgba", "outputs:rgba", "outputs:rgba", "outputs:rgba"]
+            }
+
+            def Shader "Mix"
+            {
+                uniform token info:id = "ND_mix_color3"
+                color3f inputs:bg.connect = </Root/Image/Image/BackWhite.outputs:out>
+                color3f inputs:fg.connect = </Root/Image/Image/xFlipped.outputs:rgb>
+                float inputs:mix = 0.3
+                color3f outputs:out
+                float2 ui:nodegraph:node:pos = (-130.84714, -109.09788)
+                float2 ui:nodegraph:node:size = (109, 145)
+                int ui:nodegraph:node:stackingOrder = 328
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:mix"]
+            }
+
+            def Shader "Multiply"
+            {
+                uniform token info:id = "ND_multiply_float"
+                float inputs:in1.connect = </Root/Image/Image/Max.outputs:out>
+                float inputs:in2 = 0.93
+                float outputs:out
+                float2 ui:nodegraph:node:pos = (367.49734, 291.8716)
+                float2 ui:nodegraph:node:size = (60, 36)
+                int ui:nodegraph:node:stackingOrder = 498
+            }
+        }
+
+        def RealityKitComponent "GroundingShadow"
+        {
+            bool enableIBLShadow = 1
+            bool enableMeshShadow = 1
+            uniform token info:id = "RealityKit.GroundingShadow"
+        }
+
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
+        def RealityKitComponent "Collider"
+        {
+            uint group = 1
+            uniform token info:id = "RealityKit.Collider"
+            uint mask = 4294967295
+            token type = "Default"
+
+            def RealityKitStruct "Shape"
+            {
+                float3 extent = (0.1, 0.1, 0.1)
+                token shapeType = "Box"
+
+                def RealityKitStruct "pose"
+                {
+                }
+            }
+        }
+    }
+}
+

@@ -13,6 +13,9 @@
 		EA2197A02BAC5210001F86DB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA21979F2BAC5210001F86DB /* Preview Assets.xcassets */; };
 		EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A72BAC5675001F86DB /* ImageView.swift */; };
 		EA2197AA2BAC5740001F86DB /* WindowSceneReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */; };
+		EA8197DD2BCC146F00EFE812 /* AcrylStand.usda in Resources */ = {isa = PBXBuildFile; fileRef = EA8197DC2BCC146F00EFE812 /* AcrylStand.usda */; };
+		EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8197DE2BCC269100EFE812 /* Experimental.swift */; };
+		EA8197E12BCC274200EFE812 /* banjun-arisu-v2.psd.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		EA2197A12BAC5210001F86DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA2197A72BAC5675001F86DB /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowSceneReader.swift; sourceTree = "<group>"; };
+		EA8197DC2BCC146F00EFE812 /* AcrylStand.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AcrylStand.usda; sourceTree = "<group>"; };
+		EA8197DE2BCC269100EFE812 /* Experimental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experimental.swift; sourceTree = "<group>"; };
+		EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banjun-arisu-v2.psd.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +66,12 @@
 				EA2197982BAC520E001F86DB /* AcrylStandApp.swift */,
 				EA21979A2BAC520E001F86DB /* ContentView.swift */,
 				EA2197A72BAC5675001F86DB /* ImageView.swift */,
+				EA8197DE2BCC269100EFE812 /* Experimental.swift */,
 				EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */,
 				EA21979C2BAC5210001F86DB /* Assets.xcassets */,
 				EA2197A12BAC5210001F86DB /* Info.plist */,
+				EA8197DC2BCC146F00EFE812 /* AcrylStand.usda */,
+				EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */,
 				EA21979E2BAC5210001F86DB /* Preview Content */,
 			);
 			path = AcrylStand;
@@ -144,7 +153,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2197A02BAC5210001F86DB /* Preview Assets.xcassets in Resources */,
+				EA8197DD2BCC146F00EFE812 /* AcrylStand.usda in Resources */,
 				EA21979D2BAC5210001F86DB /* Assets.xcassets in Resources */,
+				EA8197E12BCC274200EFE812 /* banjun-arisu-v2.psd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +169,7 @@
 				EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */,
 				EA21979B2BAC520E001F86DB /* ContentView.swift in Sources */,
 				EA2197992BAC520E001F86DB /* AcrylStandApp.swift in Sources */,
+				EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */,
 				EA2197AA2BAC5740001F86DB /* WindowSceneReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
