@@ -49,7 +49,7 @@ def Xform "Root"
         def Material "Image"
         {
             prepend token outputs:mtlx:surface.connect = </Root/Image/Image/PreviewSurface.outputs:out>
-            token outputs:realitykit:vertex
+            token outputs:realitykit:vertex.connect = </Root/Image/Image/GeometryModifier.outputs:out>
             token outputs:surface.connect = </Root/Image/Image/DefaultSurfaceShader.outputs:surface>
             float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (826.9087, 86.78752)
             float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
@@ -79,10 +79,11 @@ def Xform "Root"
                 float inputs:occlusion.connect = None
                 float inputs:opacity.connect = </Root/Image/Image/Remap.outputs:out>
                 float inputs:opacityThreshold
+                float inputs:roughness = 0.05
                 token outputs:out
                 float2 ui:nodegraph:node:pos = (525.1816, 82.43219)
                 float2 ui:nodegraph:node:size = (159.5, 307)
-                int ui:nodegraph:node:stackingOrder = 506
+                int ui:nodegraph:node:stackingOrder = 524
                 string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:diffuseColor", "Advanced", "inputs:ior", "inputs:metallic", "inputs:opacity"]
             }
 
@@ -278,9 +279,9 @@ def Xform "Root"
                 float inputs:inlow
                 float inputs:outlow = 0.07
                 float outputs:out
-                float2 ui:nodegraph:node:pos = (433.08472, 399.9251)
+                float2 ui:nodegraph:node:pos = (342.81247, 219.25363)
                 float2 ui:nodegraph:node:size = (94, 181)
-                int ui:nodegraph:node:stackingOrder = 512
+                int ui:nodegraph:node:stackingOrder = 516
             }
         }
 
