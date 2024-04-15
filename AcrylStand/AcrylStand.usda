@@ -77,14 +77,13 @@ def Xform "Root"
                 float3 inputs:normal
                 float inputs:occlusion = 1
                 float inputs:occlusion.connect = None
-                float inputs:opacity.connect = </Root/Image/Image/Multiply.outputs:out>
+                float inputs:opacity.connect = </Root/Image/Image/Remap.outputs:out>
                 float inputs:opacityThreshold
-                float inputs:roughness = 0
                 token outputs:out
                 float2 ui:nodegraph:node:pos = (525.1816, 82.43219)
                 float2 ui:nodegraph:node:size = (159.5, 307)
-                int ui:nodegraph:node:stackingOrder = 489
-                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:diffuseColor", "Advanced", "inputs:ior", "inputs:metallic"]
+                int ui:nodegraph:node:stackingOrder = 506
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:diffuseColor", "Advanced", "inputs:ior", "inputs:metallic", "inputs:opacity"]
             }
 
             def Shader "Constant"
@@ -271,15 +270,17 @@ def Xform "Root"
                 string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:mix"]
             }
 
-            def Shader "Multiply"
+            def Shader "Remap"
             {
-                uniform token info:id = "ND_multiply_float"
-                float inputs:in1.connect = </Root/Image/Image/Max.outputs:out>
-                float inputs:in2 = 0.93
+                uniform token info:id = "ND_remap_float"
+                float inputs:in.connect = </Root/Image/Image/Max.outputs:out>
+                float inputs:inhigh
+                float inputs:inlow
+                float inputs:outlow = 0.07
                 float outputs:out
-                float2 ui:nodegraph:node:pos = (367.49734, 291.8716)
-                float2 ui:nodegraph:node:size = (60, 36)
-                int ui:nodegraph:node:stackingOrder = 498
+                float2 ui:nodegraph:node:pos = (433.08472, 399.9251)
+                float2 ui:nodegraph:node:size = (94, 181)
+                int ui:nodegraph:node:stackingOrder = 512
             }
         }
 
