@@ -17,7 +17,9 @@ struct AcrylStandApp: App {
 
             Button("Open Experimental AcrylStand") {
                 openWindow(id: "Experimental")
+                openWindow(id: "Image", value: UIImage(named: "banjun-arisu-v2.psd")!.pngData()!)
             }
+            .padding()
         }
         .defaultSize(width: 300, height: 300)
         .windowResizability(.contentMinSize)

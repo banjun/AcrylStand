@@ -1,5 +1,8 @@
 import SwiftUI
 import RealityKit
+import VisionKit
+import Vision
+
 
 struct AcrylStand: View {
     @State private var controlVisibility: Visibility = .automatic
