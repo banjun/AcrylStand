@@ -17,7 +17,8 @@ struct AcrylStandApp: App {
 
             Button("Open Experimental AcrylStand") {
                 openWindow(id: "Experimental")
-                openWindow(id: "Image", value: UIImage(named: "banjun-arisu-v2.psd")!.pngData()!)
+//                openWindow(id: "Image", value: UIImage(named: "banjun-arisu-v2.psd")!.pngData()!)
+                openWindow(id: "Experimental2", value: UIImage(named: "banjun-arisu-v2.psd")!.pngData()!)
             }
             .padding()
         }
@@ -67,6 +68,18 @@ struct AcrylStandApp: App {
                 Spacer().frame(depth: minVolumetricLength)
 
                 AcrylStand()
+            }
+        }
+        .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
+        .windowStyle(.volumetric)
+        .windowResizability(.contentSize)
+
+        WindowGroup(id: "Experimental2", for: Data.self) { $image in
+            ZStack {
+                // make the image front aligned within lower depth limit
+                Spacer().frame(depth: minVolumetricLength)
+
+                ImageView(image: UIImage(data: image!)!)
             }
         }
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)

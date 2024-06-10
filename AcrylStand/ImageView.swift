@@ -2,6 +2,8 @@ import SwiftUI
 import Vision
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import RealityKit
+import RealityFoundation
 
 struct ImageView: View {
     var image: UIImage
@@ -10,21 +12,66 @@ struct ImageView: View {
 
     var body: some View {
         ZStack {
-            Image(uiImage: image)
-                .resizable()
+//            Image(uiImage: image)
+//                .resizable()
 
             switch path {
             case nil:
                 EmptyView()
             case .success(let path):
-                GeometryReader { g in
-                    Path({
-                        let path = path.copy() as! UIBezierPath
-                        path.apply(.init(scaleX: g.size.width, y: g.size.height))
-                        return path.cgPath
-                    }())
-                    .stroke(.green, lineWidth: 20)
-                    .fill(.white.opacity(0.2))
+//                GeometryReader { g in
+//                    Path({
+//                        let path = path.copy() as! UIBezierPath
+//                        path.apply(.init(scaleX: g.size.width, y: g.size.height))
+//                        return path.cgPath
+//                    }())
+////                    .stroke(.green, lineWidth: 20)
+//                    .fill(.white.opacity(0.2))
+//                }
+                RealityView { content in
+                    let scene = try! await Entity(named: "AcrylStand")
+                    let acrylEntity = scene.findEntity(named: "Image")! as! ModelEntity
+
+                    let points = (0..<256)
+                        .map { CGFloat($0) / 255 }
+                        .map { path.mx_point(atFractionOfLength: $0) } // x,y in 0...1
+                        .reversed()
+                    let vertices: [SIMD3<Float>] = points
+                        .map { SIMD3<Float>(Float($0.x) - 0.5, 1 - Float($0.y) - 0.5, -7) } // x,y in -0.5...+0.5 (centered)
+                    var meshDescriptor = MeshDescriptor()
+                    meshDescriptor.positions = .init(
+                        vertices.map { $0 * 0.1}
+                        +
+                        vertices.reversed().map { .init($0.x, $0.y, -8) * 0.1 })
+                    meshDescriptor.primitives = .polygons(
+                        [255, 255],
+                        Array(0..<512))
+                    meshDescriptor.textureCoordinates = .init(
+                        points.map { SIMD2<Float>(
+                            min(1, max(0, Float($0.x))),
+                            1 - min(1, max(0, Float($0.y))))
+                        }
+                        +
+                        points.reversed().map { SIMD2<Float>(
+                            min(1, max(0, Float($0.x))),
+                            1 - min(1, max(0, Float($0.y))))
+                        })
+
+                    @MainActor
+                    func hoge() async -> ModelEntity {
+                        var m = PhysicallyBasedMaterial()
+                        let texture = try! await PhysicallyBasedMaterial.Texture(TextureResource(named: "banjun-arisu-v2.psd"))
+                        m.baseColor = .init(texture: texture)
+                        m.blending = .transparent(opacity: 1.0)
+                        // just works but index of refraction is not usable as UsdPreviewSurface
+
+                        let pathEntity = try! await ModelEntity(mesh: .init(from: [meshDescriptor]), materials: [m,m])
+                        return pathEntity
+                    }
+//                    content.add(await hoge())
+
+                    acrylEntity.model!.mesh = try! await .init(from: [meshDescriptor])
+                    content.add(acrylEntity)
                 }
             case .failure(let error):
                 Text(String(describing: error))
