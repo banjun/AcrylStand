@@ -38,11 +38,12 @@ struct ImageView: View {
                         .reversed()
                     let vertices: [SIMD3<Float>] = points
                         .map { SIMD3<Float>(Float($0.x) - 0.5, 1 - Float($0.y) - 0.5, -7) } // x,y in -0.5...+0.5 (centered)
+                    let scale: Float = 0.1
                     var meshDescriptor = MeshDescriptor()
                     meshDescriptor.positions = .init(
-                        vertices.map { $0 * 0.1}
+                        vertices.map { $0 * scale }
                         +
-                        vertices.reversed().map { .init($0.x, $0.y, -8) * 0.1 })
+                        vertices.reversed().map { .init($0.x, $0.y, -8) * scale })
                     meshDescriptor.primitives = .polygons(
                         [255, 255],
                         Array(0..<512))
@@ -57,6 +58,14 @@ struct ImageView: View {
                             1 - min(1, max(0, Float($0.y))))
                         })
 
+                    var sideMeshDescriptor = MeshDescriptor()
+                    sideMeshDescriptor.positions = meshDescriptor.positions
+                    let sideQuads: [UInt32] = (UInt32(0)..<UInt32(255)).flatMap { i in
+                        [UInt32(511) - i, UInt32(511) - (i + 1),
+                        i + 1, i]
+                    }
+                    sideMeshDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuads)
+
                     @MainActor
                     func hoge() async -> ModelEntity {
                         var m = PhysicallyBasedMaterial()
@@ -70,7 +79,8 @@ struct ImageView: View {
                     }
 //                    content.add(await hoge())
 
-                    acrylEntity.model!.mesh = try! await .init(from: [meshDescriptor])
+                    acrylEntity.model!.mesh = try! await .init(from: [meshDescriptor, sideMeshDescriptor])
+//                    acrylEntity.model!.materials = [UnlitMaterial(color: .green)]
                     content.add(acrylEntity)
                 }
             case .failure(let error):

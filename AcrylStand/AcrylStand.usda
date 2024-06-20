@@ -77,13 +77,13 @@ def Xform "Root"
                 float3 inputs:normal
                 float inputs:occlusion = 1
                 float inputs:occlusion.connect = None
-                float inputs:opacity.connect = </Root/Image/Image/Max_1.outputs:out>
+                float inputs:opacity.connect = </Root/Image/Image/Multiply_1.outputs:out>
                 float inputs:opacityThreshold.connect = None
                 float inputs:roughness = 0.05
                 token outputs:out
-                float2 ui:nodegraph:node:pos = (525.1816, 82.43219)
+                float2 ui:nodegraph:node:pos = (581.80725, 72.97761)
                 float2 ui:nodegraph:node:size = (159.5, 307)
-                int ui:nodegraph:node:stackingOrder = 837
+                int ui:nodegraph:node:stackingOrder = 842
                 string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:diffuseColor", "inputs:ior", "inputs:metallic", "inputs:opacity", "inputs:emissiveColor", "inputs:diffuseColor", "inputs:opacityThreshold", "inputs:opacityThreshold", "inputs:opacityThreshold", "Advanced", "inputs:normal"]
             }
 
@@ -212,7 +212,7 @@ def Xform "Root"
                     colorSpace = "lin_srgb"
                 )
                 color3f inputs:in2.connect = </Root/Image/Image/Mix.outputs:out>
-                prepend float inputs:value1.connect = </Root/Image/Image/Separate3.outputs:outz>
+                float inputs:value1.connect = </Root/Image/Image/Separate3.outputs:outz>
                 float inputs:value2 = 0.1
                 color3f outputs:out
                 float2 ui:nodegraph:node:pos = (48.658474, -86.60569)
@@ -311,6 +311,7 @@ def Xform "Root"
             def Shader "Texcoord_1"
             {
                 uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index
                 float2 outputs:out
                 float2 ui:nodegraph:node:pos = (48.647625, 778.07825)
                 float2 ui:nodegraph:node:size = (180.5, 53)
@@ -445,7 +446,28 @@ def Xform "Root"
                 float outputs:out
                 float2 ui:nodegraph:node:pos = (334, 124.11692)
                 float2 ui:nodegraph:node:size = (121.5, 53)
-                int ui:nodegraph:node:stackingOrder = 838
+                int ui:nodegraph:node:stackingOrder = 840
+            }
+
+            def Shader "Absval"
+            {
+                uniform token info:id = "ND_absval_float"
+                float inputs:in.connect = </Root/Image/Image/Separate3.outputs:outz>
+                float outputs:out
+                float2 ui:nodegraph:node:pos = (359.3862, 252.41197)
+                float2 ui:nodegraph:node:size = (121.5, 53)
+                int ui:nodegraph:node:stackingOrder = 846
+            }
+
+            def Shader "Multiply_1"
+            {
+                uniform token info:id = "ND_multiply_float"
+                float inputs:in1.connect = </Root/Image/Image/Max_1.outputs:out>
+                float inputs:in2.connect = </Root/Image/Image/Absval.outputs:out>
+                float outputs:out
+                float2 ui:nodegraph:node:pos = (448.21384, 183.83298)
+                float2 ui:nodegraph:node:size = (60, 36)
+                int ui:nodegraph:node:stackingOrder = 847
             }
         }
 
