@@ -13,6 +13,7 @@
 		EA2197A02BAC5210001F86DB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA21979F2BAC5210001F86DB /* Preview Assets.xcassets */; };
 		EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A72BAC5675001F86DB /* ImageView.swift */; };
 		EA2197AA2BAC5740001F86DB /* WindowSceneReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */; };
+		EA5FABAD2C40170A0020721F /* SwiftHotReload in Frameworks */ = {isa = PBXBuildFile; productRef = EA5FABAC2C40170A0020721F /* SwiftHotReload */; };
 		EA8197DD2BCC146F00EFE812 /* AcrylStand.usda in Resources */ = {isa = PBXBuildFile; fileRef = EA8197DC2BCC146F00EFE812 /* AcrylStand.usda */; };
 		EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8197DE2BCC269100EFE812 /* Experimental.swift */; };
 		EA8197E12BCC274200EFE812 /* banjun-arisu-v2.psd.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */; };
@@ -28,6 +29,7 @@
 		EA2197A12BAC5210001F86DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA2197A72BAC5675001F86DB /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowSceneReader.swift; sourceTree = "<group>"; };
+		EA5FABAE2C4017130020721F /* RuntimeOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeOverride.swift; sourceTree = "<group>"; };
 		EA8197DC2BCC146F00EFE812 /* AcrylStand.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AcrylStand.usda; sourceTree = "<group>"; };
 		EA8197DE2BCC269100EFE812 /* Experimental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experimental.swift; sourceTree = "<group>"; };
 		EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banjun-arisu-v2.psd.png"; sourceTree = "<group>"; };
@@ -39,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA5FABAD2C40170A0020721F /* SwiftHotReload in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +68,7 @@
 		EA2197932BAC520E001F86DB /* AcrylStand */ = {
 			isa = PBXGroup;
 			children = (
+				EA5FABAE2C4017130020721F /* RuntimeOverride.swift */,
 				EA2197982BAC520E001F86DB /* AcrylStandApp.swift */,
 				EA21979A2BAC520E001F86DB /* ContentView.swift */,
 				EA2197A72BAC5675001F86DB /* ImageView.swift */,
@@ -112,6 +116,7 @@
 			);
 			name = AcrylStand;
 			packageProductDependencies = (
+				EA5FABAC2C40170A0020721F /* SwiftHotReload */,
 			);
 			productName = AcrylStand;
 			productReference = EA2197912BAC520E001F86DB /* AcrylStand.app */;
@@ -142,6 +147,7 @@
 			);
 			mainGroup = EA2197882BAC520E001F86DB;
 			packageReferences = (
+				EA5FABAB2C40170A0020721F /* XCRemoteSwiftPackageReference "SwiftHotReload" */,
 			);
 			productRefGroup = EA2197922BAC520E001F86DB /* Products */;
 			projectDirPath = "";
@@ -319,12 +325,14 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -enable-implicit-dynamic -enable-private-imports";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.exp.AcrylStand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 1.2;
 			};
 			name = Debug;
 		};
@@ -345,12 +353,14 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.exp.AcrylStand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 1.2;
 			};
 			name = Release;
 		};
@@ -376,6 +386,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EA5FABAB2C40170A0020721F /* XCRemoteSwiftPackageReference "SwiftHotReload" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/banjun/SwiftHotReload";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EA5FABAC2C40170A0020721F /* SwiftHotReload */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA5FABAB2C40170A0020721F /* XCRemoteSwiftPackageReference "SwiftHotReload" */;
+			productName = SwiftHotReload;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA2197892BAC520E001F86DB /* Project object */;
 }

@@ -6,6 +6,9 @@ import RealityKit
 import RealityFoundation
 
 struct ImageView: View {
+#if DEBUG
+    @ObservedObject private var reloader = AcrylStandApp.reloader
+#endif
     var image: UIImage
     @State private var path: Result<UIBezierPath, Error>?
     @State private var ciImage: CIImage?
@@ -28,61 +31,7 @@ struct ImageView: View {
 ////                    .stroke(.green, lineWidth: 20)
 //                    .fill(.white.opacity(0.2))
 //                }
-                RealityView { content in
-                    let scene = try! await Entity(named: "AcrylStand")
-                    let acrylEntity = scene.findEntity(named: "Image")! as! ModelEntity
-
-                    let points = (0..<256)
-                        .map { CGFloat($0) / 255 }
-                        .map { path.mx_point(atFractionOfLength: $0) } // x,y in 0...1
-                        .reversed()
-                    let vertices: [SIMD3<Float>] = points
-                        .map { SIMD3<Float>(Float($0.x) - 0.5, 1 - Float($0.y) - 0.5, -7) } // x,y in -0.5...+0.5 (centered)
-                    let scale: Float = 0.1
-                    var meshDescriptor = MeshDescriptor()
-                    meshDescriptor.positions = .init(
-                        vertices.map { $0 * scale }
-                        +
-                        vertices.reversed().map { .init($0.x, $0.y, -8) * scale })
-                    meshDescriptor.primitives = .polygons(
-                        [255, 255],
-                        Array(0..<512))
-                    meshDescriptor.textureCoordinates = .init(
-                        points.map { SIMD2<Float>(
-                            min(1, max(0, Float($0.x))),
-                            1 - min(1, max(0, Float($0.y))))
-                        }
-                        +
-                        points.reversed().map { SIMD2<Float>(
-                            min(1, max(0, Float($0.x))),
-                            1 - min(1, max(0, Float($0.y))))
-                        })
-
-                    var sideMeshDescriptor = MeshDescriptor()
-                    sideMeshDescriptor.positions = meshDescriptor.positions
-                    let sideQuads: [UInt32] = (UInt32(0)..<UInt32(255)).flatMap { i in
-                        [UInt32(511) - i, UInt32(511) - (i + 1),
-                        i + 1, i]
-                    }
-                    sideMeshDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuads)
-
-                    @MainActor
-                    func hoge() async -> ModelEntity {
-                        var m = PhysicallyBasedMaterial()
-                        let texture = try! await PhysicallyBasedMaterial.Texture(TextureResource(named: "banjun-arisu-v2.psd"))
-                        m.baseColor = .init(texture: texture)
-                        m.blending = .transparent(opacity: 1.0)
-                        // just works but index of refraction is not usable as UsdPreviewSurface
-
-                        let pathEntity = try! await ModelEntity(mesh: .init(from: [meshDescriptor]), materials: [m,m])
-                        return pathEntity
-                    }
-//                    content.add(await hoge())
-
-                    acrylEntity.model!.mesh = try! await .init(from: [meshDescriptor, sideMeshDescriptor])
-//                    acrylEntity.model!.materials = [UnlitMaterial(color: .green)]
-                    content.add(acrylEntity)
-                }
+                realityView(path).id(reloader.dateReloaded)
             case .failure(let error):
                 Text(String(describing: error))
             }
@@ -92,6 +41,8 @@ struct ImageView: View {
             blend.backgroundImage = CIImage(color: .black).cropped(to: .init(origin: .zero, size: image.size))
             blend.inputImage = CIImage(color: .white).cropped(to: .init(origin: .zero, size: image.size))
             blend.maskImage = CIImage(image: image)
+            let blend2 = CIFilter.sourceOverCompositing()
+            let legSize = CGSize(width: image.size.width * 0.2, height: image.size.height * 0.2)
             let morphMax = CIFilter.morphologyMaximum()
             morphMax.radius = 50
             let morphMin = CIFilter.morphologyMinimum()
@@ -101,7 +52,9 @@ struct ImageView: View {
             let morphMin2 = CIFilter.morphologyMinimum()
             morphMin2.radius = 1 // > 0 value helps edge process
 
-            morphMax.inputImage = blend.outputImage
+            blend2.backgroundImage = blend.outputImage
+            blend2.inputImage = CIImage(color: .white).cropped(to: .init(x: (image.size.width - legSize.width) / 2, y: 0, width: legSize.width, height: legSize.height))
+            morphMax.inputImage = blend2.outputImage
             morphMin.inputImage = morphMax.outputImage?.cropped(to: .init(origin: .zero, size: image.size))
             morphMax2.inputImage = morphMin.outputImage?.cropped(to: .init(origin: .zero, size: image.size))
             morphMin2.inputImage = morphMax2.outputImage?.cropped(to: .init(origin: .zero, size: image.size))
@@ -137,6 +90,80 @@ struct ImageView: View {
                 NSLog("%@", "\(String(describing: error))")
                 path = .failure(error)
             }
+        }
+    }
+
+    private func realityView(_ path: UIBezierPath) -> some View {
+        RealityView { content in
+            let scene = try! await Entity(named: "AcrylStand")
+            let acrylEntity = scene.findEntity(named: "Image")! as! ModelEntity
+
+            let points = (0..<256)
+                .map { CGFloat($0) / 255 }
+                .map { path.mx_point(atFractionOfLength: $0) } // x,y in 0...1
+                .reversed()
+            let vertices: [SIMD3<Float>] = points
+                .map { SIMD3<Float>(Float($0.x) - 0.5, 1 - Float($0.y) - 0.5, -7) } // x,y in -0.5...+0.5 (centered)
+            let scale: Float = 0.1
+            var meshDescriptor = MeshDescriptor()
+            meshDescriptor.positions = .init(
+                vertices.map { $0 * scale }
+                +
+                vertices.reversed().map { .init($0.x, $0.y, -8) * scale })
+            meshDescriptor.primitives = .polygons(
+                [255, 255],
+                Array(0..<512))
+            meshDescriptor.textureCoordinates = .init(
+                points.map { SIMD2<Float>(
+                    min(1, max(0, Float($0.x))),
+                    1 - min(1, max(0, Float($0.y))))
+                }
+                +
+                points.reversed().map { SIMD2<Float>(
+                    min(1, max(0, Float($0.x))),
+                    1 - min(1, max(0, Float($0.y))))
+                })
+
+            var sideMeshDescriptor = MeshDescriptor()
+            sideMeshDescriptor.positions = meshDescriptor.positions
+            let sideQuads: [UInt32] = (UInt32(0)..<UInt32(255)).flatMap { i in
+                [UInt32(511) - i, UInt32(511) - (i + 1),
+                 i + 1, i]
+            }
+            sideMeshDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuads)
+
+
+            let sortGroup = ModelSortGroup(depthPass: nil)
+            acrylEntity.model!.mesh = try! await .init(from: [meshDescriptor])
+            //                    acrylEntity.model!.materials = [UnlitMaterial(color: .green)]
+            acrylEntity.components.set(ModelSortGroupComponent(group: sortGroup, order: 3))
+            content.add(acrylEntity)
+
+            var acrylPBM = PhysicallyBasedMaterial()
+            acrylPBM.blending = .transparent(opacity: 0.0)
+            acrylPBM.baseColor = .init(tint: .clear)
+            acrylPBM.metallic = 0.0
+            acrylPBM.roughness = 0.05
+            acrylPBM.specular = 1.4
+
+            let outer = acrylEntity.clone(recursive: true)
+            outer.model!.mesh = try! await .init(from: [sideMeshDescriptor])
+            outer.components.set(ModelSortGroupComponent(group: sortGroup, order: 1))
+            //                     outer.model!.materials = [UnlitMaterial(color: .green)]
+            outer.model!.materials = [acrylPBM]
+            content.add(outer)
+
+            // inverted for double sided materials
+            let sideQuadsInverted: [UInt32] = (UInt32(0)..<UInt32(255)).flatMap { i in
+                [i, i + 1,
+                 UInt32(511) - (i + 1), UInt32(511) - i]
+            }
+            sideMeshDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuadsInverted)
+            let inner = acrylEntity.clone(recursive: true)
+            inner.model!.mesh = try! await .init(from: [sideMeshDescriptor])
+            inner.components.set(ModelSortGroupComponent(group: sortGroup, order: 2))
+            inner.model!.materials = [acrylPBM]
+            content.add(inner)
         }
     }
 }

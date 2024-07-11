@@ -1,7 +1,17 @@
 import SwiftUI
 
+#if DEBUG
+import SwiftHotReload
+extension AcrylStandApp {
+    static let reloader = StandaloneReloader(monitoredSwiftFile: URL(fileURLWithPath: #filePath).deletingLastPathComponent().appendingPathComponent("RuntimeOverride.swift"))
+}
+#endif
+
 @main
 struct AcrylStandApp: App {
+#if DEBUG
+    @ObservedObject private var reloader = Self.reloader
+#endif
     @Environment(\.openWindow) private var openWindow
 
     var body: some Scene {
