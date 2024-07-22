@@ -17,6 +17,7 @@
 		EA8197DD2BCC146F00EFE812 /* AcrylStand.usda in Resources */ = {isa = PBXBuildFile; fileRef = EA8197DC2BCC146F00EFE812 /* AcrylStand.usda */; };
 		EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8197DE2BCC269100EFE812 /* Experimental.swift */; };
 		EA8197E12BCC274200EFE812 /* banjun-arisu-v2.psd.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */; };
+		EAA891332C4E91DB007F9BBD /* gakumas-arisu.heic in Resources */ = {isa = PBXBuildFile; fileRef = EAA891322C4E91DB007F9BBD /* gakumas-arisu.heic */; };
 		EAEE708B2C16666200BD8E63 /* UIBezierPath+Superpowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEE708A2C16666200BD8E63 /* UIBezierPath+Superpowers.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		EA8197DC2BCC146F00EFE812 /* AcrylStand.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AcrylStand.usda; sourceTree = "<group>"; };
 		EA8197DE2BCC269100EFE812 /* Experimental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experimental.swift; sourceTree = "<group>"; };
 		EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banjun-arisu-v2.psd.png"; sourceTree = "<group>"; };
+		EAA891322C4E91DB007F9BBD /* gakumas-arisu.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gakumas-arisu.heic"; sourceTree = "<group>"; };
 		EAEE708A2C16666200BD8E63 /* UIBezierPath+Superpowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Superpowers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +80,7 @@
 				EA2197A12BAC5210001F86DB /* Info.plist */,
 				EA8197DC2BCC146F00EFE812 /* AcrylStand.usda */,
 				EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */,
+				EAA891322C4E91DB007F9BBD /* gakumas-arisu.heic */,
 				EA21979E2BAC5210001F86DB /* Preview Content */,
 				EAEE708A2C16666200BD8E63 /* UIBezierPath+Superpowers.swift */,
 			);
@@ -163,6 +166,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAA891332C4E91DB007F9BBD /* gakumas-arisu.heic in Resources */,
 				EA2197A02BAC5210001F86DB /* Preview Assets.xcassets in Resources */,
 				EA8197DD2BCC146F00EFE812 /* AcrylStand.usda in Resources */,
 				EA21979D2BAC5210001F86DB /* Assets.xcassets in Resources */,

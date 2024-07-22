@@ -29,6 +29,7 @@ struct AcrylStandApp: App {
                 openWindow(id: "Experimental")
 //                openWindow(id: "Image", value: UIImage(named: "banjun-arisu-v2.psd")!.pngData()!)
                 openWindow(id: "Experimental2", value: UIImage(named: "banjun-arisu-v2.psd")!.pngData()!)
+                openWindow(id: "Experimental2", value: UIImage(named: "gakumas-arisu.heic")!.pngData()!)
             }
             .padding()
         }

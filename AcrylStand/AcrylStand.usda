@@ -48,6 +48,15 @@ def Xform "Root"
 
         def Material "Image"
         {
+            asset inputs:image = @banjun-arisu-v2.psd.png@ (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-808.06793, 42.872944)
+                        float2 sizeInSubgraph = (115.5, 53)
+                        int stackingOrderInSubgraph = 852
+                    }
+                }
+            )
             prepend token outputs:mtlx:surface.connect = </Root/Image/Image/PreviewSurface.outputs:out>
             token outputs:realitykit:vertex.connect = None
             token outputs:surface.connect = </Root/Image/Image/DefaultSurfaceShader.outputs:surface>
@@ -94,13 +103,14 @@ def Xform "Root"
                 asset outputs:out
                 float2 ui:nodegraph:node:pos = (-826.2787, 181.20984)
                 float2 ui:nodegraph:node:size = (142.5, 53)
-                int ui:nodegraph:node:stackingOrder = 480
+                int ui:nodegraph:node:stackingOrder = 851
             }
 
             def Shader "UsdUVTexture"
             {
                 uniform token info:id = "ND_UsdUVTexture"
-                asset inputs:file.connect = </Root/Image/Image/Constant.outputs:out>
+                color4f inputs:fallback
+                asset inputs:file.connect = </Root/Image/Image.inputs:image>
                 color4f inputs:scale
                 float2 inputs:st
                 string inputs:wrapS
@@ -164,7 +174,7 @@ def Xform "Root"
                 float outputs:out
                 float2 ui:nodegraph:node:pos = (73.862206, 337.00803)
                 float2 ui:nodegraph:node:size = (109, 163)
-                int ui:nodegraph:node:stackingOrder = 828
+                int ui:nodegraph:node:stackingOrder = 852
                 string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in1", "inputs:value2"]
             }
 
@@ -241,7 +251,7 @@ def Xform "Root"
                 asset inputs:file (
                     colorSpace = "srgb_texture"
                 )
-                asset inputs:file.connect = </Root/Image/Image/Constant.outputs:out>
+                asset inputs:file.connect = </Root/Image/Image.inputs:image>
                 color4f inputs:scale
                 float2 inputs:st = (-1, 1)
                 float2 inputs:st.connect = </Root/Image/Image/Place2D.outputs:out>
@@ -389,7 +399,7 @@ def Xform "Root"
                 uniform token info:id = "ND_UsdUVTexture"
                 color4f inputs:bias
                 color4f inputs:fallback
-                asset inputs:file.connect = </Root/Image/Image/Constant.outputs:out>
+                asset inputs:file.connect = </Root/Image/Image.inputs:image>
                 color4f inputs:scale
                 float2 inputs:st.connect = </Root/Image/Image/Place2D_1.outputs:out>
                 string inputs:wrapS = "periodic"

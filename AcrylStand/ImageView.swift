@@ -4,6 +4,7 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import RealityKit
 import RealityFoundation
+import CryptoKit
 
 struct ImageView: View {
 #if DEBUG
@@ -37,12 +38,13 @@ struct ImageView: View {
             }
         }
         .onAppear {
+            let canvasSize = CGSize(width: max(image.size.width, image.size.height), height: max(image.size.width, image.size.height))
             let blend = CIFilter.blendWithAlphaMask()
-            blend.backgroundImage = CIImage(color: .black).cropped(to: .init(origin: .zero, size: image.size))
-            blend.inputImage = CIImage(color: .white).cropped(to: .init(origin: .zero, size: image.size))
-            blend.maskImage = CIImage(image: image)
+            blend.backgroundImage = CIImage(color: .black).cropped(to: .init(origin: .zero, size: canvasSize))
+            blend.inputImage = CIImage(color: .white).cropped(to: .init(origin: .zero, size: canvasSize))
+            blend.maskImage = CIImage(image: image)?.transformed(by: .init(translationX: (canvasSize.width - image.size.width) / 2, y: (canvasSize.height - image.size.height) / 2))
             let blend2 = CIFilter.sourceOverCompositing()
-            let legSize = CGSize(width: image.size.width * 0.2, height: image.size.height * 0.2)
+            let legSize = CGSize(width: canvasSize.width * 0.2, height: canvasSize.height * 0.2)
             let morphMax = CIFilter.morphologyMaximum()
             morphMax.radius = 50
             let morphMin = CIFilter.morphologyMinimum()
@@ -53,12 +55,12 @@ struct ImageView: View {
             morphMin2.radius = 1 // > 0 value helps edge process
 
             blend2.backgroundImage = blend.outputImage
-            blend2.inputImage = CIImage(color: .white).cropped(to: .init(x: (image.size.width - legSize.width) / 2, y: 0, width: legSize.width, height: legSize.height))
+            blend2.inputImage = CIImage(color: .white).cropped(to: .init(x: (canvasSize.width - legSize.width) / 2, y: 0, width: legSize.width, height: legSize.height))
             morphMax.inputImage = blend2.outputImage
-            morphMin.inputImage = morphMax.outputImage?.cropped(to: .init(origin: .zero, size: image.size))
-            morphMax2.inputImage = morphMin.outputImage?.cropped(to: .init(origin: .zero, size: image.size))
-            morphMin2.inputImage = morphMax2.outputImage?.cropped(to: .init(origin: .zero, size: image.size))
-            guard let image = morphMin2.outputImage?.cropped(to: .init(origin: .zero, size: image.size)) else { return }
+            morphMin.inputImage = morphMax.outputImage?.cropped(to: .init(origin: .zero, size: canvasSize))
+            morphMax2.inputImage = morphMin.outputImage?.cropped(to: .init(origin: .zero, size: canvasSize))
+            morphMin2.inputImage = morphMax2.outputImage?.cropped(to: .init(origin: .zero, size: canvasSize))
+            guard let image = morphMin2.outputImage?.cropped(to: .init(origin: .zero, size: canvasSize)) else { return }
 //            let uiImage = UIImage(ciImage: image)
 //            NSLog("%@", "output = \(uiImage)")
 
@@ -98,6 +100,11 @@ struct ImageView: View {
             let scene = try! await Entity(named: "AcrylStand")
             let acrylEntity = scene.findEntity(named: "Image")! as! ModelEntity
 
+            let randomImageName = SHA256.hash(data: image.pngData()!).map {String(format: "%02x", $0)}.joined()
+            let tmpImageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(randomImageName).appendingPathExtension("png")
+            try! image.pngData()!.write(to: tmpImageURL)
+            await setIdolImage(of: acrylEntity, image: try! TextureResource(contentsOf: tmpImageURL))
+
             let points = (0..<256)
                 .map { CGFloat($0) / 255 }
                 .map { path.mx_point(atFractionOfLength: $0) } // x,y in 0...1
@@ -113,15 +120,17 @@ struct ImageView: View {
             meshDescriptor.primitives = .polygons(
                 [255, 255],
                 Array(0..<512))
+            let textureWidthScale: Float = Float(image.size.width / max(image.size.width, image.size.height))
+            let textureHeightScale: Float = Float(image.size.height / max(image.size.width, image.size.height))
             meshDescriptor.textureCoordinates = .init(
                 points.map { SIMD2<Float>(
-                    min(1, max(0, Float($0.x))),
-                    1 - min(1, max(0, Float($0.y))))
+                    min(1, max(0, 0.5 + (Float($0.x) - 0.5) / textureWidthScale)),
+                    1 - min(1, max(0, 0.5 + (Float($0.y) - 0.5) / textureHeightScale)))
                 }
                 +
                 points.reversed().map { SIMD2<Float>(
-                    min(1, max(0, Float($0.x))),
-                    1 - min(1, max(0, Float($0.y))))
+                    min(1, max(0, 0.5 + (Float($0.x) - 0.5) / textureWidthScale)),
+                    1 - min(1, max(0, 0.5 + (Float($0.y) - 0.5) / textureHeightScale)))
                 })
 
             var sideMeshDescriptor = MeshDescriptor()
@@ -165,5 +174,16 @@ struct ImageView: View {
             inner.model!.materials = [acrylPBM]
             content.add(inner)
         }
+    }
+
+    // custom shaders must be set in RCP file
+    private func setShaderGraphMaterial(of modelEntity: ModelEntity, name: String, value: MaterialParameters.Value) {
+        var material = modelEntity.model!.materials[0] as! ShaderGraphMaterial
+        try! material.setParameter(name: name, value: value)
+        modelEntity.model!.materials[0] = material
+    }
+
+    public func setIdolImage(of idolImageEntity: ModelEntity, image: TextureResource) {
+        setShaderGraphMaterial(of: idolImageEntity, name: "image", value: .textureResource(image))
     }
 }
