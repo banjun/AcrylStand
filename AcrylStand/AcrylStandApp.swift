@@ -7,6 +7,8 @@ extension AcrylStandApp {
 }
 #endif
 
+import PhotosUI
+
 @main
 struct AcrylStandApp: App {
 #if DEBUG
@@ -22,19 +24,9 @@ struct AcrylStandApp: App {
                 openWindow(id: "Image", value: data)
                 openWindow(id: "FixedImage", value: data)
             })
-
-            Spacer().frame(height: 40)
-
-            Button("Open Experimental AcrylStand") {
-                openWindow(id: "Experimental")
-//                openWindow(id: "Image", value: UIImage(named: "banjun-arisu-v2.psd")!.pngData()!)
-                openWindow(id: "Experimental2", value: UIImage(named: "banjun-arisu-v2.psd")!.pngData()!)
-                openWindow(id: "Experimental2", value: UIImage(named: "gakumas-arisu.heic")!.pngData()!)
-            }
-            .padding()
         }
         .defaultSize(width: 300, height: 300)
-        .windowResizability(.contentMinSize)
+        .windowResizability(.contentSize)
 
         // dynamic scale window (placing far position let it bigger physically)
         WindowGroup(id: "Image", for: Data.self) { $value in
@@ -72,6 +64,7 @@ struct AcrylStandApp: App {
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
         .windowResizability(.contentSize)
+        .volumeWorldAlignmentGravityAligned()
 
         WindowGroup(id: "Experimental") {
             ZStack {
@@ -92,6 +85,7 @@ struct AcrylStandApp: App {
 
                 ImageView(image: UIImage(data: image!)!)
             }
+            .volumeBaseplateDisabled()
         }
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
@@ -107,5 +101,24 @@ struct AcrylStandApp: App {
         let height = min(size.height, 1080)
         let width = size.width * height / size.height
         windowScene.requestGeometryUpdate(.Vision(size: .init(width: width, height: height), resizingRestrictions: .uniform))
+    }
+}
+
+extension Scene {
+    func volumeWorldAlignmentGravityAligned() -> some Scene {
+        if #available(visionOS 2, *) {
+            return volumeWorldAlignment(.gravityAligned)
+        } else {
+            return self
+        }
+    }
+}
+extension View {
+    func volumeBaseplateDisabled() -> some View {
+        if #available(visionOS 2, *) {
+            return volumeBaseplateVisibility(.hidden)
+        } else {
+            return self
+        }
     }
 }

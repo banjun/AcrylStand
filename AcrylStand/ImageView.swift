@@ -37,6 +37,7 @@ struct ImageView: View {
                 Text(String(describing: error))
             }
         }
+        .persistentSystemOverlays(.hidden)
         .onAppear {
             let canvasSize = CGSize(width: max(image.size.width, image.size.height), height: max(image.size.width, image.size.height))
             let blend = CIFilter.blendWithAlphaMask()
@@ -174,6 +175,8 @@ struct ImageView: View {
             inner.model!.materials = [acrylPBM]
             content.add(inner)
         }
+        .scaleEffect(5)
+        .frame(width: 1000, height: 1000)
     }
 
     // custom shaders must be set in RCP file
