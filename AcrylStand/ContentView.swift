@@ -43,7 +43,9 @@ struct ContentView: View {
                             Image(ciImage: image).resizable().aspectRatio(contentMode: .fit)
                         } else { ProgressView() }
                         Image(systemName: "arrow.right").padding()
-                        Text("TODO: leg")
+                        if let image = imageModel.leggedImage {
+                            Image(ciImage: image).resizable().aspectRatio(contentMode: .fit)
+                        } else { ProgressView() }
                         Image(systemName: "arrow.right").padding()
                         Text("TODO: preview")
                     }

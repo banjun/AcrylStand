@@ -38,10 +38,10 @@ struct ImageView: View {
         }
         .persistentSystemOverlays(.hidden)
         .onAppear {
-            if imageModel.maskedImage == nil {
+            if imageModel.leggedImage == nil {
                 imageModel.generateMaskImage()
             }
-            guard let image = imageModel.maskedImage else { return }
+            guard let image = imageModel.leggedImage else { return }
 
             let request = VNDetectContoursRequest { req, error in
                 guard let observation = req.results?.first as? VNContoursObservation else { return }

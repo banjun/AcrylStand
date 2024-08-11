@@ -54,7 +54,7 @@ struct AcrylStandApp: App {
             ZStack {
                 // make the image front aligned within lower depth limit
                 Spacer().frame(depth: minVolumetricLength)
-                if let image = imageModel.maskedImage {
+                if let image = imageModel.leggedImage {
                     // TODO: 1. calculate a good default physical size
                     // TODO: 2. ui for changing size
                     let aspect = min(1, min(maxVolumetricLength / image.extent.size.width, maxVolumetricLength / image.extent.size.height))
