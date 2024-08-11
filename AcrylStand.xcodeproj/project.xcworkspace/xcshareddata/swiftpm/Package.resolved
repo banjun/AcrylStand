@@ -1,0 +1,15 @@
+{
+  "originHash" : "019a73b330b51de1280ebfb18d0e982327c6b774a8524371c9fd751018246386",
+  "pins" : [
+    {
+      "identity" : "swifthotreload",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/banjun/SwiftHotReload",
+      "state" : {
+        "revision" : "e38e757035a68ce811fad9e6fb1283ffaf5d8623",
+        "version" : "0.1.0"
+      }
+    }
+  ],
+  "version" : 3
+}
