@@ -46,17 +46,22 @@ struct AcrylStandApp: App {
         let maxVolumetricLength: CGFloat = 2700 // upper limit seems to be around 2700pt
         // fixed scale window (placing far position let it smaller but still same size physically)
         WindowGroup(id: "FixedImage", for: Data.self) { $value in
+            let imageModel: ImageModel = {
+                let m = ImageModel(imageData: value)
+                m.generateMaskImage()
+                return m
+            }()
             ZStack {
                 // make the image front aligned within lower depth limit
                 Spacer().frame(depth: minVolumetricLength)
-                if let value, let image = UIImage(data: value) {
+                if let image = imageModel.maskedImage {
                     // TODO: 1. calculate a good default physical size
                     // TODO: 2. ui for changing size
-                    let aspect = min(1, min(maxVolumetricLength / image.size.width, maxVolumetricLength / image.size.height))
-                    let width = image.size.width * aspect
-                    let height = image.size.height * aspect
+                    let aspect = min(1, min(maxVolumetricLength / image.extent.size.width, maxVolumetricLength / image.extent.size.height))
+                    let width = image.extent.size.width * aspect
+                    let height = image.extent.size.height * aspect
                     ImageView()
-                        .environment(ImageModel(imageData: value))
+                        .environment(imageModel)
                         .frame(minWidth: width, maxWidth: width, minHeight: height, maxHeight: height)
                 } else {
                     Text("Error in decoding image")

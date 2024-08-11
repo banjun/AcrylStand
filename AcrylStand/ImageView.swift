@@ -38,7 +38,9 @@ struct ImageView: View {
         }
         .persistentSystemOverlays(.hidden)
         .onAppear {
-            imageModel.generateMaskImage()
+            if imageModel.maskedImage == nil {
+                imageModel.generateMaskImage()
+            }
             guard let image = imageModel.maskedImage else { return }
 
             let request = VNDetectContoursRequest { req, error in
@@ -153,7 +155,7 @@ struct ImageView: View {
             inner.model!.materials = [acrylPBM]
             content.add(inner)
         }
-        .scaleEffect(5)
+        .scaleEffect(3)
         .frame(width: 1000, height: 1000)
     }
 
