@@ -3,27 +3,6 @@ import UniformTypeIdentifiers
 import PhotosUI
 import Observation
 
-@Observable final class ImageModel {
-    var isTargeted: Bool = false
-    @ObservationIgnored var selectedPickerItems: [PhotosPickerItem] = [] {
-        didSet { Task { await moveSelectedPickerItemsIntoImages() }}
-    }
-    var images: [Data] = [
-        try! Data(contentsOf: Bundle.main.url(forResource: "banjun-arisu-v2.psd", withExtension: "png")!),
-        try! Data(contentsOf: Bundle.main.url(forResource: "gakumas-arisu", withExtension: "heic")!),
-    ]
-    var selectedImage: Data?
-
-    func moveSelectedPickerItemsIntoImages() async {
-        let items = selectedPickerItems.reversed()
-        selectedPickerItems.removeAll()
-        for item in items {
-            guard let data = try? await item.loadTransferable(type: Data.self) else { return }
-            images.insert(data, at: 0)
-        }
-    }
-}
-
 struct ContentView: View {
     @Environment(\.openWindow) private var openWindow
     var onDropImage: (UIImage) -> Void = {_ in}
@@ -36,6 +15,7 @@ struct ContentView: View {
                 ForEach(imageModel.images, id: \.self) { data in
                     Button {
                         imageModel.selectedImage = data
+                        imageModel.generateMaskImage()
                     } label: {
                         Image(uiImage: UIImage(data: data) ?? UIImage()).resizable().aspectRatio(contentMode: .fit)
                             .frame(width: 128, height: 128, alignment: .center)
@@ -59,7 +39,9 @@ struct ContentView: View {
                     HStack(alignment: .top) {
                         Image(uiImage: image).resizable().aspectRatio(contentMode: .fit)
                         Image(systemName: "arrow.right").padding()
-                        Text("TODO: mask")
+                        if let image = imageModel.maskedImage {
+                            Image(ciImage: image).resizable().aspectRatio(contentMode: .fit)
+                        } else { ProgressView() }
                         Image(systemName: "arrow.right").padding()
                         Text("TODO: leg")
                         Image(systemName: "arrow.right").padding()

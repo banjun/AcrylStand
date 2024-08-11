@@ -30,11 +30,12 @@ struct AcrylStandApp: App {
 
         // dynamic scale window (placing far position let it bigger physically)
         WindowGroup(id: "Image", for: Data.self) { $value in
-            if let value, let image = UIImage(data: value) {
-                WindowSceneReader { windowScene, window in
-                    ImageView(image: image)
-                        .onChange(of: window) { updateWindowAspectRatio(windowScene: windowScene, size: image.size) }
-                }
+            if let value {
+//                WindowSceneReader { windowScene, window in
+                ImageView()
+                    .environment(ImageModel(imageData: value))
+//                        .onChange(of: window) { updateWindowAspectRatio(windowScene: windowScene, size: image.size) }
+//                }
             } else {
                 Text("Error in decoding image")
             }
@@ -54,7 +55,8 @@ struct AcrylStandApp: App {
                     let aspect = min(1, min(maxVolumetricLength / image.size.width, maxVolumetricLength / image.size.height))
                     let width = image.size.width * aspect
                     let height = image.size.height * aspect
-                    ImageView(image: image)
+                    ImageView()
+                        .environment(ImageModel(imageData: value))
                         .frame(minWidth: width, maxWidth: width, minHeight: height, maxHeight: height)
                 } else {
                     Text("Error in decoding image")
@@ -73,19 +75,6 @@ struct AcrylStandApp: App {
 
                 AcrylStand()
             }
-        }
-        .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
-        .windowStyle(.volumetric)
-        .windowResizability(.contentSize)
-
-        WindowGroup(id: "Experimental2", for: Data.self) { $image in
-            ZStack {
-                // make the image front aligned within lower depth limit
-                Spacer().frame(depth: minVolumetricLength)
-
-                ImageView(image: UIImage(data: image!)!)
-            }
-            .volumeBaseplateDisabled()
         }
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)

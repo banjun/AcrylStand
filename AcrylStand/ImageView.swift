@@ -10,9 +10,8 @@ struct ImageView: View {
 #if DEBUG
     @ObservedObject private var reloader = AcrylStandApp.reloader
 #endif
-    var image: UIImage
+    @Environment(ImageModel.self) private var imageModel
     @State private var path: Result<UIBezierPath, Error>?
-    @State private var ciImage: CIImage?
 
     var body: some View {
         ZStack {
@@ -39,31 +38,8 @@ struct ImageView: View {
         }
         .persistentSystemOverlays(.hidden)
         .onAppear {
-            let canvasSize = CGSize(width: max(image.size.width, image.size.height), height: max(image.size.width, image.size.height))
-            let blend = CIFilter.blendWithAlphaMask()
-            blend.backgroundImage = CIImage(color: .black).cropped(to: .init(origin: .zero, size: canvasSize))
-            blend.inputImage = CIImage(color: .white).cropped(to: .init(origin: .zero, size: canvasSize))
-            blend.maskImage = CIImage(image: image)?.transformed(by: .init(translationX: (canvasSize.width - image.size.width) / 2, y: (canvasSize.height - image.size.height) / 2))
-            let blend2 = CIFilter.sourceOverCompositing()
-            let legSize = CGSize(width: canvasSize.width * 0.2, height: canvasSize.height * 0.2)
-            let morphMax = CIFilter.morphologyMaximum()
-            morphMax.radius = 50
-            let morphMin = CIFilter.morphologyMinimum()
-            morphMin.radius = 10
-            let morphMax2 = CIFilter.morphologyMaximum()
-            morphMax2.radius = 10
-            let morphMin2 = CIFilter.morphologyMinimum()
-            morphMin2.radius = 1 // > 0 value helps edge process
-
-            blend2.backgroundImage = blend.outputImage
-            blend2.inputImage = CIImage(color: .white).cropped(to: .init(x: (canvasSize.width - legSize.width) / 2, y: 0, width: legSize.width, height: legSize.height))
-            morphMax.inputImage = blend2.outputImage
-            morphMin.inputImage = morphMax.outputImage?.cropped(to: .init(origin: .zero, size: canvasSize))
-            morphMax2.inputImage = morphMin.outputImage?.cropped(to: .init(origin: .zero, size: canvasSize))
-            morphMin2.inputImage = morphMax2.outputImage?.cropped(to: .init(origin: .zero, size: canvasSize))
-            guard let image = morphMin2.outputImage?.cropped(to: .init(origin: .zero, size: canvasSize)) else { return }
-//            let uiImage = UIImage(ciImage: image)
-//            NSLog("%@", "output = \(uiImage)")
+            imageModel.generateMaskImage()
+            guard let image = imageModel.maskedImage else { return }
 
             let request = VNDetectContoursRequest { req, error in
                 guard let observation = req.results?.first as? VNContoursObservation else { return }
@@ -98,12 +74,13 @@ struct ImageView: View {
 
     private func realityView(_ path: UIBezierPath) -> some View {
         RealityView { content in
+            guard let imageData = imageModel.selectedImage else { return }
             let scene = try! await Entity(named: "AcrylStand")
             let acrylEntity = scene.findEntity(named: "Image")! as! ModelEntity
 
-            let randomImageName = SHA256.hash(data: image.pngData()!).map {String(format: "%02x", $0)}.joined()
+            let randomImageName = SHA256.hash(data: imageData).map {String(format: "%02x", $0)}.joined()
             let tmpImageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(randomImageName).appendingPathExtension("png")
-            try! image.pngData()!.write(to: tmpImageURL)
+            try! imageData.write(to: tmpImageURL)
             await setIdolImage(of: acrylEntity, image: try! TextureResource(contentsOf: tmpImageURL))
 
             let points = (0..<256)
@@ -121,6 +98,7 @@ struct ImageView: View {
             meshDescriptor.primitives = .polygons(
                 [255, 255],
                 Array(0..<512))
+            let image = UIImage(data: imageData)!
             let textureWidthScale: Float = Float(image.size.width / max(image.size.width, image.size.height))
             let textureHeightScale: Float = Float(image.size.height / max(image.size.width, image.size.height))
             meshDescriptor.textureCoordinates = .init(
