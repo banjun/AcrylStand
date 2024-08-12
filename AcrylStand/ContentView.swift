@@ -71,7 +71,7 @@ struct ContentView: View {
         }
 
         Button("Create Acrylic Stand") {
-            openWindow(value: imageModel.selectedImage!)
+            openWindow(id: "FixedImage", value: imageModel.selectedImage!)
         }
         .disabled(imageModel.selectedImage == nil)
         .padding()

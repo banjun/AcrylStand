@@ -3,7 +3,8 @@ import SwiftUI
 #if DEBUG
 import SwiftHotReload
 extension AcrylStandApp {
-    static let reloader = StandaloneReloader(monitoredSwiftFile: URL(fileURLWithPath: #filePath).deletingLastPathComponent().appendingPathComponent("RuntimeOverride.swift"))
+//    static let reloader = StandaloneReloader(monitoredSwiftFile: URL(fileURLWithPath: #filePath).deletingLastPathComponent().appendingPathComponent("RuntimeOverride.swift"))
+    static let reloader = ProxyReloader(.init(targetSwiftFile: URL(fileURLWithPath: #filePath).deletingLastPathComponent().appendingPathComponent("RuntimeOverride.swift")))
 }
 #endif
 
@@ -46,27 +47,8 @@ struct AcrylStandApp: App {
         let maxVolumetricLength: CGFloat = 2700 // upper limit seems to be around 2700pt
         // fixed scale window (placing far position let it smaller but still same size physically)
         WindowGroup(id: "FixedImage", for: Data.self) { $value in
-            let imageModel: ImageModel = {
-                let m = ImageModel(imageData: value)
-                m.generateMaskImage()
-                return m
-            }()
-            ZStack {
-                // make the image front aligned within lower depth limit
-                Spacer().frame(depth: minVolumetricLength)
-                if let image = imageModel.leggedImage {
-                    // TODO: 1. calculate a good default physical size
-                    // TODO: 2. ui for changing size
-                    let aspect = min(1, min(maxVolumetricLength / image.extent.size.width, maxVolumetricLength / image.extent.size.height))
-                    let width = image.extent.size.width * aspect
-                    let height = image.extent.size.height * aspect
-                    ImageView()
-                        .environment(imageModel)
-                        .frame(minWidth: width, maxWidth: width, minHeight: height, maxHeight: height)
-                } else {
-                    Text("Error in decoding image")
-                }
-            }
+            FixedSizeImage(imageModel: ImageModel(imageData: value), minVolumetricLength: minVolumetricLength, maxVolumetricLength: maxVolumetricLength)
+                .volumeBaseplateDisabled()
         }
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
@@ -95,6 +77,36 @@ struct AcrylStandApp: App {
         let height = min(size.height, 1080)
         let width = size.width * height / size.height
         windowScene.requestGeometryUpdate(.Vision(size: .init(width: width, height: height), resizingRestrictions: .uniform))
+    }
+}
+
+
+struct FixedSizeImage: View {
+    let imageModel: ImageModel
+    let minVolumetricLength: CGFloat
+    let maxVolumetricLength: CGFloat
+    @Environment(\.physicalMetrics) private var physicalMetrics
+    @State private var heightInCM: CGFloat = 30
+
+    var body: some View {
+        ZStack {
+            // make the image front aligned within lower depth limit
+            Spacer().frame(depth: minVolumetricLength)
+            if let image = imageModel.leggedImage {
+                // TODO: 1. calculate a good default physical size
+                // TODO: 2. ui for changing size
+                let aspect = image.extent.size.width / image.extent.size.height
+                let height = physicalMetrics.convert(heightInCM, from: .centimeters)
+                let width = height * aspect
+                ImageView()
+                    .environment(imageModel)
+                    .frame(minWidth: width, maxWidth: width, minHeight: height, maxHeight: height)
+            } else {
+                ProgressView().onAppear {
+                    imageModel.generateMaskImage()
+                }
+            }
+        }
     }
 }
 
