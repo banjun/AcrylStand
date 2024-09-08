@@ -27,7 +27,7 @@ final class AcrylEntity: Entity {
             vertices.reversed().map { SIMD3<Float>($0.x, $0.y, -Float(0.5)) * scale })
         meshDescriptor.primitives = .polygons(
             [255, 255],
-            Array(0..<512))
+            Array(0..<255) + Array(256..<511))
         let textureWidthScale: Float = Float(textureSize.width / max(textureSize.width, textureSize.height))
         let textureHeightScale: Float = Float(textureSize.height / max(textureSize.width, textureSize.height))
         meshDescriptor.textureCoordinates = MeshBuffers.TextureCoordinates(
@@ -52,15 +52,30 @@ final class AcrylEntity: Entity {
         try imageData.write(to: tmpImageURL)
         setIdolImage(of: acrylEntity, image: try! await TextureResource(contentsOf: tmpImageURL))
 
-        let meshDescriptor = Self.meshDescriptor(textureSize: UIImage(data: imageData)!.size, path: path)
+        let textureSize = UIImage(data: imageData)!.size
+        let textureWidthScale: Float = Float(textureSize.width / max(textureSize.width, textureSize.height))
+        let textureHeightScale: Float = Float(textureSize.height / max(textureSize.width, textureSize.height))
+        let meshDescriptor = Self.meshDescriptor(textureSize: textureSize, path: path)
+
+        // - MARK
+        try USDA(name: "main", meshDescriptor: meshDescriptor).write(to: URL(fileURLWithPath: "/Users/banjun/Downloads/usda-export.usda"))
+        // - MARK
 
         var sideMeshDescriptor = MeshDescriptor()
         sideMeshDescriptor.positions = meshDescriptor.positions
+        sideMeshDescriptor.textureCoordinates = .init(zip(meshDescriptor.textureCoordinates?.elements ?? [], meshDescriptor.positions).map {
+            SIMD2<Float>(1 - max(0, min(1, ($1.z + 0.05) * 10)),
+                         $0.y)
+        })
         let sideQuads: [UInt32] = (UInt32(0)..<UInt32(255)).flatMap { i in
             [UInt32(511) - i, UInt32(511) - (i + UInt32(1)),
              i + UInt32(1), i]
         }
         sideMeshDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuads)
+        // - MARK
+        try USDA(name: "side", meshDescriptor: sideMeshDescriptor).write(to: URL(fileURLWithPath: "/Users/banjun/Downloads/usda-export-side.usda"))
+        // - MARK
+
 
 
         let sortGroup = ModelSortGroup(depthPass: nil)
@@ -107,3 +122,5 @@ final class AcrylEntity: Entity {
         modelEntity.model!.materials[0] = material
     }
 }
+
+
