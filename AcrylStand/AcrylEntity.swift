@@ -58,7 +58,7 @@ final class AcrylEntity: Entity {
         let meshDescriptor = Self.meshDescriptor(textureSize: textureSize, path: path)
 
         // - MARK
-        try USDA(name: "main", meshDescriptor: meshDescriptor).write(to: URL(fileURLWithPath: "/Users/banjun/Downloads/usda-export.usda"))
+        // try USDA(name: "main", meshDescriptor: meshDescriptor).write(to: URL(fileURLWithPath: "/Users/banjun/Downloads/usda-export.usda"))
         // - MARK
 
         var sideMeshDescriptor = MeshDescriptor()
@@ -73,7 +73,7 @@ final class AcrylEntity: Entity {
         }
         sideMeshDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuads)
         // - MARK
-        try USDA(name: "side", meshDescriptor: sideMeshDescriptor).write(to: URL(fileURLWithPath: "/Users/banjun/Downloads/usda-export-side.usda"))
+        // try USDA(name: "side", meshDescriptor: sideMeshDescriptor).write(to: URL(fileURLWithPath: "/Users/banjun/Downloads/usda-export-side.usda"))
         // - MARK
 
 
