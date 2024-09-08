@@ -19,6 +19,7 @@
 		EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8197DE2BCC269100EFE812 /* Experimental.swift */; };
 		EA8197E12BCC274200EFE812 /* banjun-arisu-v2.psd.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */; };
 		EAA891332C4E91DB007F9BBD /* gakumas-arisu.heic in Resources */ = {isa = PBXBuildFile; fileRef = EAA891322C4E91DB007F9BBD /* gakumas-arisu.heic */; };
+		EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */; };
 		EAEE708B2C16666200BD8E63 /* UIBezierPath+Superpowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEE708A2C16666200BD8E63 /* UIBezierPath+Superpowers.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		EA8197DE2BCC269100EFE812 /* Experimental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experimental.swift; sourceTree = "<group>"; };
 		EA8197E02BCC274200EFE812 /* banjun-arisu-v2.psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banjun-arisu-v2.psd.png"; sourceTree = "<group>"; };
 		EAA891322C4E91DB007F9BBD /* gakumas-arisu.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gakumas-arisu.heic"; sourceTree = "<group>"; };
+		EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrylEntity.swift; sourceTree = "<group>"; };
 		EAEE708A2C16666200BD8E63 /* UIBezierPath+Superpowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Superpowers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +78,7 @@
 				EA2197982BAC520E001F86DB /* AcrylStandApp.swift */,
 				EA21979A2BAC520E001F86DB /* ContentView.swift */,
 				EA2197A72BAC5675001F86DB /* ImageView.swift */,
+				EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */,
 				EA7852EF2C688EDF00357790 /* ImageModel.swift */,
 				EA8197DE2BCC269100EFE812 /* Experimental.swift */,
 				EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */,
@@ -188,6 +191,7 @@
 				EA21979B2BAC520E001F86DB /* ContentView.swift in Sources */,
 				EA2197992BAC520E001F86DB /* AcrylStandApp.swift in Sources */,
 				EAEE708B2C16666200BD8E63 /* UIBezierPath+Superpowers.swift in Sources */,
+				EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */,
 				EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */,
 				EA2197AA2BAC5740001F86DB /* WindowSceneReader.swift in Sources */,
 				EA7852F02C688EDF00357790 /* ImageModel.swift in Sources */,
