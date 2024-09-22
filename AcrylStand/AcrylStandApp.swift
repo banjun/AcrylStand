@@ -48,7 +48,7 @@ struct AcrylStandApp: App {
         // fixed scale window (placing far position let it smaller but still same size physically)
         WindowGroup(id: "FixedImage", for: Data.self) { $value in
             FixedSizeImage(imageModel: ImageModel(imageData: value), minVolumetricLength: minVolumetricLength, maxVolumetricLength: maxVolumetricLength)
-                .volumeBaseplateDisabled()
+//                .volumeBaseplateDisabled()
         }
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
@@ -91,7 +91,7 @@ struct FixedSizeImage: View {
     var body: some View {
         ZStack {
             // make the image front aligned within lower depth limit
-            Spacer().frame(depth: minVolumetricLength)
+//            Spacer().frame(depth: minVolumetricLength)
             if let image = imageModel.leggedImage {
                 // TODO: 1. calculate a good default physical size
                 // TODO: 2. ui for changing size
@@ -101,6 +101,7 @@ struct FixedSizeImage: View {
                 ImageView()
                     .environment(imageModel)
                     .frame(minWidth: width, maxWidth: width, minHeight: height, maxHeight: height)
+                    .frame(minDepth: width, maxDepth: width)
             } else {
                 ProgressView().onAppear {
                     imageModel.generateMaskImage()

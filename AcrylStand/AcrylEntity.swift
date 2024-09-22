@@ -2,13 +2,14 @@ import RealityKit
 import Foundation
 import UIKit
 import CryptoKit
+import Acryl
 
 final class AcrylEntity: Entity {
     @available(*, unavailable) required init() { fatalError() }
 
     static let prototypeEntity: ModelEntity = {
-        let scene = try! Entity.load(named: "AcrylStand")
-        let acrylEntity = scene.findEntity(named: "Image")! as! ModelEntity
+        let scene = try! Entity.load(named: "Scene", in: acrylBundle)
+        let acrylEntity = scene.findEntity(named: "Main")! as! ModelEntity
         return acrylEntity
     }()
 
@@ -18,7 +19,7 @@ final class AcrylEntity: Entity {
             .map { path.mx_point(atFractionOfLength: $0) } // x,y in 0...1
             .reversed()
         let vertices: [SIMD3<Float>] = points
-            .map { SIMD3<Float>(Float($0.x) - Float(0.5), Float(1) - Float($0.y) - Float(0.5), Float(0.5)) } // x,y in -0.5...+0.5 (centered)
+            .map { SIMD3<Float>(Float($0.x) - Float(0.5), Float(1) - Float($0.y) - Float(0.5), Float(0)) } // x,y in -0.5...+0.5 (centered)
         let scale: Float = 0.1
         var meshDescriptor = MeshDescriptor()
         meshDescriptor.positions = MeshBuffers.Positions(
@@ -55,6 +56,7 @@ final class AcrylEntity: Entity {
         let textureSize = UIImage(data: imageData)!.size
         let textureWidthScale: Float = Float(textureSize.width / max(textureSize.width, textureSize.height))
         let textureHeightScale: Float = Float(textureSize.height / max(textureSize.width, textureSize.height))
+        NSLog("%@", "textureWidthScale = \(textureWidthScale), textureHeightScale = \(textureHeightScale)")
         let meshDescriptor = Self.meshDescriptor(textureSize: textureSize, path: path)
 
         // - MARK
@@ -79,9 +81,12 @@ final class AcrylEntity: Entity {
 
 
         let sortGroup = ModelSortGroup(depthPass: nil)
-        acrylEntity.model!.mesh = try await MeshResource(from: [meshDescriptor])
+//        acrylEntity.model!.mesh = try await MeshResource(from: [meshDescriptor])
         //                    acrylEntity.model!.materials = [UnlitMaterial(color: .green)]
         acrylEntity.components.set(ModelSortGroupComponent(group: sortGroup, order: 3))
+//        acrylEntity.components.set(ModelDebugOptionsComponent(visualizationMode: .textureCoordinates))
+        acrylEntity.components.set(InputTargetComponent())
+        acrylEntity.components.set(GroundingShadowComponent(castsShadow: true))
         addChild(acrylEntity)
 
         var acrylPBM = PhysicallyBasedMaterial()
@@ -96,23 +101,37 @@ final class AcrylEntity: Entity {
         outer.components.set(ModelSortGroupComponent(group: sortGroup, order: 1))
         //                     outer.model!.materials = [UnlitMaterial(color: .green)]
         outer.model!.materials = [acrylPBM]
-        addChild(outer)
+//        addChild(outer)
 
         // inverted for double sided materials
         let sideQuadsInverted: [UInt32] = (UInt32(0)..<UInt32(255)).flatMap { i in
             [i, i + UInt32(1),
              UInt32(511) - (i + UInt32(1)), UInt32(511) - i]
         }
-        sideMeshDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuadsInverted)
+        var sideMeshInvertedDescriptor = sideMeshDescriptor
+        sideMeshInvertedDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuadsInverted)
         let inner = acrylEntity.clone(recursive: true)
-        inner.model!.mesh = try await MeshResource(from: [sideMeshDescriptor])
+        inner.model!.mesh = try await MeshResource(from: [sideMeshInvertedDescriptor])
         inner.components.set(ModelSortGroupComponent(group: sortGroup, order: 2))
         inner.model!.materials = [acrylPBM]
         addChild(inner)
+
+        // TODO: move sideMeshInvertedDescriptor -> acrylEntity
+
+        acrylEntity.model!.mesh = try await MeshResource(from: [meshDescriptor, sideMeshDescriptor, sideMeshInvertedDescriptor])
+        if #available(visionOS 2, *) {
+            let collision = try! await ShapeResource.generateStaticMesh(from: MeshResource(from: [meshDescriptor, sideMeshDescriptor]))
+            acrylEntity.components.set(CollisionComponent(shapes: [collision]))
+        }
+        setUnscaledExtent(of: acrylEntity, size: .init(x: textureWidthScale, y: textureHeightScale, z: 1) * 0.1)
     }
 
     func setIdolImage(of idolImageEntity: ModelEntity, image: TextureResource) {
         setShaderGraphMaterial(of: idolImageEntity, name: "image", value: .textureResource(image))
+    }
+
+    func setUnscaledExtent(of idolImageEntity: ModelEntity, size: SIMD3<Float>) {
+        setShaderGraphMaterial(of: idolImageEntity, name: "unscaledExtent", value: .simd3Float(size))
     }
 
     // custom shaders must be set in RCP file

@@ -1,0 +1,43 @@
+{
+  "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E" : {
+    "objectMetadataList" : [
+      [
+        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
+        "Root",
+        "Cube_4",
+        "AcrylStandShader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
+        "Root",
+        "Main",
+        "AcrylStandShader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
+        "Root",
+        "Main"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  }
+}
