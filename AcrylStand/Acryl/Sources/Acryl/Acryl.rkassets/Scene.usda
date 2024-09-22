@@ -20,9 +20,6 @@ def Xform "Root"
         double size = 0.1
         float2 ui:nodegraph:node:pos = (41.6331, 125.38584)
         int ui:nodegraph:node:stackingOrder = 3
-        quatf xformOp:orient = (1, 0, 0, 0)
-        float3 xformOp:scale = (1, 1, 0.2)
-        float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def Material "AcrylStandShader"
@@ -35,15 +32,15 @@ def Xform "Root"
                 customData = {
                     dictionary realitykit = {
                         float2 positionInSubgraph = (-1724.0814, 495.27402)
-                        int stackingOrderInSubgraph = 10958
+                        int stackingOrderInSubgraph = 11000
                     }
                 }
             )
-            float inputs:depthLift = 0.05 (
+            float inputs:depthLift = 0.44 (
                 customData = {
                     dictionary realitykit = {
                         float2 positionInSubgraph = (-1731.9225, 587.5573)
-                        int stackingOrderInSubgraph = 10959
+                        int stackingOrderInSubgraph = 11005
                     }
                 }
             )
@@ -59,7 +56,7 @@ def Xform "Root"
                 customData = {
                     dictionary realitykit = {
                         float2 positionInSubgraph = (-1741.3014, 832.3604)
-                        int stackingOrderInSubgraph = 8934
+                        int stackingOrderInSubgraph = 10991
                     }
                 }
             )
@@ -67,7 +64,7 @@ def Xform "Root"
                 customData = {
                     dictionary realitykit = {
                         float2 positionInSubgraph = (-1713.3142, 397.35187)
-                        int stackingOrderInSubgraph = 10958
+                        int stackingOrderInSubgraph = 11008
                     }
                 }
             )
@@ -139,7 +136,7 @@ def Xform "Root"
                 string inputs:space = "object"
                 float3 outputs:out
                 float2 ui:nodegraph:node:pos = (-1686.0933, 670.9489)
-                int ui:nodegraph:node:stackingOrder = 8928
+                int ui:nodegraph:node:stackingOrder = 10991
             }
 
             def Shader "rep"
@@ -169,7 +166,7 @@ def Xform "Root"
                 float3 inputs:normal.connect = </Root/Main/AcrylStandShader/Normal.outputs:out>
                 float3 outputs:out
                 float2 ui:nodegraph:node:pos = (-1214.9413, 740.5386)
-                int ui:nodegraph:node:stackingOrder = 8910
+                int ui:nodegraph:node:stackingOrder = 10993
             }
 
             def Shader "Normal"
@@ -178,7 +175,7 @@ def Xform "Root"
                 string inputs:space = "object"
                 float3 outputs:out
                 float2 ui:nodegraph:node:pos = (-1723.0227, 749.9293)
-                int ui:nodegraph:node:stackingOrder = 8931
+                int ui:nodegraph:node:stackingOrder = 10989
             }
 
             def Shader "tofront"
@@ -187,7 +184,7 @@ def Xform "Root"
                 float3 inputs:value = (0, 0, 1)
                 float3 outputs:out
                 float2 ui:nodegraph:node:pos = (-1156.5062, 576.7476)
-                int ui:nodegraph:node:stackingOrder = 9000
+                int ui:nodegraph:node:stackingOrder = 10995
             }
 
             def Shader "Position"
@@ -196,7 +193,7 @@ def Xform "Root"
                 string inputs:space = "object"
                 float3 outputs:out
                 float2 ui:nodegraph:node:pos = (-1724.9768, 310.65582)
-                int ui:nodegraph:node:stackingOrder = 8280
+                int ui:nodegraph:node:stackingOrder = 10998
             }
 
             def Shader "Multiply_4"
@@ -248,7 +245,7 @@ def Xform "Root"
                 float outputs:outx
                 float outputs:outy
                 float2 ui:nodegraph:node:pos = (-1547.9445, 495.97018)
-                int ui:nodegraph:node:stackingOrder = 8280
+                int ui:nodegraph:node:stackingOrder = 11004
             }
 
             def Shader "Subtract_1"
@@ -594,7 +591,7 @@ def Xform "Root"
                 float inputs:which = 0
                 color4f outputs:out
                 float2 ui:nodegraph:node:pos = (380.0091, 709.51086)
-                int ui:nodegraph:node:stackingOrder = 10977
+                int ui:nodegraph:node:stackingOrder = 11006
                 string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:which", "inputs:which", "inputs:which"]
             }
 

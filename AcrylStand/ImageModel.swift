@@ -13,7 +13,7 @@ import Observation
     }
     var images: [Data] = [
         try! Data(contentsOf: Bundle.main.url(forResource: "banjun-arisu-v2.psd", withExtension: "png")!),
-        try! Data(contentsOf: Bundle.main.url(forResource: "gakumas-arisu", withExtension: "heic")!),
+        try! Data(contentsOf: Bundle.main.url(forResource: "gakumas-arisu", withExtension: "png")!),
     ]
     var selectedImage: Data?
     var maskedImage: CIImage?

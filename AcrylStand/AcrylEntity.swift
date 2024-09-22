@@ -25,7 +25,7 @@ final class AcrylEntity: Entity {
         meshDescriptor.positions = MeshBuffers.Positions(
             vertices.map { $0 * scale }
             +
-            vertices.reversed().map { SIMD3<Float>($0.x, $0.y, -Float(0.5)) * scale })
+            vertices.reversed().map { SIMD3<Float>($0.x, $0.y, -Float(0.025 * 2)) * scale })
         meshDescriptor.primitives = .polygons(
             [255, 255],
             Array(0..<255) + Array(256..<511))
