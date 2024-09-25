@@ -48,7 +48,7 @@ struct AcrylStandApp: App {
         // fixed scale window (placing far position let it smaller but still same size physically)
         WindowGroup(id: "FixedImage", for: Data.self) { $value in
             FixedSizeImage(imageModel: ImageModel(imageData: value), minVolumetricLength: minVolumetricLength, maxVolumetricLength: maxVolumetricLength)
-//                .volumeBaseplateDisabled()
+                .handlesExternalEvents(preferring: [], allowing: []) // causes the main window active on re-opening the app, or open a main window), without activating this group.
         }
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
