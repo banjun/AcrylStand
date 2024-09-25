@@ -7,12 +7,6 @@ import Acryl
 final class AcrylEntity: Entity {
     @available(*, unavailable) required init() { fatalError() }
 
-    static let prototypeEntity: ModelEntity = {
-        let scene = try! Entity.load(named: "Scene", in: acrylBundle)
-        let acrylEntity = scene.findEntity(named: "Main")! as! ModelEntity
-        return acrylEntity
-    }()
-
     static func meshDescriptor(textureSize: CGSize, path: UIBezierPath) -> MeshDescriptor {
         let points = (0..<256)
             .map { CGFloat($0) / CGFloat(255) }
@@ -46,12 +40,10 @@ final class AcrylEntity: Entity {
 
     init(imageData: Data, path: UIBezierPath) async throws {
         super.init()
-        let acrylEntity = Self.prototypeEntity.clone(recursive: true)
 
         let randomImageName = SHA256.hash(data: imageData).map {String(format: "%02x", $0)}.joined()
         let tmpImageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(randomImageName).appendingPathExtension("png")
         try imageData.write(to: tmpImageURL)
-        setIdolImage(of: acrylEntity, image: try! await TextureResource(contentsOf: tmpImageURL))
 
         let textureSize = UIImage(data: imageData)!.size
         let textureWidthScale: Float = Float(textureSize.width / max(textureSize.width, textureSize.height))
@@ -78,15 +70,19 @@ final class AcrylEntity: Entity {
         // try USDA(name: "side", meshDescriptor: sideMeshDescriptor).write(to: URL(fileURLWithPath: "/Users/banjun/Downloads/usda-export-side.usda"))
         // - MARK
 
-
-
         let sortGroup = ModelSortGroup(depthPass: nil)
-//        acrylEntity.model!.mesh = try await MeshResource(from: [meshDescriptor])
-        //                    acrylEntity.model!.materials = [UnlitMaterial(color: .green)]
+        let acrylShader = try await AcrylShader()
+        try await acrylShader.set(image: TextureResource(contentsOf: tmpImageURL))
+        try await acrylShader.setUnscaledExtent(size: SIMD3<Float>(x: textureWidthScale, y: textureHeightScale, z: 1) * Float(0.1))
+        let acrylEntity = try await ModelEntity.acrylEntity(mesh: .init(from: [meshDescriptor]), acrylShader: acrylShader)
         acrylEntity.components.set(ModelSortGroupComponent(group: sortGroup, order: 3))
-//        acrylEntity.components.set(ModelDebugOptionsComponent(visualizationMode: .textureCoordinates))
+        //        acrylEntity.components.set(ModelDebugOptionsComponent(visualizationMode: .textureCoordinates))
         acrylEntity.components.set(InputTargetComponent())
         acrylEntity.components.set(GroundingShadowComponent(castsShadow: true))
+        if #available(visionOS 2, *) {
+            let collision = try! await ShapeResource.generateStaticMesh(from: MeshResource(from: [meshDescriptor, sideMeshDescriptor]))
+            acrylEntity.components.set(CollisionComponent(shapes: [collision]))
+        }
         addChild(acrylEntity)
 
         var acrylPBM = PhysicallyBasedMaterial()
@@ -117,28 +113,6 @@ final class AcrylEntity: Entity {
         addChild(inner)
 
         // TODO: move sideMeshInvertedDescriptor -> acrylEntity
-
-        acrylEntity.model!.mesh = try await MeshResource(from: [meshDescriptor, sideMeshDescriptor, sideMeshInvertedDescriptor])
-        if #available(visionOS 2, *) {
-            let collision = try! await ShapeResource.generateStaticMesh(from: MeshResource(from: [meshDescriptor, sideMeshDescriptor]))
-            acrylEntity.components.set(CollisionComponent(shapes: [collision]))
-        }
-        setUnscaledExtent(of: acrylEntity, size: .init(x: textureWidthScale, y: textureHeightScale, z: 1) * 0.1)
-    }
-
-    func setIdolImage(of idolImageEntity: ModelEntity, image: TextureResource) {
-        setShaderGraphMaterial(of: idolImageEntity, name: "image", value: .textureResource(image))
-    }
-
-    func setUnscaledExtent(of idolImageEntity: ModelEntity, size: SIMD3<Float>) {
-        setShaderGraphMaterial(of: idolImageEntity, name: "unscaledExtent", value: .simd3Float(size))
-    }
-
-    // custom shaders must be set in RCP file
-    func setShaderGraphMaterial(of modelEntity: ModelEntity, name: String, value: MaterialParameters.Value) {
-        var material = modelEntity.model!.materials[0] as! ShaderGraphMaterial
-        try! material.setParameter(name: name, value: value)
-        modelEntity.model!.materials[0] = material
     }
 }
 
