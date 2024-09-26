@@ -71,10 +71,10 @@ final class AcrylEntity: Entity {
         // - MARK
 
         let sortGroup = ModelSortGroup(depthPass: nil)
-        let acrylShader = try await AcrylShader()
-        try await acrylShader.set(image: TextureResource(contentsOf: tmpImageURL))
-        try await acrylShader.setUnscaledExtent(size: SIMD3<Float>(x: textureWidthScale, y: textureHeightScale, z: 1) * Float(0.1))
-        let acrylEntity = try await ModelEntity.acrylEntity(mesh: .init(from: [meshDescriptor]), acrylShader: acrylShader)
+        let acrylShader = try await AcrylShader(
+            image: TextureResource(contentsOf: tmpImageURL),
+            size: SIMD3<Float>(x: textureWidthScale, y: textureHeightScale, z: 1) * Float(0.1))
+        let acrylEntity = try await ModelEntity(acrylMesh: .init(from: [meshDescriptor, sideMeshDescriptor]), acrylShader: acrylShader)
         acrylEntity.components.set(ModelSortGroupComponent(group: sortGroup, order: 3))
         //        acrylEntity.components.set(ModelDebugOptionsComponent(visualizationMode: .textureCoordinates))
         acrylEntity.components.set(InputTargetComponent())
@@ -91,13 +91,6 @@ final class AcrylEntity: Entity {
         acrylPBM.metallic = 0.0
         acrylPBM.roughness = 0.05
         acrylPBM.specular = 1.4
-
-        let outer = acrylEntity.clone(recursive: true)
-        outer.model!.mesh = try await MeshResource(from: [sideMeshDescriptor])
-        outer.components.set(ModelSortGroupComponent(group: sortGroup, order: 1))
-        //                     outer.model!.materials = [UnlitMaterial(color: .green)]
-        outer.model!.materials = [acrylPBM]
-//        addChild(outer)
 
         // inverted for double sided materials
         let sideQuadsInverted: [UInt32] = (UInt32(0)..<UInt32(255)).flatMap { i in
