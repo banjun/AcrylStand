@@ -88,6 +88,7 @@ final class AcrylEntity: Entity {
             acrylEntity.components.set(CollisionComponent(shapes: [collision]))
 //        }
 //        acrylEntity.components.set(ModelDebugOptionsComponent(visualizationMode: .textureCoordinates))
+        // acrylEntity.model!.materials = [{var m = UnlitMaterial(color: .cyan); m.triangleFillMode = .lines; return m}()]
         addChild(acrylEntity)
 
         var acrylPBM = PhysicallyBasedMaterial()
