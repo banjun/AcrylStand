@@ -33,7 +33,10 @@ struct ImageView: View {
 ////                    .stroke(.green, lineWidth: 20)
 //                    .fill(.white.opacity(0.2))
 //                }
-                realityView(path).id(reloader.dateReloaded)
+                realityView(path)
+#if DEBUG
+                    .id(reloader.dateReloaded)
+#endif
                 if rootEntity == nil { ProgressView() }
             case .failure(let error):
                 Text(String(describing: error))
