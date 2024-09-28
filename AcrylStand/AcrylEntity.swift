@@ -86,13 +86,13 @@ final class AcrylEntity: Entity {
             let mesh = try await MeshResource(extruding: reducedPaths, extrusionOptions: extrusionOptions)
             acrylEntity = await ModelEntity(acrylMesh: mesh, acrylShader: acrylShader)
         } else {
-            acrylEntity = try await ModelEntity(acrylMesh: .init(from: [meshDescriptor]), acrylShader: acrylShader)
+            acrylEntity = try await ModelEntity(acrylMesh: .generate(from: [meshDescriptor]), acrylShader: acrylShader)
         }
         acrylEntity.components.set(ModelSortGroupComponent(group: sortGroup, order: 3))
         acrylEntity.components.set(InputTargetComponent())
         acrylEntity.components.set(GroundingShadowComponent(castsShadow: true))
         if #available(visionOS 2, *) {
-            let collision = try! await ShapeResource.generateStaticMesh(from: MeshResource(from: [meshDescriptor]))
+            let collision = try! await ShapeResource.generateStaticMesh(from: .generate(from: [meshDescriptor]))
             acrylEntity.components.set(CollisionComponent(shapes: [collision]))
         }
 //         acrylEntity.model!.materials = [{var m = UnlitMaterial(color: .cyan); m.triangleFillMode = .lines; return m}()]
@@ -130,7 +130,7 @@ final class AcrylEntity: Entity {
         var sideMeshInvertedDescriptor = sideMeshDescriptor
         sideMeshInvertedDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuadsInverted)
         let inner = acrylEntity.clone(recursive: true)
-        inner.model!.mesh = try await MeshResource(from: [sideMeshInvertedDescriptor])
+        inner.model!.mesh = try .generate(from: [sideMeshInvertedDescriptor])
         inner.components.set(ModelSortGroupComponent(group: sortGroup, order: 2))
         inner.model!.materials = [acrylPBM]
         addChild(inner)
