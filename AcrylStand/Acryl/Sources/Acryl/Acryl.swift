@@ -14,12 +14,12 @@ public final actor AcrylShader {
     }
     public init(image: TextureResource, size: SIMD3<Float>) async throws {
         try await self.init()
-        try set(image: image)
-        try set(unscaledExtent: size)
+        self.image = image
+        self.unscaledExtent = size
     }
 
-    public func set(image v: TextureResource) throws { try shaderGraph.setByArgName(v) }
-    public func set(unscaledExtent v: SIMD3<Float>) throws { try shaderGraph.setByArgName(v) }
+    public var image: TextureResource { get {shaderGraph.getByVarName()} set {try! shaderGraph.setByVarName(newValue)} }
+    public var unscaledExtent: SIMD3<Float> { get {shaderGraph.getByVarName()} set {try! shaderGraph.setByVarName(newValue)} }
 }
 
 extension ModelEntity {
