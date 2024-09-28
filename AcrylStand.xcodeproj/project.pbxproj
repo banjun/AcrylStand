@@ -343,7 +343,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -enable-implicit-dynamic -enable-private-imports";
-				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.exp.AcrylStand;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.AcrylStand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -371,7 +371,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.exp.AcrylStand;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.AcrylStand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
