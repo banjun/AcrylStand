@@ -18,12 +18,8 @@ public final actor AcrylShader {
         try set(unscaledExtent: size)
     }
 
-    public func set(image: TextureResource) throws {
-        try shaderGraph.setParameter(name: "image", value: .textureResource(image))
-    }
-    public func set(unscaledExtent size: SIMD3<Float>) throws {
-        try shaderGraph.setParameter(name: "unscaledExtent", value: .simd3Float(size))
-    }
+    public func set(image v: TextureResource) throws { try shaderGraph.setByArgName(v) }
+    public func set(unscaledExtent v: SIMD3<Float>) throws { try shaderGraph.setByArgName(v) }
 }
 
 extension ModelEntity {
