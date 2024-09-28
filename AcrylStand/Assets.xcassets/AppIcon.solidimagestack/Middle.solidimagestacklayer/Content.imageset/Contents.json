@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "appicon-middle.png",
       "idiom" : "vision",
       "scale" : "2x"
     }
