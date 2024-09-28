@@ -4,6 +4,7 @@ import UIKit
 import CryptoKit
 import Acryl
 import SwiftUI
+import UIBezierPath_Superpowers
 
 final class AcrylEntity: Entity {
     @available(*, unavailable) required init() { fatalError() }
