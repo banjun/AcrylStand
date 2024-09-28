@@ -3,7 +3,7 @@ import UniformTypeIdentifiers
 import PhotosUI
 import Observation
 
-@Observable final class ImageModel {
+@MainActor @Observable final class ImageModel {
     init(imageData: Data? = nil) {
         self.selectedImage = imageData
     }

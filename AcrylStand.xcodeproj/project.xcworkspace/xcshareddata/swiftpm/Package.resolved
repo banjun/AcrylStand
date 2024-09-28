@@ -1,5 +1,5 @@
 {
-  "originHash" : "261fa142d982fc92c3e83deb8513167646f9e3dce1d2c8066e099979c145f82f",
+  "originHash" : "697e8ca892fe55364005644e4dac64c954151f771e7e5934c44be1bbdd8769ff",
   "pins" : [
     {
       "identity" : "swifthotreload",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "a008da91686f5c714847adff770d33f398d0afdd",
         "version" : "0.2.1"
+      }
+    },
+    {
+      "identity" : "uibezierpath-superpowers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/banjun/UIBezierPath-Superpowers",
+      "state" : {
+        "branch" : "swift6",
+        "revision" : "981c4ad6b7232c691fdddba3a0c6e5af8f32ab97"
       }
     }
   ],
