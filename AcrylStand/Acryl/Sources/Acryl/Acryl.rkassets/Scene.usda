@@ -1,0 +1,682 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (448.0.16.0.3)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["AcrylStandShader", "Main"]
+    def Cube "Main" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        reorder nameChildren = ["AcrylStandShader", "Model_Sorting_Group"]
+        rel material:binding = </AcrylStandShader>
+        double size = 0.1
+        float2 ui:nodegraph:node:pos = (41.6331, 125.38584)
+        int ui:nodegraph:node:stackingOrder = 3
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}
+
+def Material "AcrylStandShader"
+{
+    reorder nameChildren = ["DefaultSurfaceShader", "PreviewSurface", "Convert", "Separate4", "z", "Image_1", "DotProduct", "Divide_7", "DotProduct_1", "Divide", "ViewDirection", "MTLFma", "rep", "xy", "Refract", "Image_2", "z_1", "Separate3_1", "Normal_2", "front", "right", "Dot", "Normal", "tofront", "Position", "left", "Remap", "front_1", "Image_3", "TextureCoordinates", "Separate2", "Oneminus", "Combine2", "Separate4_1", "Combine3_2", "Mix", "Combine2_1", "Multiply_4", "Add", "Divide_2", "centerOffset3", "cx_cy", "Subtract_1"]
+    token cullMode = "back" (
+        allowedTokens = ["unspecified", "none", "front", "back"]
+    )
+    float2 inputs:centerOffset = (0.5, 0.5) (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-1724.0814, 495.27402)
+                int stackingOrderInSubgraph = 11000
+            }
+        }
+    )
+    float inputs:depthLift = 0.44 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-1731.9225, 587.5573)
+                int stackingOrderInSubgraph = 11005
+            }
+        }
+    )
+    asset inputs:image = @CustomUVChecker_byValle_1K.png@ (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-1729.318, 221.06572)
+                int stackingOrderInSubgraph = 10988
+            }
+        }
+    )
+    float inputs:ior = 1.49 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-1741.3014, 832.3604)
+                int stackingOrderInSubgraph = 10991
+            }
+        }
+    )
+    float3 inputs:unscaledExtent = (0.1, 0.1, 0.1) (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-1713.3142, 397.35187)
+                int stackingOrderInSubgraph = 11008
+            }
+        }
+    )
+    token outputs:mtlx:surface.connect = </AcrylStandShader/PreviewSurface.outputs:out>
+    token outputs:realitykit:vertex
+    token outputs:surface.connect = None
+    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1833.2936, 1149.9667)
+    int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 10350
+
+    def Shader "DefaultSurfaceShader" (
+        active = false
+    )
+    {
+        uniform token info:id = "UsdPreviewSurface"
+        color3f inputs:diffuseColor = (0, 0, 0) (
+            colorSpace = "lin_srgb"
+        )
+        float inputs:ior = 1.5
+        float inputs:opacity = 0.1
+        float inputs:roughness = 0.5
+        token outputs:surface
+    }
+
+    def Shader "PreviewSurface"
+    {
+        uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+        float inputs:clearcoat = 0.2
+        float inputs:clearcoatRoughness
+        color3f inputs:diffuseColor.connect = </AcrylStandShader/Dot.outputs:out>
+        color3f inputs:emissiveColor
+        float inputs:ior.connect = </AcrylStandShader/Dot_2.outputs:out>
+        float inputs:metallic = 0.1
+        float inputs:metallic.connect = </AcrylStandShader/Remap.outputs:out>
+        float3 inputs:normal
+        float inputs:opacity = 1
+        float inputs:opacity.connect = </AcrylStandShader/Max.outputs:out>
+        float inputs:opacityThreshold
+        float inputs:roughness = 0.2
+        token outputs:out
+        float2 ui:nodegraph:node:pos = (1450.3673, 1041.1475)
+        int ui:nodegraph:node:stackingOrder = 10257
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["Advanced", "inputs:roughness", "inputs:diffuseColor"]
+    }
+
+    def Shader "Divide_7"
+    {
+        uniform token info:id = "ND_divide_float"
+        float inputs:in1.connect = </AcrylStandShader/s_f.outputs:out>
+        float inputs:in2.connect = </AcrylStandShader/d_f.outputs:out>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (-771.8703, 590.23413)
+        int ui:nodegraph:node:stackingOrder = 9012
+    }
+
+    def Shader "Divide"
+    {
+        uniform token info:id = "ND_divide_float"
+        float inputs:in1 = -1
+        float inputs:in2.connect = </AcrylStandShader.inputs:ior>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (-1505.6127, 827.6219)
+        int ui:nodegraph:node:stackingOrder = 8912
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in1", "inputs:in1"]
+    }
+
+    def Shader "ViewDirection"
+    {
+        uniform token info:id = "ND_realitykit_viewdirection_vector3"
+        string inputs:space = "object"
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-1686.0933, 670.9489)
+        int ui:nodegraph:node:stackingOrder = 10991
+    }
+
+    def Shader "rep"
+    {
+        uniform token info:id = "ND_convert_float_vector3"
+        float inputs:in.connect = </AcrylStandShader/Multiply_4.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-556.0286, 602.0237)
+        int ui:nodegraph:node:stackingOrder = 9016
+    }
+
+    def Shader "xy"
+    {
+        uniform token info:id = "ND_convert_vector3_vector2"
+        float3 inputs:in.connect = </AcrylStandShader/Add_1.outputs:out>
+        float2 outputs:out
+        float2 ui:nodegraph:node:pos = (-177.80223, 655.17926)
+        int ui:nodegraph:node:stackingOrder = 10227
+    }
+
+    def Shader "Refract"
+    {
+        uniform token info:id = "ND_realitykit_refract_vector3"
+        float inputs:eta = -0.67
+        float inputs:eta.connect = </AcrylStandShader/Divide.outputs:out>
+        float3 inputs:in.connect = </AcrylStandShader/ViewDirection.outputs:out>
+        float3 inputs:normal.connect = </AcrylStandShader/Normal.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-1214.9413, 740.5386)
+        int ui:nodegraph:node:stackingOrder = 10993
+    }
+
+    def Shader "Normal"
+    {
+        uniform token info:id = "ND_normal_vector3"
+        string inputs:space = "object"
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-1723.0227, 749.9293)
+        int ui:nodegraph:node:stackingOrder = 10989
+    }
+
+    def Shader "tofront"
+    {
+        uniform token info:id = "ND_constant_vector3"
+        float3 inputs:value = (0, 0, 1)
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-1156.5062, 576.7476)
+        int ui:nodegraph:node:stackingOrder = 10995
+    }
+
+    def Shader "Position"
+    {
+        uniform token info:id = "ND_position_vector3"
+        string inputs:space = "object"
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-1724.9768, 310.65582)
+        int ui:nodegraph:node:stackingOrder = 10998
+    }
+
+    def Shader "Multiply_4"
+    {
+        uniform token info:id = "ND_multiply_float"
+        float inputs:in1.connect = </AcrylStandShader/Divide_7.outputs:out>
+        float inputs:in2 = -1
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (-677.15704, 600.36365)
+        int ui:nodegraph:node:stackingOrder = 9014
+    }
+
+    def Shader "Add"
+    {
+        uniform token info:id = "ND_add_vector3"
+        float3 inputs:in1.connect = </AcrylStandShader/Divide_2.outputs:out>
+        float3 inputs:in2.connect = </AcrylStandShader/centerOffset3.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-1187.6265, 428.2154)
+        int ui:nodegraph:node:stackingOrder = 9003
+    }
+
+    def Shader "Divide_2"
+    {
+        uniform token info:id = "ND_divide_vector3"
+        float3 inputs:in1.connect = </AcrylStandShader/Position.outputs:out>
+        float3 inputs:in2.connect = </AcrylStandShader.inputs:unscaledExtent>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-1332.487, 390.52478)
+        int ui:nodegraph:node:stackingOrder = 8280
+    }
+
+    def Shader "centerOffset3"
+    {
+        uniform token info:id = "ND_combine3_vector3"
+        float inputs:in1.connect = </AcrylStandShader/cx_cy.outputs:outx>
+        float inputs:in2.connect = </AcrylStandShader/cx_cy.outputs:outy>
+        float inputs:in3 = 0.495
+        float inputs:in3.connect = </AcrylStandShader/Subtract_1.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-1363.1973, 504.96695)
+        int ui:nodegraph:node:stackingOrder = 8280
+    }
+
+    def Shader "cx_cy"
+    {
+        uniform token info:id = "ND_separate2_vector2"
+        float2 inputs:in.connect = </AcrylStandShader.inputs:centerOffset>
+        float outputs:outx
+        float outputs:outy
+        float2 ui:nodegraph:node:pos = (-1547.9445, 495.97018)
+        int ui:nodegraph:node:stackingOrder = 11004
+    }
+
+    def Shader "Subtract_1"
+    {
+        uniform token info:id = "ND_subtract_float"
+        float inputs:in1 = 0.5
+        float inputs:in1.connect = None
+        float inputs:in2.connect = </AcrylStandShader.inputs:depthLift>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (-1553.8328, 580.01953)
+        int ui:nodegraph:node:stackingOrder = 8280
+    }
+
+    def Shader "Multiply"
+    {
+        uniform token info:id = "ND_multiply_vector3"
+        float3 inputs:in1.connect = </AcrylStandShader/rep.outputs:out>
+        float3 inputs:in2.connect = </AcrylStandShader/Refract.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-415.23746, 783.1235)
+        int ui:nodegraph:node:stackingOrder = 9020
+    }
+
+    def Shader "Add_1"
+    {
+        uniform token info:id = "ND_add_vector3"
+        float3 inputs:in1.connect = </AcrylStandShader/Dot_1.outputs:out>
+        float3 inputs:in2.connect = </AcrylStandShader/Multiply.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-286.46573, 655.199)
+        int ui:nodegraph:node:stackingOrder = 10290
+    }
+
+    def Shader "Dot_1"
+    {
+        uniform token info:id = "ND_dot_vector3"
+        float3 inputs:in.connect = </AcrylStandShader/Add.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (-415.1665, 423.27524)
+        int ui:nodegraph:node:stackingOrder = 8918
+    }
+
+    def NodeGraph "faceR1L2T3B4F5B6"
+    {
+        int outputs:face_R1L2T3B4F5B6 (
+            customData = {
+                dictionary realitykit = {
+                    float2 positionInSubgraph = (1078.0184, 379.73102)
+                    int stackingOrderInSubgraph = 9344
+                }
+            }
+        )
+        int outputs:face_R1L2T3B4F5B6.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Convert.outputs:out>
+        float2 ui:nodegraph:node:pos = (635.7243, 1052.8234)
+        int ui:nodegraph:node:stackingOrder = 10317
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:face_R1L2T3B4F5B6"]
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1642.1174, 305.90765)
+        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 9358
+
+        def Shader "Max_2"
+        {
+            uniform token info:id = "ND_max_float"
+            float inputs:in1.connect = </AcrylStandShader/faceR1L2T3B4F5B6/front.outputs:out>
+            float inputs:in2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/back.outputs:out>
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (796, 940)
+            int ui:nodegraph:node:stackingOrder = 9310
+        }
+
+        def Shader "back"
+        {
+            uniform token info:id = "ND_ifgreater_float"
+            float inputs:in1 = 6
+            float inputs:in2.connect = None
+            float inputs:value1 = -0.5
+            float inputs:value1.connect = None
+            float inputs:value2 = 0.5
+            float inputs:value2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Separate3.outputs:outz>
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (541, 1135)
+            int ui:nodegraph:node:stackingOrder = 9310
+        }
+
+        def Shader "Max_3"
+        {
+            uniform token info:id = "ND_max_float"
+            float inputs:in1.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Max_1.outputs:out>
+            float inputs:in2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Max_2.outputs:out>
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (1000.75, 687.5)
+            int ui:nodegraph:node:stackingOrder = 9310
+        }
+
+        def Shader "Max_1"
+        {
+            uniform token info:id = "ND_max_float"
+            float inputs:in1.connect = </AcrylStandShader/faceR1L2T3B4F5B6/top.outputs:out>
+            float inputs:in2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/ottom.outputs:out>
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (796, 490)
+            int ui:nodegraph:node:stackingOrder = 9310
+        }
+
+        def Shader "right"
+        {
+            uniform token info:id = "ND_ifgreater_float"
+            float inputs:in1 = 1
+            float inputs:in2.connect = None
+            float inputs:value1 = 0.1
+            float inputs:value1.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Separate3.outputs:outx>
+            float inputs:value2 = 0.5
+            float inputs:value2.connect = None
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (541, 235)
+            int ui:nodegraph:node:stackingOrder = 9310
+        }
+
+        def Shader "Max"
+        {
+            uniform token info:id = "ND_max_float"
+            float inputs:in1.connect = </AcrylStandShader/faceR1L2T3B4F5B6/right.outputs:out>
+            float inputs:in2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/left.outputs:out>
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (1000.75, 30)
+            int ui:nodegraph:node:stackingOrder = 9310
+        }
+
+        def Shader "front"
+        {
+            uniform token info:id = "ND_ifgreater_float"
+            float inputs:in1 = 5
+            float inputs:in2.connect = None
+            float inputs:value1 = 0.1
+            float inputs:value1.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Separate3.outputs:outz>
+            float inputs:value2 = 0.5
+            float inputs:value2.connect = None
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (541, 910)
+            int ui:nodegraph:node:stackingOrder = 9310
+        }
+
+        def Shader "left"
+        {
+            uniform token info:id = "ND_ifgreater_float"
+            float inputs:in1 = 2
+            float inputs:in2
+            float inputs:value1 = -0.5
+            float inputs:value1.connect = None
+            float inputs:value2 = 0.5
+            float inputs:value2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Separate3.outputs:outx>
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (796, 82.5)
+            int ui:nodegraph:node:stackingOrder = 9310
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:value1"]
+        }
+
+        def Shader "top"
+        {
+            uniform token info:id = "ND_ifgreater_float"
+            float inputs:in1 = 3
+            float inputs:in2.connect = None
+            float inputs:value1 = 0.1
+            float inputs:value1.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Separate3.outputs:outy>
+            float inputs:value2 = 0.5
+            float inputs:value2.connect = None
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (541, 460)
+            int ui:nodegraph:node:stackingOrder = 9310
+        }
+
+        def Shader "ottom"
+        {
+            uniform token info:id = "ND_ifgreater_float"
+            float inputs:in1 = 4
+            float inputs:in2
+            float inputs:value1 = -0.5
+            float inputs:value1.connect = None
+            float inputs:value2 = 0.5
+            float inputs:value2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Separate3.outputs:outy>
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (541, 685)
+            int ui:nodegraph:node:stackingOrder = 9310
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:value1"]
+        }
+
+        def Shader "face_R1L2T3B4F5B6"
+        {
+            uniform token info:id = "ND_max_float"
+            float inputs:in1.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Max.outputs:out>
+            float inputs:in2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Max_3.outputs:out>
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (1246.7802, 336.7382)
+            int ui:nodegraph:node:stackingOrder = 9343
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:out"]
+        }
+
+        def Shader "Convert"
+        {
+            uniform token info:id = "ND_convert_float_integer"
+            float inputs:in.connect = </AcrylStandShader/faceR1L2T3B4F5B6/face_R1L2T3B4F5B6.outputs:out>
+            int outputs:out
+            float2 ui:nodegraph:node:pos = (1445.7722, 335.36505)
+            int ui:nodegraph:node:stackingOrder = 9356
+        }
+
+        def Shader "Normal"
+        {
+            uniform token info:id = "ND_normal_vector3"
+            float3 outputs:out
+            float2 ui:nodegraph:node:pos = (73.5, 462.5)
+            int ui:nodegraph:node:stackingOrder = 9359
+        }
+
+        def Shader "Separate3"
+        {
+            uniform token info:id = "ND_separate3_vector3"
+            float3 inputs:in.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Normal.outputs:out>
+            float outputs:outx
+            float outputs:outy
+            float outputs:outz
+            float2 ui:nodegraph:node:pos = (287.75, 462.5)
+            int ui:nodegraph:node:stackingOrder = 9361
+        }
+    }
+
+    def Shader "Max"
+    {
+        uniform token info:id = "ND_max_float"
+        float inputs:in1 = 0.05
+        float inputs:in1.connect = </AcrylStandShader/A.outputs:outa>
+        float inputs:in2 = 0.2
+        float inputs:in2.connect = None
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (1239.1589, 1062.4274)
+        int ui:nodegraph:node:stackingOrder = 10706
+    }
+
+    def Shader "Dot_2"
+    {
+        uniform token info:id = "ND_dot_float"
+        float inputs:in.connect = </AcrylStandShader.inputs:ior>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (-1493.274, 1123.1733)
+        int ui:nodegraph:node:stackingOrder = 10230
+    }
+
+    def Shader "RGB"
+    {
+        uniform token info:id = "ND_convert_color4_color3"
+        color4f inputs:in.connect = </AcrylStandShader/face_switch.outputs:out>
+        color3f outputs:out
+        float2 ui:nodegraph:node:pos = (1070.544, 766.7824)
+        int ui:nodegraph:node:stackingOrder = 10255
+    }
+
+    def Shader "A"
+    {
+        uniform token info:id = "ND_separate4_color4"
+        color4f inputs:in.connect = </AcrylStandShader/face_switch.outputs:out>
+        float outputs:outa
+        float outputs:outb
+        float outputs:outg
+        float outputs:outr
+        float2 ui:nodegraph:node:pos = (1067.2146, 932.8878)
+        int ui:nodegraph:node:stackingOrder = 10244
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:outg"]
+    }
+
+    def Shader "face_switch"
+    {
+        uniform token info:id = "ND_switch_color4I"
+        color4f inputs:in1 = (0, 1, 1, 1)
+        color4f inputs:in1.connect = </AcrylStandShader/UVdebug.outputs:out>
+        color4f inputs:in2.connect = </AcrylStandShader/UVdebug.outputs:out>
+        color4f inputs:in3.connect = </AcrylStandShader/UVdebug.outputs:out>
+        color4f inputs:in4 = (0, 1, 0, 1)
+        color4f inputs:in4.connect = </AcrylStandShader/UVdebug.outputs:out>
+        color4f inputs:in5.connect = </AcrylStandShader/UVdebug.outputs:out>
+        color4f inputs:in6.connect = </AcrylStandShader/UVdebug.outputs:out>
+        color4f inputs:in7.connect = </AcrylStandShader/white_bg.outputs:out>
+        color4f inputs:in8
+        color4f inputs:in9
+        color4f inputs:in10
+        int inputs:which.connect = </AcrylStandShader/faceR1L2T3B4F5B6.outputs:face_R1L2T3B4F5B6>
+        color4f outputs:out
+        float2 ui:nodegraph:node:pos = (881.81055, 743.8875)
+        int ui:nodegraph:node:stackingOrder = 10322
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:which", "inputs:which", "inputs:in1"]
+    }
+
+    def Shader "Remap"
+    {
+        uniform token info:id = "ND_remap_float"
+        float inputs:in.connect = </AcrylStandShader/A.outputs:outa>
+        float inputs:inhigh
+        float inputs:inlow
+        float inputs:outhigh = 0.2
+        float inputs:outlow
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (1241.2969, 920.02344)
+        int ui:nodegraph:node:stackingOrder = 10432
+    }
+
+    def Shader "Dot"
+    {
+        uniform token info:id = "ND_dot_color3"
+        color3f inputs:in.connect = </AcrylStandShader/RGB.outputs:out>
+        color3f outputs:out
+        float2 ui:nodegraph:node:pos = (1272.9618, 766.7422)
+        int ui:nodegraph:node:stackingOrder = 10745
+    }
+
+    def Shader "white_bg"
+    {
+        uniform token info:id = "ND_in_color4"
+        color4f inputs:bg = (0.999996, 1, 1, 1) (
+            colorSpace = "srgb_texture"
+        )
+        color4f inputs:bg.connect = </AcrylStandShader/UVdebug.outputs:out>
+        color4f inputs:fg = (0.999996, 1, 1, 1) (
+            colorSpace = "srgb_texture"
+        )
+        color4f inputs:fg.connect = None
+        float inputs:mix = 0.75
+        color4f outputs:out
+        float2 ui:nodegraph:node:pos = (608.25433, 918.98883)
+        int ui:nodegraph:node:stackingOrder = 10397
+    }
+
+    def Shader "UVdebug"
+    {
+        uniform token info:id = "ND_switch_color4"
+        color4f inputs:in1.connect = </AcrylStandShader/uv_checker.outputs:out>
+        color4f inputs:in2
+        color4f inputs:in3.connect = None
+        color4f inputs:in4.connect = None
+        color4f inputs:in5.connect = None
+        color4f inputs:in6.connect = None
+        color4f inputs:in7.connect = None
+        color4f inputs:in8.connect = None
+        color4f inputs:in9.connect = None
+        color4f inputs:in10.connect = None
+        float inputs:which = 0
+        color4f outputs:out
+        float2 ui:nodegraph:node:pos = (380.0091, 709.51086)
+        int ui:nodegraph:node:stackingOrder = 11006
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:which", "inputs:which", "inputs:which"]
+    }
+
+    def Shader "uv_checker"
+    {
+        uniform token info:id = "ND_image_color4"
+        color4f inputs:default
+        asset inputs:file = @CustomUVChecker_byValle_1K.png@
+        asset inputs:file.connect = </AcrylStandShader/Dot_3.outputs:out>
+        string inputs:filtertype
+        float2 inputs:texcoord.connect = </AcrylStandShader/xy.outputs:out>
+        string inputs:uaddressmode = "constant"
+        string inputs:vaddressmode = "constant"
+        color4f outputs:out
+        float2 ui:nodegraph:node:pos = (140.24333, 574.02515)
+        int ui:nodegraph:node:stackingOrder = 10975
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:file"]
+    }
+
+    def Shader "s_f"
+    {
+        uniform token info:id = "ND_dotproduct_vector3"
+        float3 inputs:in1.connect = </AcrylStandShader/Add.outputs:out>
+        float3 inputs:in2.connect = </AcrylStandShader/tofront.outputs:out>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (-923.7343, 539.218)
+        int ui:nodegraph:node:stackingOrder = 10307
+    }
+
+    def Shader "d_f"
+    {
+        uniform token info:id = "ND_dotproduct_vector3"
+        float3 inputs:in1.connect = </AcrylStandShader/tofront.outputs:out>
+        float3 inputs:in2.connect = </AcrylStandShader/Refract.outputs:out>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (-923.299, 638.70044)
+        int ui:nodegraph:node:stackingOrder = 10309
+    }
+
+    def Shader "HoverState"
+    {
+        uniform token info:id = "ND_realitykit_hover_state"
+        float2 ui:nodegraph:node:pos = (1230.9133, 621.7688)
+        int ui:nodegraph:node:stackingOrder = 10331
+    }
+
+    def Shader "BlurredBackground_1"
+    {
+        uniform token info:id = "ND_realitykit_background_blur_color4"
+        color4f outputs:out
+        float2 ui:nodegraph:node:pos = (861.4207, 1260.3401)
+        int ui:nodegraph:node:stackingOrder = 10957
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = []
+    }
+
+    def Shader "Over"
+    {
+        uniform token info:id = "ND_over_color4"
+        color4f inputs:bg.connect = </AcrylStandShader/BlurredBackground_1.outputs:out>
+        color4f inputs:fg.connect = </AcrylStandShader/face_switch.outputs:out>
+        float inputs:mix = 1
+        color4f outputs:out
+        float2 ui:nodegraph:node:pos = (1077.3296, 1271.0048)
+        int ui:nodegraph:node:stackingOrder = 10957
+    }
+
+    def Shader "Convert_1"
+    {
+        uniform token info:id = "ND_convert_color4_color3"
+        color4f inputs:in.connect = </AcrylStandShader/Over.outputs:out>
+        color3f outputs:out
+        float2 ui:nodegraph:node:pos = (1251.8276, 1291.0077)
+        int ui:nodegraph:node:stackingOrder = 10957
+    }
+
+    def Shader "Dot_3"
+    {
+        uniform token info:id = "ND_dot_filename"
+        asset inputs:in.connect = </AcrylStandShader.inputs:image>
+        asset outputs:out
+        float2 ui:nodegraph:node:pos = (-82.58623, 221.91383)
+        int ui:nodegraph:node:stackingOrder = 10987
+    }
+}
+

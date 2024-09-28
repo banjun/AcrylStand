@@ -34,6 +34,7 @@ struct ImageView: View {
 //                    .fill(.white.opacity(0.2))
 //                }
                 realityView(path).id(reloader.dateReloaded)
+                if rootEntity == nil { ProgressView() }
             case .failure(let error):
                 Text(String(describing: error))
             }
