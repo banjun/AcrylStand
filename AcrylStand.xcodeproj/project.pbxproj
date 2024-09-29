@@ -19,9 +19,9 @@
 		EA5FABAD2C40170A0020721F /* SwiftHotReload in Frameworks */ = {isa = PBXBuildFile; productRef = EA5FABAC2C40170A0020721F /* SwiftHotReload */; };
 		EA7852F02C688EDF00357790 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7852EF2C688EDF00357790 /* ImageModel.swift */; };
 		EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8197DE2BCC269100EFE812 /* Experimental.swift */; };
-		EA948C642CA89B4C0003C933 /* UIBezierPath-Superpowers in Frameworks */ = {isa = PBXBuildFile; productRef = EA948C632CA89B4C0003C933 /* UIBezierPath-Superpowers */; };
 		EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */; };
 		EAB6574E2C8D93470019D3C7 /* USDA.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB6574D2C8D93470019D3C7 /* USDA.swift */; };
+		EACB21862CA95A8D001B3DA1 /* UIBezierPath-Superpowers in Frameworks */ = {isa = PBXBuildFile; productRef = EACB21852CA95A8D001B3DA1 /* UIBezierPath-Superpowers */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2307A42C9FE27000377565 /* Acryl in Frameworks */,
-				EA948C642CA89B4C0003C933 /* UIBezierPath-Superpowers in Frameworks */,
+				EACB21862CA95A8D001B3DA1 /* UIBezierPath-Superpowers in Frameworks */,
 				EA5FABAD2C40170A0020721F /* SwiftHotReload in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,7 +130,7 @@
 			packageProductDependencies = (
 				EA5FABAC2C40170A0020721F /* SwiftHotReload */,
 				EA2307A32C9FE27000377565 /* Acryl */,
-				EA948C632CA89B4C0003C933 /* UIBezierPath-Superpowers */,
+				EACB21852CA95A8D001B3DA1 /* UIBezierPath-Superpowers */,
 			);
 			productName = AcrylStand;
 			productReference = EA2197912BAC520E001F86DB /* AcrylStand.app */;
@@ -162,7 +162,7 @@
 			mainGroup = EA2197882BAC520E001F86DB;
 			packageReferences = (
 				EA5FABAB2C40170A0020721F /* XCRemoteSwiftPackageReference "SwiftHotReload" */,
-				EA948C622CA89B4C0003C933 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */,
+				EACB21842CA95A8D001B3DA1 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */,
 			);
 			productRefGroup = EA2197922BAC520E001F86DB /* Products */;
 			projectDirPath = "";
@@ -413,11 +413,11 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		EA948C622CA89B4C0003C933 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */ = {
+		EACB21842CA95A8D001B3DA1 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/banjun/UIBezierPath-Superpowers";
+			repositoryURL = "https://github.com/CodingMeSwiftly/UIBezierPath-Superpowers";
 			requirement = {
-				branch = swift6;
+				branch = master;
 				kind = branch;
 			};
 		};
@@ -433,9 +433,9 @@
 			package = EA5FABAB2C40170A0020721F /* XCRemoteSwiftPackageReference "SwiftHotReload" */;
 			productName = SwiftHotReload;
 		};
-		EA948C632CA89B4C0003C933 /* UIBezierPath-Superpowers */ = {
+		EACB21852CA95A8D001B3DA1 /* UIBezierPath-Superpowers */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EA948C622CA89B4C0003C933 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */;
+			package = EACB21842CA95A8D001B3DA1 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */;
 			productName = "UIBezierPath-Superpowers";
 		};
 /* End XCSwiftPackageProductDependency section */
