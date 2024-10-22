@@ -31,12 +31,12 @@ extension ShaderGraphMaterial {
         case let v as SIMD2<Float>: .simd2Float(v)
         case let v as SIMD3<Float>: .simd3Float(v)
         case let v as SIMD4<Float>: .simd4Float(v)
-        case let v as CGColor: .color(v)
         case let v as float2x2: .float2x2(v)
         case let v as float3x3: .float3x3(v)
         case let v as float4x4: .float4x4(v)
         case let v as Bool: .bool(v)
         case let v as Int32: .int(v)
+        case let v as CGColor: .color(v) // CoreFoundation type should be at end. (NSNumber-ish value as CGColor) incorrectly passes.
         default: fatalError("unimplemented type: \(type(of: value)), value = \(String(describing: value))")
         }}())
     }
