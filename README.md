@@ -4,7 +4,7 @@ Realistic Acrylic Stand for visionOS
 
 ## TestFlight
 
-TestFlight Public Link
+TestFlight Public Link  
 https://testflight.apple.com/join/gS2MBsX5
 
 ## Videos & Talks
