@@ -16,6 +16,8 @@ struct AcrylStandApp: App {
     @ObservedObject private var reloader = Self.reloader
 #endif
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
 
     var body: some Scene {
         WindowGroup {
@@ -25,6 +27,9 @@ struct AcrylStandApp: App {
                 openWindow(id: "Image", value: data)
                 openWindow(id: "FixedImage", value: data)
             })
+            .onAppear {
+                Task { await openImmersiveSpace(id: "ImmersiveSpace") }
+            }
         }
         .defaultSize(width: 300, height: 300)
         .windowResizability(.contentSize)
@@ -66,6 +71,12 @@ struct AcrylStandApp: App {
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
         .windowResizability(.contentSize)
+
+        ImmersiveSpace(id: "ImmersiveSpace") {
+            Button("Close ImmersiveSpace") {
+                Task { await dismissImmersiveSpace() }
+            }
+        }
     }
 
     private func updateWindowAspectRatio(windowScene: () -> UIWindowScene?, size: CGSize) {
