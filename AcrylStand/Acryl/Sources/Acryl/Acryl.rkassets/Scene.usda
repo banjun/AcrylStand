@@ -34,8 +34,8 @@ def Material "AcrylStandShader"
     float2 inputs:centerOffset = (0.5, 0.5) (
         customData = {
             dictionary realitykit = {
-                float2 positionInSubgraph = (-1724.0814, 495.27402)
-                int stackingOrderInSubgraph = 11000
+                float2 positionInSubgraph = (-1756.9406, 495.70834)
+                int stackingOrderInSubgraph = 11130
             }
         }
     )
@@ -43,15 +43,15 @@ def Material "AcrylStandShader"
         customData = {
             dictionary realitykit = {
                 float2 positionInSubgraph = (-1731.9225, 587.5573)
-                int stackingOrderInSubgraph = 11005
+                int stackingOrderInSubgraph = 11136
             }
         }
     )
     asset inputs:image = @CustomUVChecker_byValle_1K.png@ (
         customData = {
             dictionary realitykit = {
-                float2 positionInSubgraph = (-1729.318, 221.06572)
-                int stackingOrderInSubgraph = 10988
+                float2 positionInSubgraph = (-1761.3492, 231.40166)
+                int stackingOrderInSubgraph = 11144
             }
         }
     )
@@ -66,8 +66,8 @@ def Material "AcrylStandShader"
     float3 inputs:unscaledExtent = (0.1, 0.1, 0.1) (
         customData = {
             dictionary realitykit = {
-                float2 positionInSubgraph = (-1713.3142, 397.35187)
-                int stackingOrderInSubgraph = 11008
+                float2 positionInSubgraph = (-1720.0951, 393.84235)
+                int stackingOrderInSubgraph = 11128
             }
         }
     )
@@ -119,7 +119,7 @@ def Material "AcrylStandShader"
         float inputs:in2.connect = </AcrylStandShader/d_f.outputs:out>
         float outputs:out
         float2 ui:nodegraph:node:pos = (-771.8703, 590.23413)
-        int ui:nodegraph:node:stackingOrder = 9012
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Divide"
@@ -129,7 +129,7 @@ def Material "AcrylStandShader"
         float inputs:in2.connect = </AcrylStandShader.inputs:ior>
         float outputs:out
         float2 ui:nodegraph:node:pos = (-1505.6127, 827.6219)
-        int ui:nodegraph:node:stackingOrder = 8912
+        int ui:nodegraph:node:stackingOrder = 11123
         string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in1", "inputs:in1"]
     }
 
@@ -139,7 +139,7 @@ def Material "AcrylStandShader"
         string inputs:space = "object"
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-1686.0933, 670.9489)
-        int ui:nodegraph:node:stackingOrder = 10991
+        int ui:nodegraph:node:stackingOrder = 11125
     }
 
     def Shader "rep"
@@ -148,7 +148,7 @@ def Material "AcrylStandShader"
         float inputs:in.connect = </AcrylStandShader/Multiply_4.outputs:out>
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-556.0286, 602.0237)
-        int ui:nodegraph:node:stackingOrder = 9016
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "xy"
@@ -157,7 +157,7 @@ def Material "AcrylStandShader"
         float3 inputs:in.connect = </AcrylStandShader/Add_1.outputs:out>
         float2 outputs:out
         float2 ui:nodegraph:node:pos = (-177.80223, 655.17926)
-        int ui:nodegraph:node:stackingOrder = 10227
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Refract"
@@ -169,7 +169,7 @@ def Material "AcrylStandShader"
         float3 inputs:normal.connect = </AcrylStandShader/Normal.outputs:out>
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-1214.9413, 740.5386)
-        int ui:nodegraph:node:stackingOrder = 10993
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Normal"
@@ -178,7 +178,7 @@ def Material "AcrylStandShader"
         string inputs:space = "object"
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-1723.0227, 749.9293)
-        int ui:nodegraph:node:stackingOrder = 10989
+        int ui:nodegraph:node:stackingOrder = 11126
     }
 
     def Shader "tofront"
@@ -187,7 +187,7 @@ def Material "AcrylStandShader"
         float3 inputs:value = (0, 0, 1)
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-1156.5062, 576.7476)
-        int ui:nodegraph:node:stackingOrder = 10995
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Position"
@@ -196,7 +196,7 @@ def Material "AcrylStandShader"
         string inputs:space = "object"
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-1724.9768, 310.65582)
-        int ui:nodegraph:node:stackingOrder = 10998
+        int ui:nodegraph:node:stackingOrder = 11124
     }
 
     def Shader "Multiply_4"
@@ -206,7 +206,7 @@ def Material "AcrylStandShader"
         float inputs:in2 = -1
         float outputs:out
         float2 ui:nodegraph:node:pos = (-677.15704, 600.36365)
-        int ui:nodegraph:node:stackingOrder = 9014
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Add"
@@ -216,7 +216,7 @@ def Material "AcrylStandShader"
         float3 inputs:in2.connect = </AcrylStandShader/centerOffset3.outputs:out>
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-1187.6265, 428.2154)
-        int ui:nodegraph:node:stackingOrder = 9003
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Divide_2"
@@ -226,7 +226,7 @@ def Material "AcrylStandShader"
         float3 inputs:in2.connect = </AcrylStandShader.inputs:unscaledExtent>
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-1332.487, 390.52478)
-        int ui:nodegraph:node:stackingOrder = 8280
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "centerOffset3"
@@ -238,7 +238,7 @@ def Material "AcrylStandShader"
         float inputs:in3.connect = </AcrylStandShader/Subtract_1.outputs:out>
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-1363.1973, 504.96695)
-        int ui:nodegraph:node:stackingOrder = 8280
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "cx_cy"
@@ -248,7 +248,7 @@ def Material "AcrylStandShader"
         float outputs:outx
         float outputs:outy
         float2 ui:nodegraph:node:pos = (-1547.9445, 495.97018)
-        int ui:nodegraph:node:stackingOrder = 11004
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Subtract_1"
@@ -259,7 +259,7 @@ def Material "AcrylStandShader"
         float inputs:in2.connect = </AcrylStandShader.inputs:depthLift>
         float outputs:out
         float2 ui:nodegraph:node:pos = (-1553.8328, 580.01953)
-        int ui:nodegraph:node:stackingOrder = 8280
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Multiply"
@@ -269,7 +269,7 @@ def Material "AcrylStandShader"
         float3 inputs:in2.connect = </AcrylStandShader/Refract.outputs:out>
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-415.23746, 783.1235)
-        int ui:nodegraph:node:stackingOrder = 9020
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Add_1"
@@ -279,7 +279,7 @@ def Material "AcrylStandShader"
         float3 inputs:in2.connect = </AcrylStandShader/Multiply.outputs:out>
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-286.46573, 655.199)
-        int ui:nodegraph:node:stackingOrder = 10290
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "Dot_1"
@@ -288,7 +288,7 @@ def Material "AcrylStandShader"
         float3 inputs:in.connect = </AcrylStandShader/Add.outputs:out>
         float3 outputs:out
         float2 ui:nodegraph:node:pos = (-415.1665, 423.27524)
-        int ui:nodegraph:node:stackingOrder = 8918
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def NodeGraph "faceR1L2T3B4F5B6"
@@ -303,7 +303,7 @@ def Material "AcrylStandShader"
         )
         int outputs:face_R1L2T3B4F5B6.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Convert.outputs:out>
         float2 ui:nodegraph:node:pos = (635.7243, 1052.8234)
-        int ui:nodegraph:node:stackingOrder = 10317
+        int ui:nodegraph:node:stackingOrder = 11154
         string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:face_R1L2T3B4F5B6"]
         float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1642.1174, 305.90765)
         int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 9358
@@ -323,13 +323,14 @@ def Material "AcrylStandShader"
             uniform token info:id = "ND_ifgreater_float"
             float inputs:in1 = 6
             float inputs:in2.connect = None
-            float inputs:value1 = -0.5
+            float inputs:value1 = -0.001
             float inputs:value1.connect = None
             float inputs:value2 = 0.5
             float inputs:value2.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Separate3.outputs:outz>
             float outputs:out
             float2 ui:nodegraph:node:pos = (541, 1135)
-            int ui:nodegraph:node:stackingOrder = 9310
+            int ui:nodegraph:node:stackingOrder = 9385
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in1"]
         }
 
         def Shader "Max_3"
@@ -459,18 +460,26 @@ def Material "AcrylStandShader"
             uniform token info:id = "ND_normal_vector3"
             float3 outputs:out
             float2 ui:nodegraph:node:pos = (73.5, 462.5)
-            int ui:nodegraph:node:stackingOrder = 9359
+            int ui:nodegraph:node:stackingOrder = 9376
         }
 
         def Shader "Separate3"
         {
             uniform token info:id = "ND_separate3_vector3"
-            float3 inputs:in.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Normal.outputs:out>
+            float3 inputs:in.connect = </AcrylStandShader/faceR1L2T3B4F5B6/Position.outputs:out>
             float outputs:outx
             float outputs:outy
             float outputs:outz
             float2 ui:nodegraph:node:pos = (287.75, 462.5)
             int ui:nodegraph:node:stackingOrder = 9361
+        }
+
+        def Shader "Position"
+        {
+            uniform token info:id = "ND_position_vector3"
+            float3 outputs:out
+            float2 ui:nodegraph:node:pos = (75.826515, 520.4454)
+            int ui:nodegraph:node:stackingOrder = 9377
         }
     }
 
@@ -527,7 +536,13 @@ def Material "AcrylStandShader"
         color4f inputs:in4 = (0, 1, 0, 1)
         color4f inputs:in4.connect = </AcrylStandShader/UVdebug.outputs:out>
         color4f inputs:in5.connect = </AcrylStandShader/UVdebug.outputs:out>
-        color4f inputs:in6.connect = </AcrylStandShader/UVdebug.outputs:out>
+        color4f inputs:in6 = (0.46202266, 0.8382837, 1, 1) (
+            colorSpace = "srgb_texture"
+        )
+        color4f inputs:in6.connect = None
+        color4f inputs:in7 = (1, 0.18573886, 0.573395, 1) (
+            colorSpace = "srgb_texture"
+        )
         color4f inputs:in7.connect = </AcrylStandShader/white_bg.outputs:out>
         color4f inputs:in8
         color4f inputs:in9
@@ -535,7 +550,7 @@ def Material "AcrylStandShader"
         int inputs:which.connect = </AcrylStandShader/faceR1L2T3B4F5B6.outputs:face_R1L2T3B4F5B6>
         color4f outputs:out
         float2 ui:nodegraph:node:pos = (881.81055, 743.8875)
-        int ui:nodegraph:node:stackingOrder = 10322
+        int ui:nodegraph:node:stackingOrder = 11136
         string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:which", "inputs:which", "inputs:in1"]
     }
 
@@ -575,7 +590,7 @@ def Material "AcrylStandShader"
         float inputs:mix = 0.75
         color4f outputs:out
         float2 ui:nodegraph:node:pos = (608.25433, 918.98883)
-        int ui:nodegraph:node:stackingOrder = 10397
+        int ui:nodegraph:node:stackingOrder = 11128
     }
 
     def Shader "UVdebug"
@@ -621,7 +636,7 @@ def Material "AcrylStandShader"
         float3 inputs:in2.connect = </AcrylStandShader/tofront.outputs:out>
         float outputs:out
         float2 ui:nodegraph:node:pos = (-923.7343, 539.218)
-        int ui:nodegraph:node:stackingOrder = 10307
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "d_f"
@@ -631,7 +646,7 @@ def Material "AcrylStandShader"
         float3 inputs:in2.connect = </AcrylStandShader/Refract.outputs:out>
         float outputs:out
         float2 ui:nodegraph:node:pos = (-923.299, 638.70044)
-        int ui:nodegraph:node:stackingOrder = 10309
+        int ui:nodegraph:node:stackingOrder = 11123
     }
 
     def Shader "HoverState"
@@ -676,7 +691,16 @@ def Material "AcrylStandShader"
         asset inputs:in.connect = </AcrylStandShader.inputs:image>
         asset outputs:out
         float2 ui:nodegraph:node:pos = (-82.58623, 221.91383)
-        int ui:nodegraph:node:stackingOrder = 10987
+        int ui:nodegraph:node:stackingOrder = 11123
+    }
+
+    def Scope "Group" (
+        kind = "group"
+    )
+    {
+        string ui:group:annotation = "屈折するやつ"
+        string ui:group:annotationDescription = ""
+        string[] ui:group:members = ["p:Divide_7", "p:Divide", "i:inputs:centerOffset", "p:Dot_3", "p:Refract", "p:Normal", "p:tofront", "p:Add_1", "p:centerOffset3", "i:inputs:image", "i:inputs:unscaledExtent", "p:Subtract_1", "p:d_f", "p:Position", "p:Dot_1", "p:xy", "p:rep", "p:Divide_2", "p:ViewDirection", "p:s_f", "p:Multiply_4", "p:Multiply", "p:Add", "p:cx_cy"]
     }
 }
 

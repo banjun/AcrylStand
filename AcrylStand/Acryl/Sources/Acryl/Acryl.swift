@@ -5,6 +5,7 @@ public let acrylBundle = Bundle.module
 
 
 import RealityFoundation
+import RCPMaterialParameters
 
 public final actor AcrylShader {
     public private(set) var shaderGraph: ShaderGraphMaterial
