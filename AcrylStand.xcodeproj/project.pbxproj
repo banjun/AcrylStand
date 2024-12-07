@@ -21,7 +21,7 @@
 		EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8197DE2BCC269100EFE812 /* Experimental.swift */; };
 		EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */; };
 		EAB6574E2C8D93470019D3C7 /* USDA.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB6574D2C8D93470019D3C7 /* USDA.swift */; };
-		EAEE708B2C16666200BD8E63 /* UIBezierPath+Superpowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEE708A2C16666200BD8E63 /* UIBezierPath+Superpowers.swift */; };
+		EACB21862CA95A8D001B3DA1 /* UIBezierPath-Superpowers in Frameworks */ = {isa = PBXBuildFile; productRef = EACB21852CA95A8D001B3DA1 /* UIBezierPath-Superpowers */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +41,6 @@
 		EA8197DE2BCC269100EFE812 /* Experimental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experimental.swift; sourceTree = "<group>"; };
 		EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrylEntity.swift; sourceTree = "<group>"; };
 		EAB6574D2C8D93470019D3C7 /* USDA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USDA.swift; sourceTree = "<group>"; };
-		EAEE708A2C16666200BD8E63 /* UIBezierPath+Superpowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Superpowers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2307A42C9FE27000377565 /* Acryl in Frameworks */,
+				EACB21862CA95A8D001B3DA1 /* UIBezierPath-Superpowers in Frameworks */,
 				EA5FABAD2C40170A0020721F /* SwiftHotReload in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,7 +92,6 @@
 				EA0E7C792CA061CF00669567 /* banjun-arisu-v2.psd.png */,
 				EA0E7C7A2CA061CF00669567 /* gakumas-arisu.png */,
 				EA21979E2BAC5210001F86DB /* Preview Content */,
-				EAEE708A2C16666200BD8E63 /* UIBezierPath+Superpowers.swift */,
 			);
 			path = AcrylStand;
 			sourceTree = "<group>";
@@ -131,6 +130,7 @@
 			packageProductDependencies = (
 				EA5FABAC2C40170A0020721F /* SwiftHotReload */,
 				EA2307A32C9FE27000377565 /* Acryl */,
+				EACB21852CA95A8D001B3DA1 /* UIBezierPath-Superpowers */,
 			);
 			productName = AcrylStand;
 			productReference = EA2197912BAC520E001F86DB /* AcrylStand.app */;
@@ -162,6 +162,7 @@
 			mainGroup = EA2197882BAC520E001F86DB;
 			packageReferences = (
 				EA5FABAB2C40170A0020721F /* XCRemoteSwiftPackageReference "SwiftHotReload" */,
+				EACB21842CA95A8D001B3DA1 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */,
 			);
 			productRefGroup = EA2197922BAC520E001F86DB /* Products */;
 			projectDirPath = "";
@@ -194,7 +195,6 @@
 				EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */,
 				EA21979B2BAC520E001F86DB /* ContentView.swift in Sources */,
 				EA2197992BAC520E001F86DB /* AcrylStandApp.swift in Sources */,
-				EAEE708B2C16666200BD8E63 /* UIBezierPath+Superpowers.swift in Sources */,
 				EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */,
 				EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */,
 				EAB6574E2C8D93470019D3C7 /* USDA.swift in Sources */,
@@ -347,7 +347,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 1.2;
 			};
@@ -375,7 +375,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 1.2;
 			};
@@ -413,6 +413,14 @@
 				minimumVersion = 0.1.0;
 			};
 		};
+		EACB21842CA95A8D001B3DA1 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CodingMeSwiftly/UIBezierPath-Superpowers";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -424,6 +432,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EA5FABAB2C40170A0020721F /* XCRemoteSwiftPackageReference "SwiftHotReload" */;
 			productName = SwiftHotReload;
+		};
+		EACB21852CA95A8D001B3DA1 /* UIBezierPath-Superpowers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EACB21842CA95A8D001B3DA1 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */;
+			productName = "UIBezierPath-Superpowers";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

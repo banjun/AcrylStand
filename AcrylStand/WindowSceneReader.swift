@@ -38,7 +38,7 @@ struct WindowSceneReader<Content: View>: View {
                 parentWindow = nil
                 return
             }
-            Task.detached { @MainActor in
+            Task.detached { @Sendable @MainActor in
                 defer { self.parentWindow = window }
                 let start = Date()
                 let timeout: TimeInterval = 10
