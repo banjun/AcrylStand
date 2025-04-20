@@ -20,7 +20,7 @@ struct AcrylStandApp: App {
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "Main", for: Int?.self) { _ in
             ContentView(onDropImage: { image in
                 guard let data = image.pngData() else { return }
                 // TODO: use either of these
@@ -96,8 +96,9 @@ struct FixedSizeImage: View {
     let imageModel: ImageModel
     let minVolumetricLength: CGFloat
     let maxVolumetricLength: CGFloat
-    @Environment(\.physicalMetrics) private var physicalMetrics
-    @State private var heightInCM: CGFloat = 30
+    @PhysicalMetric(from: .centimeters) private var height: CGFloat = 30
+    @State private var showsOrnaments: Bool = false
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         ZStack {
@@ -107,15 +108,25 @@ struct FixedSizeImage: View {
                 // TODO: 1. calculate a good default physical size
                 // TODO: 2. ui for changing size
                 let aspect = image.extent.size.width / image.extent.size.height
-                let height = physicalMetrics.convert(heightInCM, from: .centimeters)
+                let height = height
                 let width = height * aspect
                 ImageView()
                     .environment(imageModel)
                     .frame(minWidth: width, maxWidth: width, minHeight: height, maxHeight: height)
                     .frame(minDepth: width, maxDepth: width)
+                    .onTapGesture(count: 2) {
+                        showsOrnaments.toggle()
+                    }
             } else {
                 ProgressView().onAppear {
                     imageModel.generateMaskImage()
+                }
+            }
+        }
+        .ornament(visibility: showsOrnaments ? .visible : .hidden, attachmentAnchor: .scene(.bottomFront)) {
+            HStack {
+                Button("Main Window") {
+                    openWindow(id: "Main", value: Int?.none)
                 }
             }
         }

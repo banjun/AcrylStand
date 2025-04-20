@@ -12,16 +12,7 @@
       },
       [
         "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
-        "Root",
-        "Main"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
-        "AcrylStandShader"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -39,7 +30,16 @@
       },
       [
         "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
-        "Root"
+        "Root",
+        "Main"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
+        "AcrylStandShader"
       ],
       {
         "isExpanded" : true,

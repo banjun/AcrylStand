@@ -47,7 +47,9 @@ struct ContentView: View {
                             Image(ciImage: image).resizable().aspectRatio(contentMode: .fit)
                         } else { ProgressView() }
                         Image(systemName: "arrow.right").padding()
-                        Text("TODO: preview")
+                        PortalDisplay(imageModel: imageModel)
+                            .aspectRatio(1, contentMode: .fit)
+//                        FixedSizeImage(imageModel: imageModel, minVolumetricLength: 100, maxVolumetricLength: 100)
                     }
                     .padding()
                 }
@@ -80,4 +82,70 @@ struct ContentView: View {
 
 #Preview(windowStyle: .automatic) {
     ContentView()
+}
+
+import RealityKit
+import Vision
+
+struct PortalDisplay: View {
+    var imageModel: ImageModel
+    @State private var path: UIBezierPath?
+
+    var body: some View {
+        if let path {
+            RealityView { content in
+                let world = Entity()
+                world.components.set(WorldComponent())
+
+                guard let imageData = imageModel.selectedImage else { return }
+                let acrylEntity = try! await AcrylEntity(imageData: imageData, path: path)
+//                world.scale = .init(repeating: 0.1)
+                world.addChild(acrylEntity)
+
+                let portal = ModelEntity(mesh: .generatePlane(width: 0.1, height: 0.1), materials: [PortalMaterial()])
+                portal.position.z = -0.1
+                portal.components.set(PortalComponent(target: world))
+                content.add(portal)
+                content.add(world)
+            }
+//            .frame(width: 100, height: 100)
+        } else {
+            ProgressView().onAppear {
+                // FIXME: remove copy&paste from another file
+                if imageModel.leggedImage == nil {
+                    imageModel.generateMaskImage()
+                }
+                guard let image = imageModel.leggedImage else { return }
+
+                let request = VNDetectContoursRequest { req, error in
+                    guard let observation = req.results?.first as? VNContoursObservation else { return }
+                    if let error {
+                        NSLog("%@", "\(String(describing: error))")
+                        path = nil
+                        return
+                    }
+
+                    guard let maxContour = (observation.topLevelContours.max { $0.pointCount < $1.pointCount }) else { return }
+                    let contour = (maxContour.childContours.max { $0.pointCount < $1.pointCount }) ?? maxContour
+                    let path = UIBezierPath(cgPath: contour.normalizedPath)
+                    path.apply(CGAffineTransform.identity
+                               //                    .scaledBy(x: image.extent.width, y: -image.extent.height)
+                        .scaledBy(x: 1, y: -1)
+                        .translatedBy(x: 0, y: -1))
+                    self.path = path
+                }
+                request.maximumImageDimension = Int(max(image.extent.width, image.extent.height))
+                //            request.contrastAdjustment =
+                //            request.contrastPivot =
+                //            request.detectsDarkOnLight = true
+                let handler = VNImageRequestHandler(ciImage: image)
+                do {
+                    try handler.perform([request])
+                } catch {
+                    NSLog("%@", "\(String(describing: error))")
+                    path = nil
+                }
+            }
+        }
+    }
 }

@@ -7,7 +7,7 @@ import SwiftUI
 import UIBezierPath_Superpowers
 
 final class AcrylEntity: Entity {
-    @available(*, unavailable) required init() { fatalError() }
+    @available(*, unavailable) required init() { super.init() } // clone calls this
 
     static func meshDescriptor(textureSize: CGSize, path: UIBezierPath, pathPoints: UInt8, depth: Float) -> MeshDescriptor {
         let points = (0..<pathPoints)
