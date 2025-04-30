@@ -90,6 +90,13 @@ struct ImageView: View {
         } update: { content in
             guard let root = rootEntity else { return }
             root.transform.rotation = .init(rotation)
+
+            let t = content.transform(from: root, to: .immersiveSpace)
+            let tt = Transform(matrix: .init(.init(t.matrix4x4.columns.0),
+                                            .init(t.matrix4x4.columns.1),
+                                            .init(t.matrix4x4.columns.2),
+                                            .init(t.matrix4x4.columns.3)))
+            NSLog("%@", "at \(tt.translation), rotated: \(tt.rotation)")
         }.gesture(DragGesture().targetedToEntity(rootEntity ?? Entity())
             .updating($rotationOnDragStart) { value, state, transaction in
                 state = rotationOnDragStart ?? rotation

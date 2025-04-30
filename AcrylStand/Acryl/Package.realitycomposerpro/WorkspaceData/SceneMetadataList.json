@@ -3,17 +3,8 @@
     "objectMetadataList" : [
       [
         "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
-        "Root",
-        "Cube_4",
-        "AcrylStandShader"
+        "AcrylStandShader",
+        "faceR1L2T3B4F5B6"
       ],
       {
         "isExpanded" : true,
@@ -31,6 +22,24 @@
       [
         "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
         "AcrylStandShader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
+        "Root",
+        "Cube_4",
+        "AcrylStandShader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
+        "Root"
       ],
       {
         "isExpanded" : true,
