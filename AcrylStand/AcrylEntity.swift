@@ -16,7 +16,7 @@ final class AcrylEntity: Entity {
             .reversed()
 //        print(points)
         let vertices: [SIMD3<Float>] = points
-            .map { SIMD3<Float>(Float($0.x) - Float(0.5), Float(1) - Float($0.y) - Float(0.5), depth / 2) } // x,y in -0.5...+0.5 (centered)
+            .map { SIMD3<Float>(Float($0.x) - Float(0.5), Float(1) - Float($0.y), depth / 2) } // x in -0.5...+0.5 (centered), y in 0...1 (ground)
         let scale: Float = 0.1
         var meshDescriptor = MeshDescriptor()
         meshDescriptor.positions = MeshBuffers.Positions(
@@ -78,7 +78,7 @@ final class AcrylEntity: Entity {
                 .map { path.mx_point(atFractionOfLength: $0) } // x,y in 0...1
                 .reversed()
             let reducedPaths = reducedPoints.reduce(into: Path()) { $0.isEmpty ? $0.move(to: $1) : $0.addLine(to: $1) }
-                .applying(.init(scaleX: CGFloat(scale), y: CGFloat(scale)).translatedBy(x: -0.5, y: -0.5).scaledBy(x: 1, y: -1).translatedBy(x: 0, y: -1))
+                .applying(.init(scaleX: CGFloat(scale), y: CGFloat(scale)).translatedBy(x: -0.5, y: 1).scaledBy(x: 1, y: -1).translatedBy(x: 0, y: 0))
             var extrusionOptions = MeshResource.ShapeExtrusionOptions()
             extrusionOptions.extrusionMethod = .linear(depth: depth * scale)
             // extrusionOptions.boundaryResolution = .uniformSegmentsPerSpan(segmentCount: 64)

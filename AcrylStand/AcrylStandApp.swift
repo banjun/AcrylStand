@@ -59,6 +59,9 @@ struct AcrylStandApp: App {
         .windowStyle(.volumetric)
         .windowResizability(.contentSize)
         .volumeWorldAlignmentGravityAligned()
+        .defaultWindowPlacement { content, context in
+            context.windows.first.map {.init(.trailing($0))} ?? .init()
+        }
 
         WindowGroup(id: "Experimental") {
             ZStack {

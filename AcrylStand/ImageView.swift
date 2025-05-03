@@ -14,6 +14,7 @@ struct ImageView: View {
     @State private var rotation: Rotation3D = .identity
     @State private var rootEntity: Entity?
     @GestureState private var rotationOnDragStart: Rotation3D?
+    @State private var mirrorSpace: MirrorSpace?
 
     var body: some View {
         ZStack {
@@ -80,65 +81,16 @@ struct ImageView: View {
         }
     }
 
-    struct MirrorReceiverComponent: Component {
-        weak var original: Entity?
-    }
-    struct MirrorSystem: System {
-        static let query: EntityQuery = .init(where: .has(MirrorReceiverComponent.self))
-        init(scene: RealityKit.Scene) {}
-        func update(context: SceneUpdateContext) {
-            context.entities(matching: Self.query, updatingSystemWhen: .rendering).forEach { e in
-                guard let originalTransform = e.components[MirrorReceiverComponent.self]!.original?.convert(transform: .identity, to: nil) else { return }
-                e.transform.rotation = .init(angle: .pi, axis: .init(0, 1, 0)) * originalTransform.rotation.inverse
-            }
-        }
-    }
-
-    let mirrorSortGroup = ModelSortGroup(depthPass: .postPass)
-
     private func realityView(_ path: UIBezierPath) -> some View {
         RealityView { content in
             guard let imageData = imageModel.selectedImage else { return }
             let acrylEntity = try! await AcrylEntity(imageData: imageData, path: path)
+            acrylEntity.position.y = -0.1
             self.rootEntity = acrylEntity
 
-            let mirroredImage = ImageRenderer(
-                content: Image(uiImage: UIImage(data: imageData)!).scaleEffect(x: -1)
-            ).uiImage!.pngData()!
-
-            let mirrorWorld = Entity()
-            let mirroredPath = path
-            mirroredPath.apply(.identity.translatedBy(x: 1, y: 0).scaledBy(x: -1, y: 1))
-            let mirroredAcrylEntity = try! await AcrylEntity(imageData: mirroredImage, path: mirroredPath)
-            mirroredAcrylEntity.components.set(MirrorReceiverComponent(original: acrylEntity))
-            mirrorWorld.addChild(mirroredAcrylEntity)
-            mirrorWorld.components.set(WorldComponent())
-            content.add(mirrorWorld)
-            let mirror = ModelEntity(mesh: .generatePlane(width: 0.2, height: 0.3), materials: [PortalMaterial()])
-            mirror.components.set(PortalComponent(target: mirrorWorld))
-            mirror.position.z = -0.1
-            // content.add(mirror)
-            MirrorSystem.registerSystem()
-
-            var mirrorMaterial = PhysicallyBasedMaterial()
-            mirrorMaterial.baseColor = .init(tint: .white)
-            mirrorMaterial.blending = .opaque // .transparent(opacity: 0.95)
-            mirrorMaterial.metallic = 1.0
-            mirrorMaterial.roughness = 0.0
-            mirrorMaterial.specular = 1.0
-            let mirrorBoard = ModelEntity(mesh: .generatePlane(width: 0.15, height: 0.2), materials: [mirrorMaterial])
-            mirrorBoard.components.set(EnvironmentLightingConfigurationComponent(environmentLightingWeight: 1))
-            mirrorBoard.position.y = 0.2 / 4
-            mirrorBoard.position.z = -0.05
-            content.add(mirrorBoard)
-            mirroredAcrylEntity.position.z = mirrorBoard.position.z - 0.05
-            mirroredAcrylEntity.children.compactMap {
-               $0 as? ModelEntity
-            }.forEach {
-                $0.components.set(ModelSortGroupComponent(group: mirrorSortGroup, order: 10))
-            }
-            mirrorBoard.components.set(ModelSortGroupComponent(group: mirrorSortGroup, order: 0))
-            content.add(mirroredAcrylEntity)
+            let mirrorSpace = await MirrorSpace(original: acrylEntity, image: UIImage(data: imageData)!, path: path)
+            mirrorSpace.root.position.y = acrylEntity.position.y
+            content.add(mirrorSpace.root)
 
             content.add(acrylEntity)
 
@@ -146,12 +98,12 @@ struct ImageView: View {
             guard let root = rootEntity else { return }
             root.transform.rotation = .init(rotation)
 
-            let t = content.transform(from: root, to: .immersiveSpace)
-            let tt = Transform(matrix: .init(.init(t.matrix4x4.columns.0),
-                                            .init(t.matrix4x4.columns.1),
-                                            .init(t.matrix4x4.columns.2),
-                                            .init(t.matrix4x4.columns.3)))
-            NSLog("%@", "at \(tt.translation), rotated: \(tt.rotation)")
+//            let t = content.transform(from: root, to: .immersiveSpace)
+//            let tt = Transform(matrix: .init(.init(t.matrix4x4.columns.0),
+//                                            .init(t.matrix4x4.columns.1),
+//                                            .init(t.matrix4x4.columns.2),
+//                                            .init(t.matrix4x4.columns.3)))
+//            NSLog("%@", "at \(tt.translation), rotated: \(tt.rotation)")
         }.gesture(DragGesture().targetedToEntity(rootEntity ?? Entity())
             .updating($rotationOnDragStart) { value, state, transaction in
                 state = rotationOnDragStart ?? rotation

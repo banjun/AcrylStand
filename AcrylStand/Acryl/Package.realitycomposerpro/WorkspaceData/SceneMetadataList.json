@@ -3,8 +3,8 @@
     "objectMetadataList" : [
       [
         "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
-        "AcrylStandShader",
-        "faceR1L2T3B4F5B6"
+        "Root",
+        "Main"
       ],
       {
         "isExpanded" : true,
@@ -30,8 +30,8 @@
       },
       [
         "BB67A1D9-91FB-4CDD-B082-C3A90EAA1E5E",
-        "Root",
-        "Main"
+        "AcrylStandShader",
+        "faceR1L2T3B4F5B6"
       ],
       {
         "isExpanded" : true,
