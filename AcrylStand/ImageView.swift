@@ -14,7 +14,10 @@ struct ImageView: View {
     @State private var rotation: Rotation3D = .identity
     @State private var rootEntity: Entity?
     @GestureState private var rotationOnDragStart: Rotation3D?
+    @State private var acrylEntity: AcrylEntity?
     @State private var mirrorSpace: MirrorSpace?
+    @State private var showsMirror: Bool = false
+    @State private var controlsVisibility: Visibility = .hidden
 
     var body: some View {
         ZStack {
@@ -43,7 +46,10 @@ struct ImageView: View {
                 Text(String(describing: error))
             }
         }
-        .persistentSystemOverlays(.hidden)
+        .persistentSystemOverlays(controlsVisibility)
+        .ornament(visibility: controlsVisibility, attachmentAnchor: .scene(.bottomFront), contentAlignment: .top) {
+            Toggle("Mirror", isOn: $showsMirror).toggleStyle(.button).padding().glassBackgroundEffect()
+        }
         .onAppear {
             if imageModel.leggedImage == nil {
                 imageModel.generateMaskImage()
@@ -84,19 +90,28 @@ struct ImageView: View {
     private func realityView(_ path: UIBezierPath) -> some View {
         RealityView { content in
             guard let imageData = imageModel.selectedImage else { return }
-            let acrylEntity = try! await AcrylEntity(imageData: imageData, path: path)
-            acrylEntity.position.y = -0.1
+            acrylEntity = try! await AcrylEntity(imageData: imageData, path: path)
+            acrylEntity?.position.y = -0.1
             self.rootEntity = acrylEntity
 
-            let mirrorSpace = await MirrorSpace(original: acrylEntity, image: UIImage(data: imageData)!, path: path)
-            mirrorSpace.root.position.y = acrylEntity.position.y
-            content.add(mirrorSpace.root)
-
-            content.add(acrylEntity)
-
+            content.add(acrylEntity!)
         } update: { content in
             guard let root = rootEntity else { return }
             root.transform.rotation = .init(rotation)
+
+            if showsMirror {
+                if let mirrorSpace {
+                    content.add(mirrorSpace.root)
+                } else if let acrylEntity, let imageData = imageModel.selectedImage {
+                    Task {
+                        let mirrorSpace = await MirrorSpace(original: acrylEntity, image: UIImage(data: imageData)!, path: path)
+                        mirrorSpace.root.position.y = acrylEntity.position.y
+                        self.mirrorSpace = mirrorSpace
+                    }
+                }
+            } else {
+                mirrorSpace?.root.removeFromParent()
+            }
 
 //            let t = content.transform(from: root, to: .immersiveSpace)
 //            let tt = Transform(matrix: .init(.init(t.matrix4x4.columns.0),
@@ -104,7 +119,8 @@ struct ImageView: View {
 //                                            .init(t.matrix4x4.columns.2),
 //                                            .init(t.matrix4x4.columns.3)))
 //            NSLog("%@", "at \(tt.translation), rotated: \(tt.rotation)")
-        }.gesture(DragGesture().targetedToEntity(rootEntity ?? Entity())
+        }
+        .gesture(DragGesture().targetedToEntity(rootEntity ?? Entity())
             .updating($rotationOnDragStart) { value, state, transaction in
                 state = rotationOnDragStart ?? rotation
             }.onChanged { value in
@@ -112,6 +128,9 @@ struct ImageView: View {
                 rotation = rotationOnDragStart.rotated(by: Rotation3D(angle: .degrees(value.translation3D.x), axis: .y))
             })
 //        .scaleEffect(3)
+        .gesture(TapGesture().onEnded {
+            controlsVisibility = controlsVisibility == .hidden ? .visible : .hidden
+        })
         .frame(width: 1000, height: 1000)
     }
 }
