@@ -18,6 +18,7 @@
 		EA2197AA2BAC5740001F86DB /* WindowSceneReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */; };
 		EA5FABAD2C40170A0020721F /* SwiftHotReload in Frameworks */ = {isa = PBXBuildFile; productRef = EA5FABAC2C40170A0020721F /* SwiftHotReload */; };
 		EA656B942DC6258100C6D8B5 /* MirrorSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA656B932DC6251C00C6D8B5 /* MirrorSpace.swift */; };
+		EA656B962DC7601A00C6D8B5 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA656B952DC7601A00C6D8B5 /* Floor.swift */; };
 		EA7852F02C688EDF00357790 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7852EF2C688EDF00357790 /* ImageModel.swift */; };
 		EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8197DE2BCC269100EFE812 /* Experimental.swift */; };
 		EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */; };
@@ -39,6 +40,7 @@
 		EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowSceneReader.swift; sourceTree = "<group>"; };
 		EA5FABAE2C4017130020721F /* RuntimeOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeOverride.swift; sourceTree = "<group>"; };
 		EA656B932DC6251C00C6D8B5 /* MirrorSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorSpace.swift; sourceTree = "<group>"; };
+		EA656B952DC7601A00C6D8B5 /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
 		EA7852EF2C688EDF00357790 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		EA8197DE2BCC269100EFE812 /* Experimental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experimental.swift; sourceTree = "<group>"; };
 		EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrylEntity.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				EA8197DE2BCC269100EFE812 /* Experimental.swift */,
 				EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */,
 				EA656B932DC6251C00C6D8B5 /* MirrorSpace.swift */,
+				EA656B952DC7601A00C6D8B5 /* Floor.swift */,
 				EA21979C2BAC5210001F86DB /* Assets.xcassets */,
 				EA2197A12BAC5210001F86DB /* Info.plist */,
 				EA0E7C792CA061CF00669567 /* banjun-arisu-v2.psd.png */,
@@ -197,6 +200,7 @@
 			files = (
 				EA656B942DC6258100C6D8B5 /* MirrorSpace.swift in Sources */,
 				EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */,
+				EA656B962DC7601A00C6D8B5 /* Floor.swift in Sources */,
 				EA21979B2BAC520E001F86DB /* ContentView.swift in Sources */,
 				EA2197992BAC520E001F86DB /* AcrylStandApp.swift in Sources */,
 				EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */,

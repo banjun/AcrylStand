@@ -17,6 +17,8 @@ struct ImageView: View {
     @State private var acrylEntity: AcrylEntity?
     @State private var mirrorSpace: MirrorSpace?
     @State private var showsMirror: Bool = false
+    @State private var floorEntity: Entity?
+    @State private var showsFloor: Bool = false
     @State private var controlsVisibility: Visibility = .hidden
 
     var body: some View {
@@ -47,8 +49,13 @@ struct ImageView: View {
             }
         }
         .persistentSystemOverlays(controlsVisibility)
+        .volumeBaseplateVisibility(controlsVisibility)
         .ornament(visibility: controlsVisibility, attachmentAnchor: .scene(.bottomFront), contentAlignment: .top) {
-            Toggle("Mirror", isOn: $showsMirror).toggleStyle(.button).padding().glassBackgroundEffect()
+            HStack {
+                Toggle("Mirror", isOn: $showsMirror).toggleStyle(.button)
+                Toggle("Floor", isOn: $showsFloor).toggleStyle(.button)
+            }
+            .padding().glassBackgroundEffect()
         }
         .onAppear {
             if imageModel.leggedImage == nil {
@@ -111,6 +118,29 @@ struct ImageView: View {
                 }
             } else {
                 mirrorSpace?.root.removeFromParent()
+            }
+
+            if showsFloor {
+                if let floorEntity {
+                    floorEntity.isEnabled = true
+                    content.add(floorEntity)
+                } else {
+                    Task {
+                        var m = PhysicallyBasedMaterial()
+                        m.specular = 1.5
+                        m.roughness = 0.0
+                        m.metallic = 0.0
+                        var a = m
+                        a.blending = .transparent(opacity: 0.0)
+                        m.baseColor = .init(texture: .init(try! TextureResource(image: ImageRenderer(content: Floor()).cgImage!, options: .init(semantic: nil))))
+                        m.roughness = 0.4
+                        let floorEntity = ModelEntity(mesh: .generateBox(width: 0.2, height: 0.005, depth: 0.2, splitFaces: true), materials: [a, m, a, a, a, a])
+                        floorEntity.position.y = -0.1
+                        self.floorEntity = floorEntity
+                    }
+                }
+            } else {
+                floorEntity?.isEnabled = false
             }
 
 //            let t = content.transform(from: root, to: .immersiveSpace)
