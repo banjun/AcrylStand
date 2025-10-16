@@ -99,10 +99,10 @@ struct ImageView: View {
             guard let imageData = imageModel.selectedImage else { return }
             acrylEntity = try! await AcrylEntity(imageData: imageData, path: path)
             acrylEntity?.position.y = -0.15
-            if #available(visionOS 26, *) {
+
                 // NOTE: it works if in ImmersiveSpace
                 // acrylEntity?.components.set(EnvironmentBlendingComponent(preferredBlendingMode: .occluded(by: .surroundings)))
-            }
+            
             self.rootEntity = acrylEntity
 
             content.add(acrylEntity!)

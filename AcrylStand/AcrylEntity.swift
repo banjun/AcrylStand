@@ -67,35 +67,31 @@ final class AcrylEntity: Entity {
             size: SIMD3<Float>(x: textureWidthScale, y: textureHeightScale, z: 1) * scale)
 
         let acrylEntity: ModelEntity
-        if #available(visionOS 2.0, *) {
-            // var count = 0
-            // path.cgPath.applyWithBlock {_ in count += 1}
-            // NSLog("%@", "path count = \(count)") // -> typically 4000 poitns
-            // -
-            // reduce path points for smooth surface
-            let reducedPoints = (0..<pathPoints)
-                .map { CGFloat($0) / CGFloat(pathPoints) }
-                .map { path.mx_point(atFractionOfLength: $0) } // x,y in 0...1
-                .reversed()
-            let reducedPaths = reducedPoints.reduce(into: Path()) { $0.isEmpty ? $0.move(to: $1) : $0.addLine(to: $1) }
-                .applying(.init(scaleX: CGFloat(scale), y: CGFloat(scale)).translatedBy(x: -0.5, y: 1).scaledBy(x: 1, y: -1).translatedBy(x: 0, y: 0))
-            var extrusionOptions = MeshResource.ShapeExtrusionOptions()
-            extrusionOptions.extrusionMethod = .linear(depth: depth * scale)
-            // extrusionOptions.boundaryResolution = .uniformSegmentsPerSpan(segmentCount: 64)
-            // extrusionOptions.chamferResolution = .uniformSegmentsPerSpan(segmentCount: 1)
-            // extrusionOptions.materialAssignment = .init(assignAll: 0)
-            let mesh = try await MeshResource(extruding: reducedPaths, extrusionOptions: extrusionOptions)
-            acrylEntity = await ModelEntity(acrylMesh: mesh, acrylShader: acrylShader)
-        } else {
-            acrylEntity = try await ModelEntity(acrylMesh: .generate(from: [meshDescriptor]), acrylShader: acrylShader)
-        }
+        // var count = 0
+        // path.cgPath.applyWithBlock {_ in count += 1}
+        // NSLog("%@", "path count = \(count)") // -> typically 4000 poitns
+        // -
+        // reduce path points for smooth surface
+        let reducedPoints = (0..<pathPoints)
+            .map { CGFloat($0) / CGFloat(pathPoints) }
+            .map { path.mx_point(atFractionOfLength: $0) } // x,y in 0...1
+            .reversed()
+        let reducedPaths = reducedPoints.reduce(into: Path()) { $0.isEmpty ? $0.move(to: $1) : $0.addLine(to: $1) }
+            .applying(.init(scaleX: CGFloat(scale), y: CGFloat(scale)).translatedBy(x: -0.5, y: 1).scaledBy(x: 1, y: -1).translatedBy(x: 0, y: 0))
+        var extrusionOptions = MeshResource.ShapeExtrusionOptions()
+        extrusionOptions.extrusionMethod = .linear(depth: depth * scale)
+        // extrusionOptions.boundaryResolution = .uniformSegmentsPerSpan(segmentCount: 64)
+        // extrusionOptions.chamferResolution = .uniformSegmentsPerSpan(segmentCount: 1)
+        // extrusionOptions.materialAssignment = .init(assignAll: 0)
+        let mesh = try await MeshResource(extruding: reducedPaths, extrusionOptions: extrusionOptions)
+        acrylEntity = await ModelEntity(acrylMesh: mesh, acrylShader: acrylShader)
+
         acrylEntity.components.set(ModelSortGroupComponent(group: sortGroup, order: 3))
         acrylEntity.components.set(InputTargetComponent())
         acrylEntity.components.set(GroundingShadowComponent(castsShadow: true, receivesShadow: false, fadeBehaviorNearPhysicalObjects: .fade))
-        if #available(visionOS 2, *) {
-            let collision = try! await ShapeResource.generateStaticMesh(from: .generate(from: [meshDescriptor]))
-            acrylEntity.components.set(CollisionComponent(shapes: [collision]))
-        }
+        let collision = try! await ShapeResource.generateStaticMesh(from: .generate(from: [meshDescriptor]))
+        acrylEntity.components.set(CollisionComponent(shapes: [collision]))
+
 //         acrylEntity.model!.materials = [{var m = UnlitMaterial(color: .cyan); m.triangleFillMode = .lines; return m}()]
 //         acrylEntity.components.set(ModelDebugOptionsComponent(visualizationMode: .textureCoordinates))
         addChild(acrylEntity)
