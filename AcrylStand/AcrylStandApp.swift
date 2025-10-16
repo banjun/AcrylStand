@@ -20,19 +20,20 @@ struct AcrylStandApp: App {
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
 
     var body: some Scene {
-        WindowGroup(id: "Main", for: Int?.self) { _ in
+        Window("Main", id: "Main") {
             ContentView(onDropImage: { image in
                 guard let data = image.pngData() else { return }
                 // TODO: use either of these
                 openWindow(id: "Image", value: data)
                 openWindow(id: "FixedImage", value: data)
             })
-            .onAppear {
-                Task { await openImmersiveSpace(id: "ImmersiveSpace") }
-            }
+//            .onAppear {
+//                Task { await openImmersiveSpace(id: "ImmersiveSpace") }
+//            }
         }
         .defaultSize(width: 300, height: 300)
         .windowResizability(.contentSize)
+//        .defaultLaunchBehavior(.presented)
 
         // dynamic scale window (placing far position let it bigger physically)
         WindowGroup(id: "Image", for: Data.self) { $value in
@@ -58,10 +59,11 @@ struct AcrylStandApp: App {
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
         .windowResizability(.contentSize)
-        .volumeWorldAlignmentGravityAligned()
-        .defaultWindowPlacement { content, context in
-            context.windows.first.map {.init(.trailing($0))} ?? .init()
-        }
+        .volumeWorldAlignment(.gravityAligned)
+//        .defaultWindowPlacement { content, context in
+//            context.windows.first.map {.init(.trailing($0))} ?? .init()
+//        }
+//        .defaultLaunchBehavior(.suppressed)
 
         WindowGroup(id: "Experimental") {
             ZStack {
@@ -104,7 +106,7 @@ struct FixedSizeImage: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             // make the image front aligned within lower depth limit
 //            Spacer().frame(depth: minVolumetricLength)
             if let image = imageModel.leggedImage {
@@ -129,28 +131,9 @@ struct FixedSizeImage: View {
         .ornament(visibility: showsOrnaments ? .visible : .hidden, attachmentAnchor: .scene(.bottomFront)) {
             HStack {
                 Button("Main Window") {
-                    openWindow(id: "Main", value: Int?.none)
+                    openWindow(id: "Main")
                 }
             }
-        }
-    }
-}
-
-extension Scene {
-    func volumeWorldAlignmentGravityAligned() -> some Scene {
-        if #available(visionOS 2, *) {
-            return volumeWorldAlignment(.gravityAligned)
-        } else {
-            return self
-        }
-    }
-}
-extension View {
-    func volumeBaseplateDisabled() -> some View {
-        if #available(visionOS 2, *) {
-            return volumeBaseplateVisibility(.hidden)
-        } else {
-            return self
         }
     }
 }

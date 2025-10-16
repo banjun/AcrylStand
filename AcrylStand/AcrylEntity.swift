@@ -91,7 +91,7 @@ final class AcrylEntity: Entity {
         }
         acrylEntity.components.set(ModelSortGroupComponent(group: sortGroup, order: 3))
         acrylEntity.components.set(InputTargetComponent())
-        acrylEntity.components.set(GroundingShadowComponent(castsShadow: true))
+        acrylEntity.components.set(GroundingShadowComponent(castsShadow: true, receivesShadow: false, fadeBehaviorNearPhysicalObjects: .fade))
         if #available(visionOS 2, *) {
             let collision = try! await ShapeResource.generateStaticMesh(from: .generate(from: [meshDescriptor]))
             acrylEntity.components.set(CollisionComponent(shapes: [collision]))

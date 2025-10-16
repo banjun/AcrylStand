@@ -4,7 +4,7 @@ import Foundation
 public let acrylBundle = Bundle.module
 
 
-import RealityFoundation
+import RealityKit
 import RCPMaterialParameters
 
 public final actor AcrylShader {

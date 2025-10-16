@@ -3,7 +3,7 @@ import Vision
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import RealityKit
-import RealityFoundation
+import RealityKit
 
 struct ImageView: View {
 #if DEBUG
@@ -22,7 +22,7 @@ struct ImageView: View {
     @State private var controlsVisibility: Visibility = .hidden
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
 //            Image(uiImage: image)
 //                .resizable()
 
@@ -98,7 +98,11 @@ struct ImageView: View {
         RealityView { content in
             guard let imageData = imageModel.selectedImage else { return }
             acrylEntity = try! await AcrylEntity(imageData: imageData, path: path)
-            acrylEntity?.position.y = -0.1
+            acrylEntity?.position.y = -0.15
+            if #available(visionOS 26, *) {
+                // NOTE: it works if in ImmersiveSpace
+                // acrylEntity?.components.set(EnvironmentBlendingComponent(preferredBlendingMode: .occluded(by: .surroundings)))
+            }
             self.rootEntity = acrylEntity
 
             content.add(acrylEntity!)
@@ -135,7 +139,8 @@ struct ImageView: View {
                         m.baseColor = .init(texture: .init(try! TextureResource(image: ImageRenderer(content: Floor()).cgImage!, options: .init(semantic: nil))))
                         m.roughness = 0.4
                         let floorEntity = ModelEntity(mesh: .generateBox(width: 0.2, height: 0.005, depth: 0.2, splitFaces: true), materials: [a, m, a, a, a, a])
-                        floorEntity.position.y = -0.1
+                        floorEntity.position.y = -0.15
+                        floorEntity.components.set(GroundingShadowComponent(castsShadow: false, receivesShadow: true, fadeBehaviorNearPhysicalObjects: .fade))
                         self.floorEntity = floorEntity
                     }
                 }

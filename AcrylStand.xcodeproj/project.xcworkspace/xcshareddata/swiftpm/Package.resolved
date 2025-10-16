@@ -1,13 +1,13 @@
 {
-  "originHash" : "276ca8fafb7237464c7882dd4f16f01786d7c9e19e74dfcda0f06d522338910d",
+  "originHash" : "478183ee7def79bdf0318d89c6b136d9fcf30e86251fbd3a187bd3210218af70",
   "pins" : [
     {
       "identity" : "rcpmaterialparameters",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/banjun/RCPMaterialParameters",
       "state" : {
-        "branch" : "main",
-        "revision" : "715f9fef6715e0b4e58d2db66bbe74cea10d8b3b"
+        "revision" : "8d480d596ef49dc2bfec83219f429bc2402ccfc2",
+        "version" : "0.0.2"
       }
     },
     {
