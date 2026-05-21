@@ -9,14 +9,16 @@
 /* Begin PBXBuildFile section */
 		EA0E7C7B2CA061CF00669567 /* banjun-arisu-v2.psd.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0E7C792CA061CF00669567 /* banjun-arisu-v2.psd.png */; };
 		EA0E7C7C2CA061CF00669567 /* gakumas-arisu.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0E7C7A2CA061CF00669567 /* gakumas-arisu.png */; };
+		EA1C1A032DAA59B700747450 /* Acryl in Frameworks */ = {isa = PBXBuildFile; productRef = EA1C1A022DAA59B700747450 /* Acryl */; };
 		EA2197992BAC520E001F86DB /* AcrylStandApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197982BAC520E001F86DB /* AcrylStandApp.swift */; };
 		EA21979B2BAC520E001F86DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA21979A2BAC520E001F86DB /* ContentView.swift */; };
 		EA21979D2BAC5210001F86DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA21979C2BAC5210001F86DB /* Assets.xcassets */; };
 		EA2197A02BAC5210001F86DB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA21979F2BAC5210001F86DB /* Preview Assets.xcassets */; };
 		EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A72BAC5675001F86DB /* ImageView.swift */; };
 		EA2197AA2BAC5740001F86DB /* WindowSceneReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */; };
-		EA2307A42C9FE27000377565 /* Acryl in Frameworks */ = {isa = PBXBuildFile; productRef = EA2307A32C9FE27000377565 /* Acryl */; };
 		EA5FABAD2C40170A0020721F /* SwiftHotReload in Frameworks */ = {isa = PBXBuildFile; productRef = EA5FABAC2C40170A0020721F /* SwiftHotReload */; };
+		EA656B942DC6258100C6D8B5 /* MirrorSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA656B932DC6251C00C6D8B5 /* MirrorSpace.swift */; };
+		EA656B962DC7601A00C6D8B5 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA656B952DC7601A00C6D8B5 /* Floor.swift */; };
 		EA7852F02C688EDF00357790 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7852EF2C688EDF00357790 /* ImageModel.swift */; };
 		EA8197DF2BCC269100EFE812 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8197DE2BCC269100EFE812 /* Experimental.swift */; };
 		EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */; };
@@ -27,6 +29,7 @@
 /* Begin PBXFileReference section */
 		EA0E7C792CA061CF00669567 /* banjun-arisu-v2.psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banjun-arisu-v2.psd.png"; sourceTree = "<group>"; };
 		EA0E7C7A2CA061CF00669567 /* gakumas-arisu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gakumas-arisu.png"; sourceTree = "<group>"; };
+		EA1C1A012DAA59AC00747450 /* Acryl */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Acryl; sourceTree = "<group>"; };
 		EA2197912BAC520E001F86DB /* AcrylStand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcrylStand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2197982BAC520E001F86DB /* AcrylStandApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrylStandApp.swift; sourceTree = "<group>"; };
 		EA21979A2BAC520E001F86DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -35,8 +38,9 @@
 		EA2197A12BAC5210001F86DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA2197A72BAC5675001F86DB /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowSceneReader.swift; sourceTree = "<group>"; };
-		EA2307A12C9FE0B800377565 /* Acryl */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Acryl; path = AcrylStand/Acryl; sourceTree = SOURCE_ROOT; };
 		EA5FABAE2C4017130020721F /* RuntimeOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeOverride.swift; sourceTree = "<group>"; };
+		EA656B932DC6251C00C6D8B5 /* MirrorSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorSpace.swift; sourceTree = "<group>"; };
+		EA656B952DC7601A00C6D8B5 /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
 		EA7852EF2C688EDF00357790 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		EA8197DE2BCC269100EFE812 /* Experimental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experimental.swift; sourceTree = "<group>"; };
 		EAB6574B2C8D76320019D3C7 /* AcrylEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrylEntity.swift; sourceTree = "<group>"; };
@@ -48,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA2307A42C9FE27000377565 /* Acryl in Frameworks */,
+				EA1C1A032DAA59B700747450 /* Acryl in Frameworks */,
 				EACB21862CA95A8D001B3DA1 /* UIBezierPath-Superpowers in Frameworks */,
 				EA5FABAD2C40170A0020721F /* SwiftHotReload in Frameworks */,
 			);
@@ -61,7 +65,6 @@
 			isa = PBXGroup;
 			children = (
 				EA2197932BAC520E001F86DB /* AcrylStand */,
-				EA2307A12C9FE0B800377565 /* Acryl */,
 				EA2307A22C9FE27000377565 /* Frameworks */,
 				EA2197922BAC520E001F86DB /* Products */,
 			);
@@ -87,11 +90,14 @@
 				EA7852EF2C688EDF00357790 /* ImageModel.swift */,
 				EA8197DE2BCC269100EFE812 /* Experimental.swift */,
 				EA2197A92BAC5740001F86DB /* WindowSceneReader.swift */,
+				EA656B932DC6251C00C6D8B5 /* MirrorSpace.swift */,
+				EA656B952DC7601A00C6D8B5 /* Floor.swift */,
 				EA21979C2BAC5210001F86DB /* Assets.xcassets */,
 				EA2197A12BAC5210001F86DB /* Info.plist */,
 				EA0E7C792CA061CF00669567 /* banjun-arisu-v2.psd.png */,
 				EA0E7C7A2CA061CF00669567 /* gakumas-arisu.png */,
 				EA21979E2BAC5210001F86DB /* Preview Content */,
+				EA1C1A012DAA59AC00747450 /* Acryl */,
 			);
 			path = AcrylStand;
 			sourceTree = "<group>";
@@ -129,8 +135,8 @@
 			name = AcrylStand;
 			packageProductDependencies = (
 				EA5FABAC2C40170A0020721F /* SwiftHotReload */,
-				EA2307A32C9FE27000377565 /* Acryl */,
 				EACB21852CA95A8D001B3DA1 /* UIBezierPath-Superpowers */,
+				EA1C1A022DAA59B700747450 /* Acryl */,
 			);
 			productName = AcrylStand;
 			productReference = EA2197912BAC520E001F86DB /* AcrylStand.app */;
@@ -144,7 +150,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					EA2197902BAC520E001F86DB = {
 						CreatedOnToolsVersion = 15.3;
@@ -192,7 +198,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA656B942DC6258100C6D8B5 /* MirrorSpace.swift in Sources */,
 				EA2197A82BAC5675001F86DB /* ImageView.swift in Sources */,
+				EA656B962DC7601A00C6D8B5 /* Floor.swift in Sources */,
 				EA21979B2BAC520E001F86DB /* ContentView.swift in Sources */,
 				EA2197992BAC520E001F86DB /* AcrylStandApp.swift in Sources */,
 				EAB6574C2C8D76320019D3C7 /* AcrylEntity.swift in Sources */,
@@ -241,6 +249,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -263,6 +272,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = xros;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				XROS_DEPLOYMENT_TARGET = 1.1;
@@ -304,6 +314,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -319,6 +330,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = xros;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 				XROS_DEPLOYMENT_TARGET = 1.1;
@@ -333,7 +345,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AcrylStand/Preview Content\"";
-				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
@@ -349,7 +360,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 1.2;
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
 		};
@@ -361,7 +372,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AcrylStand/Preview Content\"";
-				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
@@ -377,7 +387,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 1.2;
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
 		};
@@ -409,8 +419,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/banjun/SwiftHotReload";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				branch = xcode26.4;
+				kind = branch;
 			};
 		};
 		EACB21842CA95A8D001B3DA1 /* XCRemoteSwiftPackageReference "UIBezierPath-Superpowers" */ = {
@@ -424,7 +434,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		EA2307A32C9FE27000377565 /* Acryl */ = {
+		EA1C1A022DAA59B700747450 /* Acryl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Acryl;
 		};

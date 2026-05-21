@@ -3,7 +3,7 @@ import Vision
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import RealityKit
-import RealityFoundation
+import RealityKit
 
 struct ImageView: View {
 #if DEBUG
@@ -14,9 +14,15 @@ struct ImageView: View {
     @State private var rotation: Rotation3D = .identity
     @State private var rootEntity: Entity?
     @GestureState private var rotationOnDragStart: Rotation3D?
+    @State private var acrylEntity: AcrylEntity?
+    @State private var mirrorSpace: MirrorSpace?
+    @State private var showsMirror: Bool = false
+    @State private var floorEntity: Entity?
+    @State private var showsFloor: Bool = false
+    @State private var controlsVisibility: Visibility = .hidden
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
 //            Image(uiImage: image)
 //                .resizable()
 
@@ -42,7 +48,15 @@ struct ImageView: View {
                 Text(String(describing: error))
             }
         }
-        .persistentSystemOverlays(.hidden)
+        .persistentSystemOverlays(controlsVisibility)
+        .volumeBaseplateVisibility(controlsVisibility)
+        .ornament(visibility: controlsVisibility, attachmentAnchor: .scene(.bottomFront), contentAlignment: .top) {
+            HStack {
+                Toggle("Mirror", isOn: $showsMirror).toggleStyle(.button)
+                Toggle("Floor", isOn: $showsFloor).toggleStyle(.button)
+            }
+            .padding().glassBackgroundEffect()
+        }
         .onAppear {
             if imageModel.leggedImage == nil {
                 imageModel.generateMaskImage()
@@ -83,21 +97,75 @@ struct ImageView: View {
     private func realityView(_ path: UIBezierPath) -> some View {
         RealityView { content in
             guard let imageData = imageModel.selectedImage else { return }
-            let acrylEntity = try! await AcrylEntity(imageData: imageData, path: path)
+            acrylEntity = try! await AcrylEntity(imageData: imageData, path: path)
+            acrylEntity?.position.y = -0.15
+
+                // NOTE: it works if in ImmersiveSpace
+                // acrylEntity?.components.set(EnvironmentBlendingComponent(preferredBlendingMode: .occluded(by: .surroundings)))
+            
             self.rootEntity = acrylEntity
 
-            content.add(acrylEntity)
+            content.add(acrylEntity!)
         } update: { content in
             guard let root = rootEntity else { return }
             root.transform.rotation = .init(rotation)
-        }.gesture(DragGesture().targetedToEntity(rootEntity ?? Entity())
+
+            if showsMirror {
+                if let mirrorSpace {
+                    content.add(mirrorSpace.root)
+                } else if let acrylEntity, let imageData = imageModel.selectedImage {
+                    Task {
+                        let mirrorSpace = await MirrorSpace(original: acrylEntity, image: UIImage(data: imageData)!, path: path)
+                        mirrorSpace.root.position.y = acrylEntity.position.y
+                        self.mirrorSpace = mirrorSpace
+                    }
+                }
+            } else {
+                mirrorSpace?.root.removeFromParent()
+            }
+
+            if showsFloor {
+                if let floorEntity {
+                    floorEntity.isEnabled = true
+                    content.add(floorEntity)
+                } else {
+                    Task {
+                        var m = PhysicallyBasedMaterial()
+                        m.specular = 1.5
+                        m.roughness = 0.0
+                        m.metallic = 0.0
+                        var a = m
+                        a.blending = .transparent(opacity: 0.0)
+                        m.baseColor = .init(texture: .init(try! TextureResource(image: ImageRenderer(content: Floor()).cgImage!, options: .init(semantic: nil))))
+                        m.roughness = 0.4
+                        let floorEntity = ModelEntity(mesh: .generateBox(width: 0.2, height: 0.005, depth: 0.2, splitFaces: true), materials: [a, m, a, a, a, a])
+                        floorEntity.position.y = -0.15
+                        floorEntity.components.set(GroundingShadowComponent(castsShadow: false, receivesShadow: true, fadeBehaviorNearPhysicalObjects: .fade))
+                        self.floorEntity = floorEntity
+                    }
+                }
+            } else {
+                floorEntity?.isEnabled = false
+            }
+
+//            let t = content.transform(from: root, to: .immersiveSpace)
+//            let tt = Transform(matrix: .init(.init(t.matrix4x4.columns.0),
+//                                            .init(t.matrix4x4.columns.1),
+//                                            .init(t.matrix4x4.columns.2),
+//                                            .init(t.matrix4x4.columns.3)))
+//            NSLog("%@", "at \(tt.translation), rotated: \(tt.rotation)")
+        }
+        .gesture(DragGesture().targetedToEntity(rootEntity ?? Entity())
             .updating($rotationOnDragStart) { value, state, transaction in
                 state = rotationOnDragStart ?? rotation
             }.onChanged { value in
                 guard let rotationOnDragStart else { return }
                 rotation = rotationOnDragStart.rotated(by: Rotation3D(angle: .degrees(value.translation3D.x), axis: .y))
             })
-        .scaleEffect(3)
+//        .scaleEffect(3)
+        .gesture(TapGesture().onEnded {
+            controlsVisibility = controlsVisibility == .hidden ? .visible : .hidden
+        })
         .frame(width: 1000, height: 1000)
     }
 }

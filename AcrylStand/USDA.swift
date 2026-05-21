@@ -1,4 +1,4 @@
-import RealityFoundation
+import RealityKit
 import Foundation
 
 struct USDA {

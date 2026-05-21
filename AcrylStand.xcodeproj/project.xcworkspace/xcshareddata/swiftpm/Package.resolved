@@ -1,13 +1,22 @@
 {
-  "originHash" : "aa72aea896eac7f79577532b5a52a77f268c568cf74e10e14f5fb5771e1f2d63",
+  "originHash" : "478183ee7def79bdf0318d89c6b136d9fcf30e86251fbd3a187bd3210218af70",
   "pins" : [
+    {
+      "identity" : "rcpmaterialparameters",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/banjun/RCPMaterialParameters",
+      "state" : {
+        "revision" : "8d480d596ef49dc2bfec83219f429bc2402ccfc2",
+        "version" : "0.0.2"
+      }
+    },
     {
       "identity" : "swifthotreload",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/banjun/SwiftHotReload",
       "state" : {
-        "revision" : "a008da91686f5c714847adff770d33f398d0afdd",
-        "version" : "0.2.1"
+        "branch" : "xcode26.4",
+        "revision" : "2f101acd5ff95f76ad00a38b32849928f43432f4"
       }
     },
     {

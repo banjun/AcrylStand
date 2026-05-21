@@ -16,18 +16,24 @@ struct AcrylStandApp: App {
     @ObservedObject private var reloader = Self.reloader
 #endif
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
 
     var body: some Scene {
-        WindowGroup {
+        Window("Main", id: "Main") {
             ContentView(onDropImage: { image in
                 guard let data = image.pngData() else { return }
                 // TODO: use either of these
                 openWindow(id: "Image", value: data)
                 openWindow(id: "FixedImage", value: data)
             })
+//            .onAppear {
+//                Task { await openImmersiveSpace(id: "ImmersiveSpace") }
+//            }
         }
         .defaultSize(width: 300, height: 300)
         .windowResizability(.contentSize)
+//        .defaultLaunchBehavior(.presented)
 
         // dynamic scale window (placing far position let it bigger physically)
         WindowGroup(id: "Image", for: Data.self) { $value in
@@ -53,7 +59,11 @@ struct AcrylStandApp: App {
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
         .windowResizability(.contentSize)
-        .volumeWorldAlignmentGravityAligned()
+        .volumeWorldAlignment(.gravityAligned)
+//        .defaultWindowPlacement { content, context in
+//            context.windows.first.map {.init(.trailing($0))} ?? .init()
+//        }
+//        .defaultLaunchBehavior(.suppressed)
 
         WindowGroup(id: "Experimental") {
             ZStack {
@@ -66,6 +76,12 @@ struct AcrylStandApp: App {
         .defaultSize(width: minVolumetricLength, height: minVolumetricLength, depth: minVolumetricLength)
         .windowStyle(.volumetric)
         .windowResizability(.contentSize)
+
+        ImmersiveSpace(id: "ImmersiveSpace") {
+            Button("Close ImmersiveSpace") {
+                Task { await dismissImmersiveSpace() }
+            }
+        }
     }
 
     private func updateWindowAspectRatio(windowScene: () -> UIWindowScene?, size: CGSize) {
@@ -85,47 +101,39 @@ struct FixedSizeImage: View {
     let imageModel: ImageModel
     let minVolumetricLength: CGFloat
     let maxVolumetricLength: CGFloat
-    @Environment(\.physicalMetrics) private var physicalMetrics
-    @State private var heightInCM: CGFloat = 30
+    @PhysicalMetric(from: .centimeters) private var height: CGFloat = 30
+    @State private var showsOrnaments: Bool = false
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             // make the image front aligned within lower depth limit
 //            Spacer().frame(depth: minVolumetricLength)
             if let image = imageModel.leggedImage {
                 // TODO: 1. calculate a good default physical size
                 // TODO: 2. ui for changing size
                 let aspect = image.extent.size.width / image.extent.size.height
-                let height = physicalMetrics.convert(heightInCM, from: .centimeters)
+                let height = height
                 let width = height * aspect
                 ImageView()
                     .environment(imageModel)
                     .frame(minWidth: width, maxWidth: width, minHeight: height, maxHeight: height)
                     .frame(minDepth: width, maxDepth: width)
+                    .onTapGesture(count: 2) {
+                        showsOrnaments.toggle()
+                    }
             } else {
                 ProgressView().onAppear {
                     imageModel.generateMaskImage()
                 }
             }
         }
-    }
-}
-
-extension Scene {
-    func volumeWorldAlignmentGravityAligned() -> some Scene {
-        if #available(visionOS 2, *) {
-            return volumeWorldAlignment(.gravityAligned)
-        } else {
-            return self
-        }
-    }
-}
-extension View {
-    func volumeBaseplateDisabled() -> some View {
-        if #available(visionOS 2, *) {
-            return volumeBaseplateVisibility(.hidden)
-        } else {
-            return self
+        .ornament(visibility: showsOrnaments ? .visible : .hidden, attachmentAnchor: .scene(.bottomFront)) {
+            HStack {
+                Button("Main Window") {
+                    openWindow(id: "Main")
+                }
+            }
         }
     }
 }
