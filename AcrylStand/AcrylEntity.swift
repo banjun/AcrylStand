@@ -52,7 +52,7 @@ final class AcrylEntity: Entity {
         let textureWidthScale: Float = Float(textureSize.width / max(textureSize.width, textureSize.height))
         let textureHeightScale: Float = Float(textureSize.height / max(textureSize.width, textureSize.height))
         // NSLog("%@", "textureWidthScale = \(textureWidthScale), textureHeightScale = \(textureHeightScale)")
-        let pathPoints = 255
+        let pathPoints: UInt32 = 255
         let depth: Float = 0.03
         let meshDescriptor = Self.meshDescriptor(textureSize: textureSize, path: path, pathPoints: UInt8(pathPoints), depth: depth)
 
@@ -113,16 +113,16 @@ final class AcrylEntity: Entity {
             SIMD2<Float>(1 - max(0, min(1, ($1.z + 0.05) * 10)),
                          $0.y)
         })
-        let sideQuads: [UInt32] = (UInt32(0)..<UInt32(pathPoints)).flatMap { i in
-            [UInt32(pathPoints * 2 - 1) - i, UInt32(pathPoints * 2 - 1) - (i + UInt32(1)),
+        let sideQuads: [UInt32] = (UInt32(0)..<UInt32(pathPoints)).flatMap { (i: UInt32) -> [UInt32] in
+            [UInt32(pathPoints * UInt32(2) - UInt32(1)) - i, UInt32(pathPoints * UInt32(2) - UInt32(1)) - (i + UInt32(1)),
              i + UInt32(1), i]
         }
         sideMeshDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuads)
 
         // inverted for double sided materials
-        let sideQuadsInverted: [UInt32] = (UInt32(0)..<UInt32(pathPoints)).flatMap { i in
+        let sideQuadsInverted: [UInt32] = (UInt32(0)..<UInt32(pathPoints)).flatMap { (i: UInt32) -> [UInt32] in
             [i, i + UInt32(1),
-             UInt32(pathPoints * 2 - 1) - (i + UInt32(1)), UInt32(pathPoints * 2 - 1) - i]
+             UInt32(pathPoints * 2 - 1) - (i + UInt32(1)), UInt32(pathPoints * UInt32(2) - UInt32(1)) - i]
         }
         var sideMeshInvertedDescriptor = sideMeshDescriptor
         sideMeshInvertedDescriptor.primitives = .trianglesAndQuads(triangles: [], quads: sideQuadsInverted)

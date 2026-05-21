@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/banjun/SwiftHotReload",
       "state" : {
-        "revision" : "a008da91686f5c714847adff770d33f398d0afdd",
-        "version" : "0.2.1"
+        "branch" : "xcode26.4",
+        "revision" : "2f101acd5ff95f76ad00a38b32849928f43432f4"
       }
     },
     {
